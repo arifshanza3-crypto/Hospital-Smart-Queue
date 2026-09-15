@@ -27,6 +27,10 @@
         --danger: #ef4444;
     }
 
+    * {
+        box-sizing: border-box;
+    }
+
     .add-user-wrapper {
         padding: 24px 28px;
         background: var(--bg-primary);
@@ -49,6 +53,7 @@
     .page-header-left {
         display: flex;
         flex-direction: column;
+        min-width: 0;
     }
 
     .page-header-left h1 {
@@ -72,6 +77,11 @@
         margin: 4px 0 0 0;
     }
 
+    .page-header-left p i {
+        color: var(--accent-1);
+        margin-right: 4px;
+    }
+
     .btn-secondary-gradient {
         background: #e2e8f0;
         color: var(--text-primary);
@@ -86,6 +96,7 @@
         transition: all 0.3s ease;
         border: none;
         cursor: pointer;
+        white-space: nowrap;
     }
 
     .btn-secondary-gradient:hover {
@@ -102,6 +113,7 @@
         text-decoration: none;
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 10px;
         font-weight: 600;
         font-size: 14px;
@@ -109,6 +121,8 @@
         border: none;
         cursor: pointer;
         box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25);
+        font-family: inherit;
+        white-space: nowrap;
     }
 
     .btn-primary-gradient:hover {
@@ -188,6 +202,11 @@
         transition: all 0.3s ease;
         outline: none;
         box-sizing: border-box;
+        font-family: inherit;
+    }
+
+    .form-control::placeholder {
+        color: var(--text-muted);
     }
 
     .form-control:focus {
@@ -206,6 +225,7 @@
 
     select.form-control {
         appearance: none;
+        -webkit-appearance: none;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: right 14px center;
@@ -225,7 +245,7 @@
         border-radius: 12px;
         margin-bottom: 20px;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 12px;
         border-left: 4px solid;
         background: var(--bg-card);
@@ -233,37 +253,45 @@
         max-width: 800px;
         margin-left: auto;
         margin-right: auto;
+        font-size: 14px;
+        line-height: 1.5;
     }
 
     .alert-modern.success {
         border-color: var(--success);
         color: #065f46;
+        background: #f0fdf4;
     }
 
     .alert-modern.success i {
         color: var(--success);
+        margin-top: 2px;
     }
 
     .alert-modern.error {
         border-color: var(--danger);
         color: #991b1b;
+        background: #fef2f2;
     }
 
     .alert-modern.error i {
         color: var(--danger);
+        margin-top: 2px;
     }
 
     .alert-modern i {
         font-size: 18px;
+        flex-shrink: 0;
     }
 
     .alert-modern ul {
-        margin: 0;
-        padding-left: 20px;
+        margin: 4px 0 0 20px;
+        padding: 0;
     }
 
     .alert-modern ul li {
         list-style-type: disc;
+        margin-bottom: 2px;
     }
 
     /* ===== FORM ACTIONS ===== */
@@ -284,57 +312,239 @@
         flex: 0.5;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ============================================ */
+    /* ✅ RESPONSIVE - TABLET (max 768px)           */
+    /* ============================================ */
     @media (max-width: 768px) {
         .add-user-wrapper {
-            padding: 16px;
+            padding: 16px 12px;
+        }
+
+        .page-header {
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .page-header-left h1 {
-            font-size: 22px;
+            font-size: 20px;
+            gap: 8px;
+        }
+
+        .page-header-left h1 i {
+            font-size: 20px;
+        }
+
+        .page-header-left p {
+            font-size: 13px;
+        }
+
+        .btn-secondary-gradient {
+            width: 100%;
+            justify-content: center;
+            padding: 11px 20px;
+            font-size: 13px;
+        }
+
+        .form-card {
+            border-radius: 12px;
+        }
+
+        .form-card-header {
+            padding: 16px 18px;
+        }
+
+        .form-card-header h3 {
+            font-size: 16px;
         }
 
         .form-card-body {
-            padding: 16px;
+            padding: 18px 16px;
         }
 
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+        }
+
+        .form-control {
+            padding: 11px 14px;
+            font-size: 13.5px;
+            border-radius: 10px;
+        }
+
+        select.form-control {
+            padding-right: 36px;
+            background-position: right 12px center;
+        }
+
+        /* Form actions - column-reverse (Submit upar) */
         .form-actions {
-            flex-direction: column;
+            flex-direction: column-reverse;
+            gap: 10px;
+            padding-top: 18px;
         }
 
-        .form-actions .btn {
-            width: 100%;
-            justify-content: center;
-            flex: 1;
-        }
-
+        .form-actions .btn,
         .form-actions .btn-secondary-gradient {
+            width: 100%;
             flex: 1;
+            padding: 12px 20px;
+            font-size: 13px;
+        }
+
+        .alert-modern {
+            padding: 12px 16px;
+            font-size: 13px;
+            border-radius: 10px;
+        }
+
+        .alert-modern ul {
+            margin-left: 18px;
+            font-size: 12.5px;
         }
     }
 
+    /* ============================================ */
+    /* ✅ RESPONSIVE - SMALL MOBILE (max 576px)     */
+    /* ============================================ */
     @media (max-width: 576px) {
         .add-user-wrapper {
-            padding: 12px;
+            padding: 12px 10px;
         }
 
         .page-header-left h1 {
             font-size: 18px;
         }
 
-        .btn-primary-gradient,
+        .page-header-left h1 i {
+            font-size: 16px;
+        }
+
+        .page-header-left p {
+            font-size: 12px;
+        }
+
         .btn-secondary-gradient {
-            padding: 10px 20px;
-            font-size: 13px;
+            padding: 10px 16px;
+            font-size: 12px;
+        }
+
+        .form-card-header {
+            padding: 14px 14px;
+        }
+
+        .form-card-header h3 {
+            font-size: 15px;
         }
 
         .form-card-body {
-            padding: 12px;
+            padding: 14px 12px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            font-size: 12.5px;
+        }
+
+        .form-group label i {
+            width: 16px;
+            margin-right: 4px;
         }
 
         .form-control {
+            padding: 10px 12px;
             font-size: 13px;
-            padding: 8px 12px;
+            border-radius: 9px;
+        }
+
+        .form-actions .btn,
+        .form-actions .btn-secondary-gradient {
+            padding: 11px 16px;
+            font-size: 12.5px;
+            border-radius: 9px;
+        }
+
+        .alert-modern {
+            padding: 10px 12px;
+            font-size: 12px;
+        }
+
+        .alert-modern i {
+            font-size: 15px;
+        }
+
+        .alert-modern ul {
+            margin-left: 16px;
+            font-size: 11.5px;
+        }
+    }
+
+    /* ============================================ */
+    /* ✅ RESPONSIVE - EXTRA SMALL (max 380px)     */
+    /* ============================================ */
+    @media (max-width: 380px) {
+        .add-user-wrapper {
+            padding: 10px 8px;
+        }
+
+        .page-header-left h1 {
+            font-size: 16px;
+        }
+
+        .page-header-left h1 i {
+            font-size: 14px;
+        }
+
+        .form-card {
+            border-radius: 10px;
+        }
+
+        .form-card-header {
+            padding: 12px 12px;
+        }
+
+        .form-card-header h3 {
+            font-size: 14px;
+        }
+
+        .form-card-body {
+            padding: 12px 10px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+        }
+
+        .form-control {
+            padding: 9px 11px;
+            font-size: 12.5px;
+            border-radius: 8px;
+        }
+
+        .form-actions .btn,
+        .form-actions .btn-secondary-gradient {
+            padding: 10px 14px;
+            font-size: 11.5px;
+        }
+
+        .alert-modern {
+            padding: 9px 11px;
+            font-size: 11.5px;
+        }
+
+        .alert-modern ul {
+            font-size: 11px;
+            margin-left: 14px;
         }
     }
 </style>
@@ -346,7 +556,7 @@
             <h1>
                 <i class="fas fa-user-plus"></i> Add New User
             </h1>
-            <p><i class="fas fa-arrow-trend-up" style="color: var(--accent-1);"></i> Create a new system user account</p>
+            <p><i class="fas fa-arrow-trend-up"></i> Create a new system user account</p>
         </div>
         <div>
             <a href="{{ route('admin.users.index') }}" class="btn-secondary-gradient">
@@ -359,14 +569,14 @@
     @if(session('success'))
         <div class="alert-modern success">
             <i class="fas fa-check-circle"></i>
-            {{ session('success') }}
+            <span>{{ session('success') }}</span>
         </div>
     @endif
 
     @if(session('error'))
         <div class="alert-modern error">
             <i class="fas fa-exclamation-circle"></i>
-            {{ session('error') }}
+            <span>{{ session('error') }}</span>
         </div>
     @endif
 
@@ -441,7 +651,7 @@
                         <i class="fas fa-lock"></i> Password <span class="required">*</span>
                     </label>
                     <input type="password" class="form-control @error('password') is-invalid @enderror" 
-                           id="password" name="password" placeholder="Minimum 8 characters" required>
+                           id="password" name="password" placeholder="Minimum 6 characters" required>
                     @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -467,7 +677,6 @@
                         <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>👤 User</option>
                         <option value="staff" {{ old('role') == 'staff' ? 'selected' : '' }}>👔 Staff</option>
                         <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>👑 Admin</option>
-                        <option value="warden" {{ old('role') == 'warden' ? 'selected' : '' }}>🛡️ Warden</option>
                     </select>
                     @error('role')
                         <div class="invalid-feedback">{{ $message }}</div>

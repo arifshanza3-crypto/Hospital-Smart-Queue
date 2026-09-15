@@ -1,4 +1,34 @@
-/* --- NO TOKEN STATE STYLING --- */
+/* ============================================ */
+/* NO TOKEN STATE - RESPONSIVE                  */
+/* ============================================ */
+
+/* --- SECTION CONTAINER --- */
+.token-status-section {
+    background-color: #ffffff;
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+/* --- CARD --- */
+.token-display-card {
+    background: #071a1c;
+    width: 100%;
+    max-width: 700px;
+    border-radius: 40px;
+    padding: 50px 40px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    box-sizing: border-box;
+}
+
+/* ============================================ */
+/* NO TOKEN STATE                               */
+/* ============================================ */
 .no-token-state {
     padding: 20px;
     display: flex;
@@ -6,6 +36,7 @@
     align-items: center;
 }
 
+/* --- ICON BOX --- */
 .icon-box-glow {
     width: 100px;
     height: 100px;
@@ -16,6 +47,44 @@
     justify-content: center;
     border: 1px solid rgba(0, 212, 255, 0.3);
     box-shadow: 0 0 30px rgba(0, 212, 255, 0.1);
+    margin-bottom: 24px;
+    animation: iconPulse 3s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { box-shadow: 0 0 30px rgba(0, 212, 255, 0.1); }
+    50% { box-shadow: 0 0 45px rgba(0, 212, 255, 0.25); }
+}
+
+.icon-box-glow i {
+    font-size: 3rem;
+    color: #00d4ff;
+}
+
+/* --- TITLE --- */
+.no-token-title {
+    color: #ffffff;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+}
+
+/* --- DESCRIPTION --- */
+.no-token-desc {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 28px 0;
+    max-width: 480px;
+}
+
+/* --- BUTTON --- */
+.action-area {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .btn-get-token {
@@ -26,10 +95,12 @@
     padding: 18px 45px;
     border-radius: 50px;
     font-weight: 800;
+    font-size: 0.95rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: 0.4s ease;
     box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+    white-space: nowrap;
 }
 
 .btn-get-token:hover {
@@ -38,11 +109,192 @@
     color: #ffffff;
 }
 
-/* Re-ensuring the section background is white */
-.token-status-section {
-    background-color: #ffffff;
-    min-height: 60vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* --- FOOTER INFO --- */
+.no-token-footer {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+}
+
+.footer-text {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.footer-text strong {
+    color: #00d4ff;
+    font-weight: 700;
+}
+
+/* ============================================ */
+/* ✅ RESPONSIVE - TABLET (max 768px)           */
+/* ============================================ */
+@media (max-width: 768px) {
+    .token-status-section {
+        padding: 30px 16px;
+        min-height: auto;
+    }
+
+    .token-display-card {
+        padding: 35px 25px;
+        border-radius: 30px;
+    }
+
+    .no-token-state {
+        padding: 15px;
+    }
+
+    .icon-box-glow {
+        width: 85px;
+        height: 85px;
+        border-radius: 24px;
+        margin-bottom: 20px;
+    }
+
+    .icon-box-glow i {
+        font-size: 2.4rem;
+    }
+
+    .no-token-title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .no-token-desc {
+        font-size: 0.9rem;
+        margin-bottom: 24px;
+    }
+
+    .btn-get-token {
+        padding: 16px 38px;
+        font-size: 0.88rem;
+    }
+
+    .no-token-footer {
+        margin-top: 24px;
+        padding-top: 18px;
+    }
+
+    .footer-text {
+        font-size: 0.78rem;
+    }
+}
+
+/* ============================================ */
+/* ✅ RESPONSIVE - SMALL MOBILE (max 576px)     */
+/* ============================================ */
+@media (max-width: 576px) {
+    .token-status-section {
+        padding: 20px 12px;
+    }
+
+    .token-display-card {
+        padding: 28px 18px;
+        border-radius: 24px;
+    }
+
+    .no-token-state {
+        padding: 10px;
+    }
+
+    .icon-box-glow {
+        width: 75px;
+        height: 75px;
+        border-radius: 20px;
+        margin-bottom: 18px;
+    }
+
+    .icon-box-glow i {
+        font-size: 2rem;
+    }
+
+    .no-token-title {
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+    }
+
+    .no-token-desc {
+        font-size: 0.85rem;
+        margin-bottom: 22px;
+        line-height: 1.55;
+    }
+
+    /* Button full width mobile par */
+    .action-area {
+        width: 100%;
+    }
+
+    .btn-get-token {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 0.82rem;
+        letter-spacing: 0.8px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .no-token-footer {
+        margin-top: 20px;
+        padding-top: 16px;
+    }
+
+    .footer-text {
+        font-size: 0.75rem;
+    }
+}
+
+/* ============================================ */
+/* ✅ RESPONSIVE - EXTRA SMALL (max 380px)     */
+/* ============================================ */
+@media (max-width: 380px) {
+    .token-status-section {
+        padding: 15px 10px;
+    }
+
+    .token-display-card {
+        padding: 22px 14px;
+        border-radius: 20px;
+    }
+
+    .no-token-state {
+        padding: 8px;
+    }
+
+    .icon-box-glow {
+        width: 65px;
+        height: 65px;
+        border-radius: 18px;
+        margin-bottom: 16px;
+    }
+
+    .icon-box-glow i {
+        font-size: 1.7rem;
+    }
+
+    .no-token-title {
+        font-size: 1.15rem;
+    }
+
+    .no-token-desc {
+        font-size: 0.8rem;
+        margin-bottom: 18px;
+    }
+
+    .btn-get-token {
+        padding: 13px 16px;
+        font-size: 0.78rem;
+        letter-spacing: 0.5px;
+    }
+
+    .no-token-footer {
+        margin-top: 18px;
+        padding-top: 14px;
+    }
+
+    .footer-text {
+        font-size: 0.72rem;
+    }
 }

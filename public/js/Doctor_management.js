@@ -19,27 +19,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function filterTable() {
-        let searchValue = document.getElementById('search').value.toLowerCase();
-        let statusValue = document.getElementById('filterStatus').value;
+        let searchValue = (document.getElementById('search')?.value || '').toLowerCase();
+        let statusValue = document.getElementById('filterStatus')?.value || '';
         let rows = document.querySelectorAll('#tableBody tr');
         let visibleCount = 0;
-        
+
         rows.forEach(row => {
-            if(row.querySelector('td')) {
+            // Skip the noResults message row
+            if (row.id === 'noResultsMsg') return;
+
+            if (row.querySelector('td')) {
                 let text = row.textContent.toLowerCase();
                 let statusCell = row.querySelector('.status-badge-modern');
                 let status = '';
-                
-                if(statusCell) {
+
+                if (statusCell) {
                     let statusText = statusCell.textContent.trim().toLowerCase();
-                    if(statusText.includes('active')) status = 'active';
-                    if(statusText.includes('on duty')) status = 'on_duty';
-                    if(statusText.includes('inactive')) status = 'inactive';
+                    if (statusText.includes('active') && !statusText.includes('inactive')) status = 'active';
+                    if (statusText.includes('on duty')) status = 'on_duty';
+                    if (statusText.includes('inactive')) status = 'inactive';
                 }
-                
+
                 let matchesSearch = text.includes(searchValue);
                 let matchesStatus = !statusValue || status === statusValue;
-                
+
                 if (matchesSearch && matchesStatus) {
                     row.style.display = '';
                     visibleCount++;
@@ -48,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-        
+
         // Show/hide no results message
         let noResultsMsg = document.getElementById('noResultsMsg');
         if (visibleCount === 0 && rows.length > 0) {
@@ -60,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td colspan="7" style="padding: 40px; text-align: center;">
                         <div class="empty-state" style="padding: 20px;">
                             <i class="fas fa-search" style="font-size: 40px;"></i>
-                            <h3 style="color: var(--text-primary); font-weight: 600;">No Matching Doctors</h3>
-                            <p style="color: var(--text-secondary);">Try adjusting your search or filter criteria</p>
+                            <h3>No Matching Doctors</h3>
+                            <p>Try adjusting your search or filter criteria</p>
                         </div>
                     </td>
                 `;
@@ -76,22 +79,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // RESET FILTERS
     // ============================================
     window.resetFilters = function() {
-        document.getElementById('search').value = '';
-        document.getElementById('filterStatus').value = '';
+        const searchEl = document.getElementById('search');
+        const filterEl = document.getElementById('filterStatus');
+        if (searchEl) searchEl.value = '';
+        if (filterEl) filterEl.value = '';
         filterTable();
-    }
+    };
 
     // ============================================
     // DELETE DOCTOR
     // ============================================
     window.deleteDoctor = function(id) {
-        if(confirm('⚠️ Are you sure you want to delete this doctor?\n\nThis action cannot be undone!')) {
+        if (confirm('⚠️ Are you sure you want to delete this doctor?\n\nThis action cannot be undone!')) {
             showLoader();
-            
+
             fetch('/admin/doctors/' + id, {
                 method: 'DELETE',
                 headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 }
@@ -99,8 +104,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 hideLoader();
-                if(data.success) {
-                    showNotification('success', data.message);
+                if (data.success) {
+                    showNotification('success', data.message || 'Doctor deleted successfully');
                     setTimeout(() => location.reload(), 1000);
                 } else {
                     showNotification('error', data.message || 'Error deleting doctor');
@@ -112,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error:', error);
             });
         }
-    }
+    };
 
     // ============================================
     // LOADER
@@ -128,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ============================================
-    // NOTIFICATION SYSTEM
+    // NOTIFICATION SYSTEM (Mobile friendly)
     // ============================================
     function showNotification(type, message) {
         let notification = document.createElement('div');
@@ -136,31 +141,37 @@ document.addEventListener('DOMContentLoaded', function() {
         let borderColor = type === 'success' ? '#10b981' : '#ef4444';
         let textColor = type === 'success' ? '#065f46' : '#991b1b';
         let icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
-        
+
+        // ✅ Mobile friendly width
+        const isMobile = window.innerWidth <= 576;
+        const styles = isMobile
+            ? `left: 12px; right: 12px; top: 70px;`
+            : `right: 24px; top: 80px; min-width: 280px; max-width: 400px;`;
+
         notification.style.cssText = `
             position: fixed;
-            top: 80px;
-            right: 24px;
-            padding: 16px 24px;
+            ${styles}
+            padding: 14px 20px;
             background: ${bgColor};
             border-left: 4px solid ${borderColor};
             color: ${textColor};
             border-radius: 12px;
             z-index: 9999;
-            animation: slideIn 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            animation: drSlideIn 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
             display: flex;
             align-items: center;
             gap: 12px;
             font-weight: 500;
             font-size: 14px;
-            min-width: 280px;
+            font-family: inherit;
+            box-sizing: border-box;
         `;
-        notification.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+        notification.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
         document.body.appendChild(notification);
-        
+
         setTimeout(() => {
-            notification.style.animation = 'slideOut 0.3s ease';
+            notification.style.animation = 'drSlideOut 0.3s ease';
             setTimeout(() => notification.remove(), 300);
         }, 4000);
     }
@@ -170,22 +181,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     document.querySelectorAll('.action-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
-            // Don't close tooltip on click
             e.stopPropagation();
         });
     });
 
     // ============================================
-    // KEYBOARD SHORTCUTS
+    // KEYBOARD SHORTCUTS (Ctrl+F)
     // ============================================
     document.addEventListener('keydown', function(e) {
-        // Ctrl + F for search focus
         if (e.ctrlKey && e.key === 'f') {
             e.preventDefault();
-            const searchInput = document.getElementById('search');
-            if (searchInput) {
-                searchInput.focus();
-                searchInput.select();
+            const searchEl = document.getElementById('search');
+            if (searchEl) {
+                searchEl.focus();
+                searchEl.select();
             }
         }
     });
@@ -194,15 +203,15 @@ document.addEventListener('DOMContentLoaded', function() {
 // ============================================
 // STYLES FOR ANIMATIONS
 // ============================================
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
+const drStyles = document.createElement('style');
+drStyles.textContent = `
+    @keyframes drSlideIn {
         from { transform: translateX(100%); opacity: 0; }
         to { transform: translateX(0); opacity: 1; }
     }
-    @keyframes slideOut {
+    @keyframes drSlideOut {
         from { transform: translateX(0); opacity: 1; }
         to { transform: translateX(100%); opacity: 0; }
     }
 `;
-document.head.appendChild(style);
+document.head.appendChild(drStyles);

@@ -20,7 +20,7 @@
             --primary-dark: #0b2e33;
             --primary-mid: #1a4a50;
             --primary-light: #0d3b42;
-            --nav-bg: rgba(7, 26, 28, 0.96);  /* CHANGED: #071a1c */
+            --nav-bg: rgba(7, 26, 28, 0.96);
             --glass-border: rgba(255, 255, 255, 0.08);
             --shadow-color: rgba(0, 0, 0, 0.3);
             --card-bg: rgba(11, 46, 51, 0.85);
@@ -35,9 +35,7 @@
             box-sizing: border-box;
         }
 
-        html { 
-            scroll-behavior: smooth; 
-        }
+        html { scroll-behavior: smooth; }
 
         body { 
             background: linear-gradient(145deg, #0b2e33 0%, #1a4a50 50%, #0d3b42 100%);
@@ -46,15 +44,13 @@
             padding: 0;
             color: #ffffff;
             position: relative;
+            overflow-x: hidden;
         }
 
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: radial-gradient(ellipse at 20% 50%, rgba(0, 212, 255, 0.03) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
@@ -75,9 +71,7 @@
             transition: all 0.4s ease !important;
         }
 
-        .navbar-wrapper.scrolled {
-            padding: 8px 24px !important;
-        }
+        .navbar-wrapper.scrolled { padding: 8px 24px !important; }
 
         .navbar-wrapper.scrolled .navbar {
             background: var(--nav-bg) !important;
@@ -88,7 +82,7 @@
         }
 
         .navbar {
-            background: rgba(7, 26, 28, 0.7) !important;  /* CHANGED: #071a1c */
+            background: rgba(7, 26, 28, 0.7) !important;
             backdrop-filter: blur(16px) !important;
             -webkit-backdrop-filter: blur(16px) !important;
             border-radius: 16px !important;
@@ -120,9 +114,7 @@
             transition: transform 0.3s ease !important;
         }
 
-        .navbar-brand:hover {
-            transform: scale(1.02) !important;
-        }
+        .navbar-brand:hover { transform: scale(1.02) !important; }
 
         .nav-logo-img {
             height: 40px !important;
@@ -149,9 +141,7 @@
         }
 
         /* ---- Nav Links ---- */
-        .navbar-nav {
-            gap: 2px !important;
-        }
+        .navbar-nav { gap: 2px !important; }
 
         .nav-link {
             color: rgba(255, 255, 255, 0.5) !important;
@@ -183,9 +173,7 @@
             transform: translateY(-1px) !important;
         }
 
-        .nav-link:hover::before {
-            opacity: 1 !important;
-        }
+        .nav-link:hover::before { opacity: 1 !important; }
 
         .nav-link.active {
             color: #ffffff !important;
@@ -225,6 +213,7 @@
             letter-spacing: 0.4px !important;
             position: relative !important;
             overflow: hidden !important;
+            white-space: nowrap !important;
         }
 
         .btn-pill::after {
@@ -237,9 +226,7 @@
             border-radius: 10px !important;
         }
 
-        .btn-pill:hover::after {
-            opacity: 1 !important;
-        }
+        .btn-pill:hover::after { opacity: 1 !important; }
 
         .btn-book { 
             background: linear-gradient(135deg, #00d4ff, #0088b3) !important; 
@@ -280,7 +267,7 @@
         }
 
         /* ============================================
-           NOTIFICATION BELL - MODERN
+           NOTIFICATION BELL
            ============================================ */
         .notification-wrapper {
             position: relative !important;
@@ -310,9 +297,7 @@
             box-shadow: 0 0 40px rgba(255, 215, 0, 0.06) !important;
         }
 
-        .notification-bell .bell-icon {
-            font-size: 16px !important;
-        }
+        .notification-bell .bell-icon { font-size: 16px !important; }
 
         .notification-badge {
             position: absolute !important;
@@ -328,7 +313,7 @@
             text-align: center !important;
             display: none !important;
             animation: pulse-badge 2s ease-in-out infinite !important;
-            border: 2px solid rgba(7, 26, 28, 0.9) !important;  /* CHANGED: #071a1c */
+            border: 2px solid rgba(7, 26, 28, 0.9) !important;
             box-shadow: 0 2px 12px rgba(239, 68, 68, 0.3) !important;
         }
 
@@ -338,7 +323,7 @@
         }
 
         /* ============================================
-           PROFILE DROPDOWN - MODERN
+           PROFILE DROPDOWN
            ============================================ */
         .profile-wrapper {
             position: relative !important;
@@ -393,11 +378,7 @@
             box-shadow: 0 0 24px rgba(0, 212, 255, 0.12) !important;
         }
 
-        .profile-avatar img {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: cover !important;
-        }
+        .profile-avatar img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
 
         .profile-name-display {
             font-size: 11px !important;
@@ -426,7 +407,7 @@
             top: 40px !important;
             right: 0 !important;
             width: 230px !important;
-            background: rgba(7, 26, 28, 0.97) !important;  /* CHANGED: #071a1c */
+            background: rgba(7, 26, 28, 0.97) !important;
             backdrop-filter: blur(24px) !important;
             -webkit-backdrop-filter: blur(24px) !important;
             border: 1px solid rgba(255, 255, 255, 0.06) !important;
@@ -459,7 +440,6 @@
             cursor: pointer !important;
             border: none !important;
             background: none !important;
-            width: 100% !important;
             text-align: left !important;
             font-size: 12px !important;
             font-weight: 500 !important;
@@ -481,9 +461,7 @@
             transition: color 0.3s ease !important;
         }
 
-        .profile-dropdown .dropdown-item:hover i {
-            color: #00d4ff !important;
-        }
+        .profile-dropdown .dropdown-item:hover i { color: #00d4ff !important; }
 
         .profile-dropdown .dropdown-divider {
             height: 1px !important;
@@ -491,21 +469,15 @@
             margin: 6px 14px !important;
         }
 
-        .profile-dropdown .dropdown-item.logout-item {
-            color: #f87171 !important;
-        }
-
-        .profile-dropdown .dropdown-item.logout-item i {
-            color: #ef4444 !important;
-        }
-
+        .profile-dropdown .dropdown-item.logout-item { color: #f87171 !important; }
+        .profile-dropdown .dropdown-item.logout-item i { color: #ef4444 !important; }
         .profile-dropdown .dropdown-item.logout-item:hover {
             background: rgba(239, 68, 68, 0.06) !important;
             color: #ef4444 !important;
         }
 
         /* ============================================
-           NOTIFICATION DROPDOWN - MODERN
+           NOTIFICATION DROPDOWN
            ============================================ */
         .notification-dropdown {
             position: absolute !important;
@@ -513,7 +485,7 @@
             right: 0 !important;
             width: 380px !important;
             max-height: 460px !important;
-            background: rgba(7, 26, 28, 0.97) !important;  /* CHANGED: #071a1c */
+            background: rgba(7, 26, 28, 0.97) !important;
             backdrop-filter: blur(24px) !important;
             -webkit-backdrop-filter: blur(24px) !important;
             border: 1px solid rgba(255, 255, 255, 0.06) !important;
@@ -565,14 +537,8 @@
             padding: 4px 0 !important;
         }
 
-        .notification-list::-webkit-scrollbar {
-            width: 3px !important;
-        }
-
-        .notification-list::-webkit-scrollbar-track {
-            background: transparent !important;
-        }
-
+        .notification-list::-webkit-scrollbar { width: 3px !important; }
+        .notification-list::-webkit-scrollbar-track { background: transparent !important; }
         .notification-list::-webkit-scrollbar-thumb {
             background: rgba(255, 215, 0, 0.3) !important;
             border-radius: 10px !important;
@@ -590,9 +556,7 @@
             border-radius: 6px !important;
         }
 
-        .notification-item:hover {
-            background: rgba(255, 215, 0, 0.03) !important;
-        }
+        .notification-item:hover { background: rgba(255, 215, 0, 0.03) !important; }
 
         .notification-item.unread {
             background: rgba(255, 215, 0, 0.03) !important;
@@ -606,9 +570,7 @@
             margin-top: 2px !important;
         }
 
-        .notification-item .notification-content {
-            flex: 1 !important;
-        }
+        .notification-item .notification-content { flex: 1 !important; }
 
         .notification-item .notification-title {
             color: #fff !important;
@@ -641,9 +603,7 @@
             display: block !important;
         }
 
-        .notification-empty p {
-            font-size: 13px !important;
-        }
+        .notification-empty p { font-size: 13px !important; }
 
         .notification-footer {
             padding: 10px 20px !important;
@@ -666,7 +626,7 @@
         }
 
         /* ============================================
-           TOGGLER (Mobile)
+           TOGGLER
            ============================================ */
         .navbar-toggler {
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -685,6 +645,10 @@
             opacity: 0.8 !important;
         }
 
+        .navbar-toggler:focus {
+            box-shadow: none !important;
+        }
+
         /* ============================================
            MAIN CONTENT
            ============================================ */
@@ -696,7 +660,7 @@
         }
 
         /* ============================================
-           FOOTER - MODERN
+           FOOTER
            ============================================ */
         .footer-main {
             background: rgba(11, 46, 51, 0.95) !important;
@@ -720,14 +684,9 @@
             transition: transform 0.3s ease !important;
         }
 
-        .footer-logo-text:hover {
-            transform: scale(1.02) !important;
-        }
+        .footer-logo-text:hover { transform: scale(1.02) !important; }
 
-        .footer-logo-text img {
-            height: 48px !important;
-            width: auto !important;
-        }
+        .footer-logo-text img { height: 48px !important; width: auto !important; }
 
         .footer-desc {
             color: rgba(255,255,255,0.45) !important;
@@ -741,12 +700,10 @@
             display: flex !important; 
             align-items: center !important; 
             gap: 16px !important; 
+            flex-wrap: wrap !important;
         }
         
-        .social-links { 
-            display: flex !important;
-            gap: 8px !important;
-        }
+        .social-links { display: flex !important; gap: 8px !important; }
 
         .social-links a { 
             width: 36px !important; 
@@ -821,162 +778,158 @@
         }
 
         /* ============================================
-           RESPONSIVE
+           ✅ RESPONSIVE - TABLET (max 992px)
            ============================================ */
         @media (max-width: 992px) {
             .navbar {
                 max-width: 100% !important;
                 border-radius: 0 !important;
             }
-            .navbar-wrapper {
-                padding: 0 !important;
-            }
-            main {
-                padding-top: 72px !important;
-            }
-            .profile-name-display {
-                display: none !important;
-            }
-            .auth-buttons {
-                flex-wrap: wrap !important;
-                gap: 4px !important;
-                padding: 8px 0 !important;
-            }
-            .nav-logo-img {
-                height: 34px !important;
-            }
-            .brand-text {
-                font-size: 17px !important;
-            }
-            .btn-pill {
-                padding: 6px 16px !important;
-                font-size: 10px !important;
-            }
-            .nav-link {
-                font-size: 10px !important;
-                padding: 6px 14px !important;
-            }
-            .navbar-nav {
-                padding: 8px 0 !important;
-                gap: 0 !important;
-            }
+            .navbar-wrapper { padding: 0 !important; }
+            main { padding-top: 72px !important; }
+
+            .profile-name-display { display: none !important; }
+            .nav-logo-img { height: 34px !important; }
+            .brand-text { font-size: 17px !important; }
+            .btn-pill { padding: 6px 16px !important; font-size: 10px !important; }
+            .nav-link { font-size: 10px !important; padding: 6px 14px !important; }
+            .navbar-nav { padding: 8px 0 !important; gap: 0 !important; }
+
+            /* Collapsed navbar panel */
             .navbar-collapse {
-                background: rgba(7, 26, 28, 0.98) !important;  /* CHANGED: #071a1c */
+                background: rgba(7, 26, 28, 0.98) !important;
                 backdrop-filter: blur(20px) !important;
                 border-radius: 12px !important;
-                padding: 8px 12px !important;
+                padding: 12px !important;
                 margin-top: 8px !important;
                 border: 1px solid rgba(255, 255, 255, 0.04) !important;
+                max-height: calc(100vh - 100px) !important;
+                overflow-y: auto !important;
             }
-        }
 
-        @media (max-width: 768px) {
-            .navbar-wrapper {
-                padding: 0 !important;
-            }
-            .navbar {
-                border-radius: 0 !important;
-                max-width: 100% !important;
-            }
-            main {
-                padding-top: 64px !important;
-            }
-            .nav-logo-img {
-                height: 30px !important;
-            }
-            .brand-text {
-                font-size: 15px !important;
-            }
-            .btn-pill {
-                padding: 5px 14px !important;
-                font-size: 9px !important;
-            }
-            .profile-avatar {
-                width: 24px !important;
-                height: 24px !important;
-                font-size: 9px !important;
-            }
-            .profile-btn {
-                padding: 2px 10px 2px 2px !important;
-            }
-            .notification-bell {
-                padding: 4px 10px !important;
-                font-size: 12px !important;
-            }
-            .notification-bell .bell-icon {
-                font-size: 14px !important;
-            }
-            .notification-dropdown {
-                width: 320px !important;
-                right: -10px !important;
-            }
-            .profile-dropdown {
-                width: 210px !important;
-                right: -10px !important;
-            }
-            .nav-link {
-                font-size: 9px !important;
-                padding: 5px 12px !important;
-            }
-            .footer-logo-text {
-                font-size: 20px !important;
-            }
-            .footer-logo-text img {
-                height: 40px !important;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .btn-pill {
-                padding: 4px 12px !important;
-                font-size: 8px !important;
-            }
-            .nav-logo-img {
-                height: 26px !important;
-            }
-            .brand-text {
-                font-size: 13px !important;
-            }
-            .notification-dropdown {
-                width: 290px !important;
-                right: -5px !important;
-            }
-            .profile-dropdown {
-                width: 190px !important;
-                right: -5px !important;
-            }
-            main {
-                padding-top: 58px !important;
-            }
-            .nav-link {
-                font-size: 8px !important;
-                padding: 4px 10px !important;
-            }
-            .profile-name-display {
-                display: none !important;
-            }
-            .profile-btn {
-                padding: 2px 6px 2px 2px !important;
-            }
-            .profile-avatar {
-                width: 20px !important;
-                height: 20px !important;
-                font-size: 8px !important;
-            }
+            /* Auth buttons layout inside collapsed menu */
             .auth-buttons {
-                gap: 3px !important;
-            }
-            .footer-main {
-                padding: 40px 0 24px 0 !important;
-            }
-            .footer-logo-text {
-                font-size: 18px !important;
-            }
-            .footer-logo-text img {
-                height: 34px !important;
-            }
-            .social-container {
                 flex-wrap: wrap !important;
+                gap: 8px !important;
+                padding: 12px 0 4px 0 !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.04) !important;
+                margin-top: 8px !important;
+                justify-content: flex-start !important;
+            }
+
+            .auth-buttons .btn-pill {
+                margin-left: 0 !important;
+            }
+
+            /* Dropdowns: mobile par full width */
+            .profile-dropdown {
+                position: fixed !important;
+                top: 70px !important;
+                left: 12px !important;
+                right: 12px !important;
+                width: auto !important;
+                max-width: none !important;
+                border-radius: 14px !important;
+            }
+
+            .notification-dropdown {
+                position: fixed !important;
+                top: 70px !important;
+                left: 12px !important;
+                right: 12px !important;
+                width: auto !important;
+                max-width: none !important;
+                max-height: 70vh !important;
+                border-radius: 14px !important;
+            }
+
+            .notification-list {
+                max-height: 55vh !important;
+            }
+
+            .notification-item {
+                padding: 12px 16px !important;
+            }
+
+            .notification-item .notification-title { font-size: 13px !important; }
+            .notification-item .notification-message { font-size: 12px !important; }
+        }
+
+        /* ============================================
+           ✅ RESPONSIVE - MOBILE (max 768px)
+           ============================================ */
+        @media (max-width: 768px) {
+            .navbar-wrapper { padding: 0 !important; }
+            .navbar { border-radius: 0 !important; max-width: 100% !important; }
+            main { padding-top: 64px !important; }
+
+            .nav-logo-img { height: 30px !important; }
+            .brand-text { font-size: 15px !important; }
+            .btn-pill { padding: 5px 14px !important; font-size: 9px !important; }
+            .profile-avatar { width: 24px !important; height: 24px !important; font-size: 9px !important; }
+            .profile-btn { padding: 2px 10px 2px 2px !important; }
+            .notification-bell { padding: 4px 10px !important; font-size: 12px !important; }
+            .notification-bell .bell-icon { font-size: 14px !important; }
+            .nav-link { font-size: 9px !important; padding: 5px 12px !important; }
+
+            .footer-logo-text { font-size: 20px !important; }
+            .footer-logo-text img { height: 40px !important; }
+        }
+
+        /* ============================================
+           ✅ RESPONSIVE - SMALL MOBILE (max 576px)
+           ============================================ */
+        @media (max-width: 576px) {
+            .btn-pill { padding: 4px 12px !important; font-size: 8px !important; }
+            .nav-logo-img { height: 26px !important; }
+            .brand-text { font-size: 13px !important; }
+            main { padding-top: 58px !important; }
+            .nav-link { font-size: 8px !important; padding: 4px 10px !important; }
+
+            .profile-name-display { display: none !important; }
+            .profile-btn { padding: 2px 6px 2px 2px !important; }
+            .profile-avatar { width: 20px !important; height: 20px !important; font-size: 8px !important; }
+            .auth-buttons { gap: 3px !important; }
+
+            /* Dropdowns full width */
+            .profile-dropdown,
+            .notification-dropdown {
+                top: 62px !important;
+                left: 8px !important;
+                right: 8px !important;
+                border-radius: 12px !important;
+            }
+
+            .notification-header { padding: 12px 16px !important; }
+            .notification-header h4 { font-size: 13px !important; }
+            .notification-item { padding: 10px 14px !important; gap: 10px !important; }
+            .notification-item .notification-icon { font-size: 14px !important; min-width: 24px !important; }
+            .notification-item .notification-title { font-size: 12px !important; }
+            .notification-item .notification-message { font-size: 11px !important; }
+            .notification-footer { padding: 10px 16px !important; }
+
+            .profile-dropdown .dropdown-item { font-size: 13px !important; padding: 11px 16px !important; }
+
+            .footer-main { padding: 40px 0 24px 0 !important; }
+            .footer-logo-text { font-size: 18px !important; }
+            .footer-logo-text img { height: 34px !important; }
+            .social-container { flex-wrap: wrap !important; }
+        }
+
+        /* ============================================
+           ✅ RESPONSIVE - EXTRA SMALL (max 380px)
+           ============================================ */
+        @media (max-width: 380px) {
+            .nav-logo-img { height: 24px !important; }
+            .brand-text { font-size: 12px !important; }
+            .navbar-brand { gap: 6px !important; margin-right: 6px !important; }
+            .btn-pill { padding: 4px 10px !important; font-size: 8px !important; }
+
+            .profile-dropdown,
+            .notification-dropdown {
+                top: 58px !important;
+                left: 6px !important;
+                right: 6px !important;
             }
         }
     </style>
@@ -1004,13 +957,11 @@
                     </ul>
                     
                     <div class="auth-buttons">
-                        {{-- Book Now Button --}}
                         <a href="/Token_form" class="btn btn-pill btn-book">
                             <i class="fas fa-calendar-check"></i> Book Now
                         </a>
                         
                         @auth
-                            {{-- Profile Dropdown --}}
                             <div class="profile-wrapper">
                                 <div class="profile-btn" onclick="toggleProfileDropdown()" aria-expanded="false" aria-label="Profile menu">
                                     <div class="profile-avatar">
@@ -1055,7 +1006,6 @@
                                 </div>
                             </div>
 
-                            {{-- Notification Bell --}}
                             <div class="notification-wrapper">
                                 <div class="notification-bell" onclick="toggleNotifications()" aria-expanded="false" aria-label="Notifications">
                                     <i class="bi bi-bell-fill bell-icon"></i>
@@ -1165,13 +1115,12 @@
             }
             
             window.addEventListener('scroll', handleScroll, { passive: true });
-            handleScroll(); // Initial check
+            handleScroll();
         });
 
         // ============================================
         // TOGGLE FUNCTIONS
         // ============================================
-        
         function toggleProfileDropdown() {
             const dropdown = document.getElementById('profileDropdown');
             const isOpen = dropdown.classList.contains('active');
@@ -1203,7 +1152,6 @@
             });
         }
 
-        // Close dropdowns on outside click
         document.addEventListener('click', function(event) {
             const isClickInside = event.target.closest('.profile-wrapper') || 
                                  event.target.closest('.notification-wrapper') ||
@@ -1214,7 +1162,6 @@
             }
         });
 
-        // Close dropdowns on Escape key
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeAllDropdowns();

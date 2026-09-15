@@ -1,4 +1,5 @@
-<link rel="stylesheet" href="{{ asset('css/Token_detail.css') }}"></link>
+<link rel="stylesheet" href="{{ asset('css/Token_detail.css') }}">
+
 <section class="token-status-section">
     <div class="token-display-card">
         <div class="token-header">
@@ -35,4 +36,5 @@
         </div>
     </div>
 </section>
+
 <script src="{{ asset('js/Token_detail.js') }}"></script>

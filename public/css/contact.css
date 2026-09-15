@@ -10,9 +10,9 @@
     padding-bottom: 80px;
 }
 
-.contact-premium-hero {
+.contact-hero {
     position: relative;
-    padding: 120px 20px 200px; /* Increased padding for better visual depth */
+    padding: 120px 20px 200px; /* Desktop ke liye perfect */
     text-align: center;
     color: white;
     overflow: hidden;
@@ -67,12 +67,60 @@
     z-index: 10;
 }
 
-/* Responsive adjustments */
+/* ============================================ */
+/* ✅ RESPONSIVE FIXES (SIRF MOBILE KE LIYE)     */
+/* ============================================ */
+
 @media (max-width: 768px) {
-    .contact-premium-hero {
-        padding: 80px 20px 120px;
+    /* 1. FIX: Mobile par background fixed kaam nahi karta, is liye override kiya */
+    .contact-hero {
+        background-attachment: scroll !important; 
+        padding: 80px 15px 120px !important; /* Padding kam ki taake content upar aaye */
     }
+
+    /* 2. FIX: Cards ko 1 column (ek ke neeche ek) kiya */
+    .contact-quick-cards {
+        grid-template-columns: 1fr; 
+        gap: 15px;
+        margin-top: 40px;
+    }
+
+    /* 3. Card ki padding kam ki taake screen par fit aaye */
+    .q-card {
+        padding: 25px;
+    }
+
+    /* 4. Form ko upar pull karne wala margin adjust kiya */
     .form-wrapper {
-        margin-top: -50px;
+        margin-top: -60px;
+        padding: 0 15px;
+    }
+
+    /* 5. Text sizes chote kiye */
+    .hero-text h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+    
+    .hero-text p {
+        font-size: 0.95rem;
+    }
+
+    /* 6. Background ke blobs chhupa diye taake screen na toote */
+    .hero-bg-shapes {
+        display: none; 
+    }
+}
+
+/* Choti screens (jaise iPhone SE) ke liye extra tweaks */
+@media (max-width: 480px) {
+    .contact-hero {
+        padding: 60px 10px 100px !important;
+    }
+    .hero-text h1 {
+        font-size: 1.7rem;
+    }
+    .q-card {
+        padding: 20px;
     }
 }

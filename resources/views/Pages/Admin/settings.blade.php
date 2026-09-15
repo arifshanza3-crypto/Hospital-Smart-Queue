@@ -46,6 +46,7 @@
     .page-header-left {
         display: flex;
         flex-direction: column;
+        min-width: 0;
     }
 
     .page-header-left h1 {
@@ -67,6 +68,11 @@
         color: var(--text-secondary);
         font-size: 14px;
         margin: 4px 0 0 0;
+    }
+
+    .page-header-left p i {
+        color: var(--accent-1);
+        margin-right: 4px;
     }
 
     /* ===== FORM CARD ===== */
@@ -139,6 +145,11 @@
         transition: all 0.3s ease;
         outline: none;
         box-sizing: border-box;
+        font-family: inherit;
+    }
+
+    .form-control::placeholder {
+        color: var(--text-muted);
     }
 
     .form-control:focus {
@@ -164,6 +175,7 @@
         font-size: 12px;
         color: var(--danger);
         margin-top: 4px;
+        display: block;
     }
 
     /* ===== ALERTS ===== */
@@ -172,7 +184,7 @@
         border-radius: 12px;
         margin-bottom: 20px;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 12px;
         border-left: 4px solid;
         background: var(--bg-card);
@@ -180,28 +192,38 @@
         max-width: 800px;
         margin-left: auto;
         margin-right: auto;
+        font-size: 14px;
+        line-height: 1.5;
     }
 
     .alert-modern.success {
         border-color: var(--success);
         color: #065f46;
+        background: #f0fdf4;
     }
 
-    .alert-modern.success i {
-        color: var(--success);
-    }
+    .alert-modern.success i { color: var(--success); margin-top: 2px; }
 
     .alert-modern.error {
         border-color: var(--danger);
         color: #991b1b;
+        background: #fef2f2;
     }
 
-    .alert-modern.error i {
-        color: var(--danger);
-    }
+    .alert-modern.error i { color: var(--danger); margin-top: 2px; }
 
     .alert-modern i {
         font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    .alert-modern ul {
+        margin: 4px 0 0 20px;
+        padding: 0;
+    }
+
+    .alert-modern ul li {
+        margin-bottom: 2px;
     }
 
     /* ===== FORM ACTIONS ===== */
@@ -227,6 +249,8 @@
         transition: all 0.3s ease;
         cursor: pointer;
         box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25);
+        font-family: inherit;
+        white-space: nowrap;
     }
 
     .btn-primary-gradient:hover {
@@ -235,51 +259,196 @@
         color: white;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ============================================ */
+    /* ✅ RESPONSIVE - TABLET (max 768px)           */
+    /* ============================================ */
     @media (max-width: 768px) {
         .settings-wrapper {
-            padding: 16px;
+            padding: 16px 12px;
+        }
+
+        .page-header {
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .page-header-left h1 {
-            font-size: 22px;
+            font-size: 20px;
+            gap: 8px;
+        }
+
+        .page-header-left h1 i {
+            font-size: 20px;
+        }
+
+        .page-header-left p {
+            font-size: 13px;
+        }
+
+        .form-card {
+            border-radius: 12px;
+        }
+
+        .form-card-header {
+            padding: 16px 18px;
+        }
+
+        .form-card-header h3 {
+            font-size: 16px;
         }
 
         .form-card-body {
-            padding: 16px;
+            padding: 18px 16px;
         }
 
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+        }
+
+        .form-control {
+            padding: 11px 14px;
+            font-size: 14px;
+            border-radius: 10px;
+        }
+
+        /* Form actions - stack on mobile */
         .form-actions {
             flex-direction: column;
+            gap: 10px;
+            padding-top: 18px;
         }
 
-        .form-actions .btn {
+        .btn-primary-gradient {
             width: 100%;
             justify-content: center;
+            padding: 12px 20px;
+            font-size: 13px;
+        }
+
+        .alert-modern {
+            padding: 12px 16px;
+            font-size: 13px;
+            border-radius: 10px;
+        }
+
+        .alert-modern ul {
+            margin-left: 18px;
+            font-size: 12px;
         }
     }
 
+    /* ============================================ */
+    /* ✅ RESPONSIVE - SMALL MOBILE (max 576px)     */
+    /* ============================================ */
     @media (max-width: 576px) {
         .settings-wrapper {
-            padding: 12px;
+            padding: 12px 10px;
         }
 
         .page-header-left h1 {
             font-size: 18px;
         }
 
-        .btn-primary-gradient {
-            padding: 10px 20px;
-            font-size: 13px;
+        .page-header-left p {
+            font-size: 12px;
+        }
+
+        .form-card-header {
+            padding: 14px 14px;
+        }
+
+        .form-card-header h3 {
+            font-size: 15px;
         }
 
         .form-card-body {
-            padding: 12px;
+            padding: 14px 12px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            font-size: 12.5px;
+        }
+
+        .form-group label i {
+            width: 16px;
+            margin-right: 4px;
         }
 
         .form-control {
+            padding: 10px 12px;
             font-size: 13px;
-            padding: 8px 12px;
+            border-radius: 9px;
+        }
+
+        .btn-primary-gradient {
+            padding: 11px 16px;
+            font-size: 12px;
+            border-radius: 10px;
+        }
+
+        .alert-modern {
+            padding: 10px 12px;
+            font-size: 12px;
+        }
+
+        .alert-modern i {
+            font-size: 15px;
+        }
+
+        .alert-modern ul {
+            margin-left: 16px;
+            font-size: 11.5px;
+        }
+    }
+
+    /* ============================================ */
+    /* ✅ RESPONSIVE - EXTRA SMALL (max 380px)     */
+    /* ============================================ */
+    @media (max-width: 380px) {
+        .settings-wrapper {
+            padding: 10px 8px;
+        }
+
+        .page-header-left h1 {
+            font-size: 16px;
+        }
+
+        .page-header-left h1 i {
+            font-size: 16px;
+        }
+
+        .form-card-header {
+            padding: 12px 12px;
+        }
+
+        .form-card-header h3 {
+            font-size: 14px;
+        }
+
+        .form-card-body {
+            padding: 12px 10px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+        }
+
+        .form-control {
+            padding: 9px 11px;
+            font-size: 12.5px;
+        }
+
+        .btn-primary-gradient {
+            padding: 10px 14px;
+            font-size: 11.5px;
         }
     }
 </style>
@@ -291,7 +460,7 @@
             <h1>
                 <i class="fas fa-sliders-h"></i> Settings
             </h1>
-            <p><i class="fas fa-arrow-trend-up" style="color: var(--accent-1);"></i> Configure your hospital management system</p>
+            <p><i class="fas fa-arrow-trend-up"></i> Configure your hospital management system</p>
         </div>
     </div>
 
@@ -299,14 +468,14 @@
     @if(session('success'))
         <div class="alert-modern success">
             <i class="fas fa-check-circle"></i>
-            {{ session('success') }}
+            <span>{{ session('success') }}</span>
         </div>
     @endif
 
     @if(session('error'))
         <div class="alert-modern error">
             <i class="fas fa-exclamation-circle"></i>
-            {{ session('error') }}
+            <span>{{ session('error') }}</span>
         </div>
     @endif
 

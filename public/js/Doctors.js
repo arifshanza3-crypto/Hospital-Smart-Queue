@@ -1,5 +1,5 @@
 /**
- * Doctors Page - JavaScript
+ * Doctors Page - JavaScript (Mobile Responsive)
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ============================================
-    // ✅ Render Doctors
+    // ✅ Render Doctors (RESPONSIVE GRID FIXED)
     // ============================================
     function renderDoctors(list) {
         if (!grid) {
@@ -98,8 +98,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const displayName = getDoctorDisplayName(dr);
             const avatarName = getAvatarName(dr);
             
+            // ✅ FIXED: Mobile par 1 column (col-12), bara mobile par 2 (col-sm-6), desktop par 4 (col-lg-3)
             grid.innerHTML += `
-                <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="dr-item-card" onclick="openDrModal(${dr.id})">
                         <div class="dr-card-img">
                             <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(avatarName)}&background=00d4ff&color=fff&size=200" 

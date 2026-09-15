@@ -1,106 +1,64 @@
 /**
- * Notification System
+ * Global Notifications Helper & Filtering Script
  */
 
-let allNotifications = [];
-let currentFilter = 'all';
+// 1. FILTERING FUNCTIONALITY (All, Unread, Read)
+function filterNotifications(filterType) {
+    // Collect all notification cards and filter buttons
+    const items = document.querySelectorAll('.notification-item');
+    const buttons = document.querySelectorAll('.notifications-filter .filter-btn');
 
-function loadNotifications() {
-    const list = document.getElementById('notificationsList');
-    if (!list) return;
-
-    fetch('/notifications', {
-        headers: { 'Accept': 'application/json' }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            allNotifications = data.notifications || [];
-            document.getElementById('totalCount').textContent = allNotifications.length;
-            document.getElementById('countAll').textContent = allNotifications.length;
-            
-            const unread = allNotifications.filter(n => !n.is_read).length;
-            document.getElementById('countUnread').textContent = unread;
-            document.getElementById('countRead').textContent = allNotifications.length - unread;
-            
-            renderNotifications(allNotifications);
-            updateBadge(unread);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-
-function renderNotifications(notifications) {
-    const list = document.getElementById('notificationsList');
-    const shownCount = document.getElementById('shownCount');
-
-    if (!list) return;
-
-    if (!notifications || notifications.length === 0) {
-        list.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-icon">🔕</div>
-                <h3>No Notifications</h3>
-                <p>You don't have any notifications yet.</p>
-            </div>
-        `;
-        if (shownCount) shownCount.textContent = '0';
-        return;
-    }
-
-    let html = '';
-    notifications.forEach(notification => {
-        const isRead = notification.is_read;
-        const readClass = isRead ? 'read' : 'unread';
-        const icon = notification.data?.icon || 'fa-bell';
-        const newTag = !isRead ? `<span class="new-tag">New</span>` : '';
-
-        html += `
-            <div class="notification-item ${readClass}" data-id="${notification.id}" onclick="markAsRead(${notification.id})">
-                <div class="notification-icon">
-                    <i class="fas ${icon}"></i>
-                </div>
-                <div class="notification-content">
-                    <div class="notification-title">${notification.title} ${newTag}</div>
-                    <div class="notification-message">${notification.message}</div>
-                    <div class="notification-time">${new Date(notification.created_at).toLocaleString()}</div>
-                </div>
-                <div class="notification-status">
-                    ${!isRead ? '<span class="unread-dot">●</span>' : '<span class="read-check">✓</span>'}
-                </div>
-            </div>
-        `;
-    });
-
-    list.innerHTML = html;
-    if (shownCount) shownCount.textContent = notifications.length;
-}
-
-function filterNotifications(filter) {
-    currentFilter = filter;
-    
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.filter === filter) {
+    // Active button styling manage karein
+    buttons.forEach(btn => {
+        const btnFilter = btn.getAttribute('data-filter');
+        if (btnFilter === filterType) {
             btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
         }
     });
 
-    let filtered = allNotifications;
-    if (filter === 'unread') {
-        filtered = allNotifications.filter(n => !n.is_read);
-    } else if (filter === 'read') {
-        filtered = allNotifications.filter(n => n.is_read);
-    }
+    let visibleCount = 0;
 
-    renderNotifications(filtered);
+    // Direct DOM show/hide logic
+    items.forEach(item => {
+        const isUnread = item.classList.contains('unread');
+        const isRead = item.classList.contains('read');
+
+        if (filterType === 'all') {
+            item.style.setProperty('display', 'flex', 'important');
+            visibleCount++;
+        } else if (filterType === 'unread') {
+            if (isUnread) {
+                item.style.setProperty('display', 'flex', 'important');
+                visibleCount++;
+            } else {
+                item.style.setProperty('display', 'none', 'important');
+            }
+        } else if (filterType === 'read') {
+            if (isRead) {
+                item.style.setProperty('display', 'flex', 'important');
+                visibleCount++;
+            } else {
+                item.style.setProperty('display', 'none', 'important');
+            }
+        }
+    });
+
+    // Bottom showing count update karein
+    const shownCountEl = document.getElementById('shownCount');
+    if (shownCountEl) {
+        shownCountEl.textContent = visibleCount;
+    }
 }
 
-function markAsRead(id) {
+// Window object par assign karein taake Inline onclick call ho saky
+window.filterNotifications = filterNotifications;
+
+// 2. MARK AS READ FUNCTIONALITY
+window.markAsRead = function(id) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
-    
+
     fetch(`/notifications/${id}/read`, {
         method: 'POST',
         headers: {
@@ -112,168 +70,72 @@ function markAsRead(id) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            const notification = allNotifications.find(n => n.id === id);
-            if (notification) {
-                notification.is_read = true;
-            }
-            const unread = allNotifications.filter(n => !n.is_read).length;
-            document.getElementById('countUnread').textContent = unread;
-            document.getElementById('countRead').textContent = allNotifications.length - unread;
-            filterNotifications(currentFilter);
-            updateBadge(unread);
-            showToast('✅ Notification marked as read!', 'success');
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
+            const item = document.querySelector(`.notification-item[data-id="${id}"]`);
+            if (item && item.classList.contains('unread')) {
+                item.classList.remove('unread');
+                item.classList.add('read');
 
-function markAllRead() {
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
-    const btn = document.getElementById('markAllBtn');
-    
-    if (btn) {
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Please wait...';
-    }
-    
-    fetch('/notifications/read-all', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken,
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-check-double"></i> Mark all as read';
-        }
-        if (data.success) {
-            allNotifications.forEach(n => n.is_read = true);
-            document.getElementById('countUnread').textContent = 0;
-            document.getElementById('countRead').textContent = allNotifications.length;
-            filterNotifications(currentFilter);
-            updateBadge(0);
-            showToast('✅ All notifications marked as read!', 'success');
-        } else {
-            showToast('❌ Failed to mark all as read', 'error');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-check-double"></i> Mark all as read';
-        }
-        showToast('❌ Error marking all as read', 'error');
-    });
-}
+                // Remove NEW badge
+                const newTag = item.querySelector('.new-tag');
+                if (newTag) newTag.remove();
 
-function updateBadge(unreadCount) {
-    const badge = document.getElementById('notificationBadge');
-    if (badge) {
-        if (unreadCount > 0) {
-            badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
-            badge.style.display = 'block';
-        } else {
-            badge.style.display = 'none';
-        }
-    }
-}
+                // Status icon update to Checkmark
+                const statusDot = item.querySelector('.notification-status');
+                if (statusDot) statusDot.innerHTML = '<span class="read-check">✓</span>';
 
-function showToast(message, type = 'success') {
-    const existing = document.querySelector('.toast-message');
-    if (existing) existing.remove();
-    
-    const toast = document.createElement('div');
-    toast.className = `toast-message toast-${type}`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(20px)';
-        toast.style.transition = 'all 0.3s ease';
-        setTimeout(() => toast.remove(), 400);
-    }, 3500);
-}
-
-// ============================================ //
-// CHECK UNREAD COUNT                         //
-// ============================================ //
-
-let previousCount = 0;
-
-function checkUnreadCount() {
-    fetch('/notifications/unread-count')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                const count = data.count;
-                updateBadge(count);
-                
-                if (count > previousCount && count > 0) {
-                    playNotificationSound();
+                // Badges count decrease/increase
+                const unreadBadge = document.getElementById('countUnread');
+                if (unreadBadge) {
+                    let currentUnread = parseInt(unreadBadge.textContent) || 0;
+                    unreadBadge.textContent = Math.max(0, currentUnread - 1);
                 }
-                previousCount = count;
+
+                const readBadge = document.getElementById('countRead');
+                if (readBadge) {
+                    let currentRead = parseInt(readBadge.textContent) || 0;
+                    readBadge.textContent = currentRead + 1;
+                }
             }
-        })
-        .catch(error => console.error('Error checking unread count:', error));
-}
+        }
+    })
+    .catch(err => console.error('Mark as read error:', err));
+};
 
-// ============================================ //
-// SOUND                                       //
-// ============================================ //
-
-let notificationAudio = null;
-
-function initAudio() {
-    try {
-        notificationAudio = new Audio('/Notification%20Sound/notification.wav');
-        notificationAudio.volume = 0.8;
-        notificationAudio.preload = 'auto';
-        notificationAudio.onerror = function() {
-            console.warn('⚠️ Sound file not found');
-            notificationAudio = null;
-        };
-    } catch (error) {
-        console.warn('Audio init failed:', error);
-        notificationAudio = null;
+// 3. DROPDOWN TOGGLE
+window.toggleNotifications = function(event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
     }
-}
 
-function playNotificationSound() {
-    if (notificationAudio) {
-        try {
-            notificationAudio.currentTime = 0;
-            notificationAudio.play()
-                .then(() => console.log('🔊 Notification sound played!'))
-                .catch(() => console.log('🔇 Sound play blocked'));
-        } catch (error) {
-            console.log('🔇 Sound error:', error);
+    const dropdown = document.getElementById('notificationDropdown');
+    if (dropdown) {
+        const isShown = dropdown.classList.contains('show');
+        document.querySelectorAll('.profile-dropdown, .notification-dropdown').forEach(el => el.classList.remove('show'));
+        if (!isShown) {
+            dropdown.classList.add('show');
+            if (typeof fetchNotifications === 'function') {
+                fetchNotifications();
+            }
         }
     }
-}
+};
 
-// ============================================ //
-// INIT                                       //
-// ============================================ //
-
+// 4. EVENT LISTENERS INITIALIZATION
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('✅ Notification system initialized');
-    
-    loadNotifications();
-    checkUnreadCount();
-    setInterval(checkUnreadCount, 10000);
-    setInterval(loadNotifications, 30000);
-    initAudio();
-});
+    // Filter Buttons click binding via Event Listeners
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+            if (filter) {
+                filterNotifications(filter);
+            }
+        });
+    });
 
-// EXPOSE TO GLOBAL SCOPE
-window.filterNotifications = filterNotifications;
-window.markAsRead = markAsRead;
-window.markAllRead = markAllRead;
-window.loadNotifications = loadNotifications;
-window.checkUnreadCount = checkUnreadCount;
+    const bell = document.getElementById('notificationBell');
+    if (bell && !bell.hasAttribute('onclick')) {
+        bell.addEventListener('click', window.toggleNotifications);
+    }
+});

@@ -1,102 +1,284 @@
+/* ============================================ */
+/* FEATURES SECTION - FRESH MEDICAL THEME       */
+/* ============================================ */
+
 :root {
-    --dark-green: #1a3a3a;
-    --bg-light: #3e8686;
-    --accent-blue: #00d4ff;
+    --primary-cyan: #1a7a82;
+    --dark-teal: #0a2a3a;
+    --text-muted: #3a5a6a;
     --card-bg: #ffffff;
 }
 
+/* --- SECTION --- */
 .features-section {
-    padding: 100px 20px;
-    background-color: #f8fafc; 
+    padding: 50px 20px 60px;
+    background: linear-gradient(135deg, #f0f7fa 0%, #e0ecf0 50%, #d4e4e8 100%);
+    box-sizing: border-box;
 }
 
-.container {
+.features-container {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
+/* --- SECTION HEADER --- */
 .section-header {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 28px;
 }
 
 .tagline {
-    color: var(--bg-light);
+    color: var(--primary-cyan);
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-size: 14px;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    display: block;
+    margin-bottom: 4px;
 }
 
 .section-title {
-    font-size: 36px;
-    color: var(--dark-green);
-    margin: 10px 0 20px;
-    font-weight: 800;
+    font-size: 1.8rem;
+    color: var(--dark-teal);
+    margin: 0 0 6px 0;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.section-title span {
+    color: var(--primary-cyan);
 }
 
 .section-desc {
-    color: #64748b;
-    max-width: 600px;
+    color: var(--text-muted);
+    max-width: 550px;
     margin: 0 auto;
-    font-size: 18px;
+    font-size: 0.95rem;
+    line-height: 1.6;
 }
 
+/* --- FEATURES GRID --- */
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
 }
 
+/* --- FEATURE CARD --- */
 .feature-card {
-    background: var(--card-bg);
-    padding: 40px;
-    border-radius: 24px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 24px 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(10, 42, 58, 0.04);
     transition: all 0.3s ease;
-    border: 1px solid #e2e8f0;
-    text-align: left;
+    border: 1px solid rgba(10, 42, 58, 0.04);
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .feature-card:hover {
-    transform: translateY(-10px);
-    border-color: var(--accent-blue);
-    box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
+    transform: translateY(-6px);
+    border-color: rgba(26, 122, 130, 0.2);
+    box-shadow: 0 12px 30px rgba(10, 42, 58, 0.08);
 }
 
-/* Icon Box Styling */
 .icon-box {
-    width: 64px;
-    height: 64px;
-    background: rgba(0, 212, 255, 0.1);
-    color: var(--accent-blue);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 25px;
-}
-
-/* This is the part that was missing */
-.icon-box i {
-    font-size: 28px;
+    font-size: 32px;
+    color: var(--primary-cyan);
+    margin-bottom: 2px;
     display: block;
 }
 
+.icon-box i {
+    font-size: 32px;
+}
+
 .feature-card h3 {
-    font-size: 22px;
-    color: var(--dark-green);
-    margin-bottom: 15px;
+    font-size: 1rem;
+    color: var(--dark-teal);
+    margin: 0 0 4px 0;
     font-weight: 700;
+    line-height: 1.3;
 }
 
 .feature-card p {
-    color: #64748b;
+    color: var(--text-muted);
     line-height: 1.6;
-    font-size: 15px;
+    font-size: 0.85rem;
+    margin: 0;
 }
 
+/* ============================================ */
+/* ✅ RESPONSIVE - TABLET (max 992px)           */
+/* ============================================ */
+@media (max-width: 992px) {
+    .features-section {
+        padding: 45px 18px 55px;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .section-title {
+        font-size: 1.65rem;
+    }
+}
+
+/* ============================================ */
+/* ✅ RESPONSIVE - MOBILE (max 768px)           */
+/* ============================================ */
 @media (max-width: 768px) {
-    .features-section { padding: 60px 20px; }
-    .section-title { font-size: 28px; }
+    .features-section {
+        padding: 40px 16px 50px;
+    }
+
+    .features-container {
+        padding: 0 6px;
+    }
+
+    .section-header {
+        margin-bottom: 22px;
+    }
+
+    .tagline {
+        font-size: 0.7rem;
+        letter-spacing: 1.5px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .section-desc {
+        font-size: 0.9rem;
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    /* Grid stack on mobile */
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    /* Card - disable hover translate on mobile */
+    .feature-card {
+        padding: 22px 18px;
+        border-radius: 14px;
+    }
+
+    .feature-card:hover {
+        transform: none;
+        box-shadow: 0 4px 20px rgba(10, 42, 58, 0.04);
+    }
+
+    .icon-box,
+    .icon-box i {
+        font-size: 28px;
+    }
+
+    .feature-card h3 {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+
+    .feature-card p {
+        font-size: 0.88rem;
+        line-height: 1.55;
+    }
+}
+
+/* ============================================ */
+/* ✅ RESPONSIVE - SMALL MOBILE (max 576px)     */
+/* ============================================ */
+@media (max-width: 576px) {
+    .features-section {
+        padding: 35px 12px 45px;
+    }
+
+    .tagline {
+        font-size: 0.65rem;
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+    }
+
+    .section-desc {
+        font-size: 0.85rem;
+        line-height: 1.55;
+    }
+
+    .features-grid {
+        gap: 14px;
+    }
+
+    .feature-card {
+        padding: 20px 16px;
+        border-radius: 12px;
+    }
+
+    .icon-box,
+    .icon-box i {
+        font-size: 26px;
+    }
+
+    .feature-card h3 {
+        font-size: 0.95rem;
+    }
+
+    .feature-card p {
+        font-size: 0.85rem;
+    }
+}
+
+/* ============================================ */
+/* ✅ RESPONSIVE - EXTRA SMALL (max 380px)     */
+/* ============================================ */
+@media (max-width: 380px) {
+    .features-section {
+        padding: 30px 10px 40px;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+    }
+
+    .tagline {
+        font-size: 0.6rem;
+        letter-spacing: 1.2px;
+    }
+
+    .section-desc {
+        font-size: 0.8rem;
+    }
+
+    .features-grid {
+        gap: 12px;
+    }
+
+    .feature-card {
+        padding: 18px 14px;
+        border-radius: 10px;
+    }
+
+    .icon-box,
+    .icon-box i {
+        font-size: 24px;
+    }
+
+    .feature-card h3 {
+        font-size: 0.9rem;
+    }
+
+    .feature-card p {
+        font-size: 0.82rem;
+        line-height: 1.5;
+    }
 }

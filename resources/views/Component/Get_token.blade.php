@@ -1,9 +1,10 @@
 <link rel="stylesheet" href="{{ asset('css/Get_token.css') }}">
+
 <section class="token-status-section">
     <div class="token-display-card" id="tokenCardContainer">
         <div class="token-header">
             <span class="status-badge pulse">Live Status</span>
-            <h2 class="card-title text-white-50 mt-3">Your Queue Position</h2>
+            <h2 class="card-title">Your Queue Position</h2>
         </div>
 
         <div class="token-main-content">
@@ -22,7 +23,7 @@
                 </div>
                 
                 <div class="info-box">
-                    <div class="info-item mb-2">
+                    <div class="info-item">
                         <span class="info-label">Patients Ahead</span>
                         <span class="info-value">04</span>
                     </div>
@@ -35,4 +36,5 @@
         </div>
     </div>
 </section>
+
 <script src="{{ asset('js/Get_token.js') }}"></script>

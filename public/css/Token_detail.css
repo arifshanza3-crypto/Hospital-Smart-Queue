@@ -1,23 +1,25 @@
 /* --- SECTION CONTAINER --- */
 .token-status-section {
     min-height: 80vh;
-    background-color: #ffffff; /* Page Background set to White */
+    background-color: #ffffff;
     display: flex;
-    justify-content: center; /* Horizontal Center */
-    align-items: center;     /* Vertical Center */
+    justify-content: center;
+    align-items: center;
     padding: 40px 20px;
+    box-sizing: border-box;
 }
 
 /* --- CENTERED CARD --- */
 .token-display-card {
-    background: #071a1c; /* Requested Card Color */
+    background: #071a1c;
     width: 100%;
-    max-width: 700px;    /* Constrained width for better look */
+    max-width: 700px;
     border-radius: 40px;
     padding: 50px 40px;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
     text-align: center;
     border: 1px solid rgba(0, 212, 255, 0.1);
+    box-sizing: border-box;
 }
 
 /* --- TOKEN NUMBER STYLING --- */
@@ -51,6 +53,7 @@
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
+    display: block;
 }
 
 .token-value {
@@ -59,6 +62,7 @@
     font-weight: 900;
     margin: 0;
     text-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+    line-height: 1;
 }
 
 /* --- STATUS GRID (Bottom Row) --- */
@@ -69,6 +73,7 @@
     margin-top: 40px;
     padding-top: 30px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 20px;
 }
 
 .time-value {
@@ -110,6 +115,7 @@
     font-size: 0.75rem;
     font-weight: 700;
     border: 1px solid #00d4ff;
+    display: inline-block;
 }
 
 .pulse {
@@ -120,4 +126,167 @@
     0% { box-shadow: 0 0 0 0px rgba(0, 212, 255, 0.4); }
     70% { box-shadow: 0 0 0 10px rgba(0, 212, 255, 0); }
     100% { box-shadow: 0 0 0 0px rgba(0, 212, 255, 0); }
+}
+
+/* ============================================ */
+/* ✅ RESPONSIVE - TABLET (max 768px)           */
+/* ============================================ */
+@media (max-width: 768px) {
+    .token-status-section {
+        padding: 30px 16px;
+        min-height: auto;
+    }
+
+    .token-display-card {
+        padding: 35px 25px;
+        border-radius: 30px;
+    }
+
+    .token-number-wrapper {
+        width: 200px;
+        height: 200px;
+        margin: 25px auto;
+    }
+
+    .token-value {
+        font-size: 4rem;
+    }
+
+    .token-label {
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+    }
+
+    .status-grid {
+        margin-top: 30px;
+        padding-top: 25px;
+        gap: 15px;
+    }
+
+    .time-value {
+        font-size: 2.5rem;
+    }
+
+    .info-value {
+        font-size: 1rem;
+    }
+}
+
+/* ============================================ */
+/* ✅ RESPONSIVE - SMALL MOBILE (max 576px)     */
+/* ============================================ */
+@media (max-width: 576px) {
+    .token-status-section {
+        padding: 20px 12px;
+    }
+
+    .token-display-card {
+        padding: 28px 18px;
+        border-radius: 24px;
+    }
+
+    .status-badge {
+        padding: 5px 14px;
+        font-size: 0.65rem;
+        letter-spacing: 0.5px;
+    }
+
+    .token-number-wrapper {
+        width: 160px;
+        height: 160px;
+        margin: 20px auto;
+    }
+
+    .token-value {
+        font-size: 3.2rem;
+    }
+
+    .token-label {
+        font-size: 0.65rem;
+        letter-spacing: 1.2px;
+    }
+
+    /* Stack status grid on small mobile */
+    .status-grid {
+        flex-direction: column;
+        align-items: stretch;
+        margin-top: 25px;
+        padding-top: 20px;
+        gap: 18px;
+        text-align: center;
+    }
+
+    .time-box {
+        text-align: center;
+    }
+
+    .time-value {
+        font-size: 2.2rem;
+    }
+
+    .time-label {
+        font-size: 0.7rem;
+    }
+
+    .info-box {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .info-label {
+        font-size: 0.7rem;
+    }
+
+    .info-value {
+        font-size: 1rem;
+    }
+}
+
+/* ============================================ */
+/* ✅ RESPONSIVE - EXTRA SMALL (max 380px)     */
+/* ============================================ */
+@media (max-width: 380px) {
+    .token-status-section {
+        padding: 15px 10px;
+    }
+
+    .token-display-card {
+        padding: 22px 14px;
+        border-radius: 20px;
+    }
+
+    .status-badge {
+        padding: 4px 12px;
+        font-size: 0.6rem;
+    }
+
+    .token-number-wrapper {
+        width: 140px;
+        height: 140px;
+    }
+
+    .token-value {
+        font-size: 2.6rem;
+    }
+
+    .token-label {
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+    }
+
+    .time-value {
+        font-size: 1.9rem;
+    }
+
+    .info-value {
+        font-size: 0.95rem;
+    }
+
+    .status-grid {
+        margin-top: 20px;
+        padding-top: 18px;
+        gap: 15px;
+    }
 }

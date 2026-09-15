@@ -78,19 +78,15 @@
     </div>
 </div>
 
-{{-- ✅ FIXED: Pass doctors data from database to JavaScript --}}
+{{-- ✅ Pass doctors data from database to JavaScript --}}
 <script>
-    // ✅ Define doctorsData in global scope
     window.doctorsData = @json($doctors);
     
-    // ✅ Debug - Check data in console
     console.log('=== DOCTORS DATA FROM BLADE ===');
     console.log('Total Doctors:', window.doctorsData.length);
     
     if (window.doctorsData.length > 0) {
         console.log('First doctor:', window.doctorsData[0]);
-        console.log('Doctor Name:', window.doctorsData[0].name);
-        console.log('Specialization:', window.doctorsData[0].specialization);
         console.log('Name exists?', window.doctorsData[0].name ? 'YES ✅' : 'NO ❌');
     } else {
         console.log('⚠️ No doctors found in database!');

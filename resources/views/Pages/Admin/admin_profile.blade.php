@@ -60,7 +60,6 @@
         overflow: hidden;
     }
 
-    /* Animated Background Glows */
     .profile-header::before {
         content: '';
         position: absolute;
@@ -166,7 +165,6 @@
         z-index: 3;
     }
 
-    /* ===== USERNAME - SMALLER SIZE ===== */
     .profile-name {
         color: white;
         margin-top: 18px;
@@ -182,6 +180,7 @@
         font-size: 14px;
         position: relative;
         z-index: 1;
+        word-break: break-word;
     }
 
     .profile-badges {
@@ -203,6 +202,7 @@
         color: rgba(255, 255, 255, 0.8);
         border: 1px solid rgba(255, 255, 255, 0.06);
         backdrop-filter: blur(10px);
+        white-space: nowrap;
     }
 
     .profile-badge i {
@@ -265,6 +265,7 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
+        white-space: nowrap;
     }
 
     .profile-tab:hover:not(.active) {
@@ -331,6 +332,7 @@
         font-family: 'Inter', system-ui, sans-serif;
         background: #f7fafc;
         color: var(--text-primary);
+        box-sizing: border-box;
     }
 
     .form-control:focus {
@@ -373,7 +375,7 @@
         box-shadow: 0 8px 30px rgba(14, 165, 233, 0.35);
     }
 
-    /* ===== LOGOUT BUTTON - FULL WIDTH CENTERED ===== */
+    /* ===== LOGOUT BUTTON ===== */
     .btn-danger {
         background: linear-gradient(135deg, #ef4444, #dc2626);
         color: white;
@@ -405,10 +407,12 @@
         border-radius: 12px;
         margin-bottom: 20px;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 12px;
         border-left: 4px solid;
         background: #f7fafc;
+        font-size: 14px;
+        line-height: 1.5;
     }
 
     .alert-modern.success {
@@ -418,6 +422,7 @@
 
     .alert-modern.success i {
         color: var(--success);
+        margin-top: 2px;
     }
 
     .alert-modern.error {
@@ -427,9 +432,10 @@
 
     .alert-modern.error i {
         color: var(--danger);
+        margin-top: 2px;
     }
 
-    /* ===== LOGOUT SECTION - FULL WIDTH ===== */
+    /* ===== LOGOUT SECTION ===== */
     .logout-section {
         margin-top: 30px;
         padding-top: 24px;
@@ -441,7 +447,9 @@
         width: 100%;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ============================================ */
+    /* ✅ RESPONSIVE - TABLET (max 768px)           */
+    /* ============================================ */
     @media (max-width: 768px) {
         .profile-container {
             padding: 16px;
@@ -468,17 +476,33 @@
             font-size: 20px;
         }
 
+        /* Tabs horizontal scroll rakhein (stack nahi) */
         .profile-tabs {
-            flex-direction: column;
+            overflow-x: auto;
+            flex-wrap: nowrap;
+            padding: 6px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .profile-tabs::-webkit-scrollbar {
+            display: none;
         }
 
         .profile-tab {
-            padding: 10px;
+            flex: 0 0 auto;
+            padding: 10px 18px;
+            font-size: 13px;
         }
 
+        /* Badges wrap karte rahein, column nahi */
         .profile-badges {
-            flex-direction: column;
-            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-badge {
+            font-size: 11px;
+            padding: 4px 14px;
         }
 
         .btn-danger {
@@ -487,6 +511,9 @@
         }
     }
 
+    /* ============================================ */
+    /* ✅ RESPONSIVE - MOBILE (max 576px)           */
+    /* ============================================ */
     @media (max-width: 576px) {
         .profile-container {
             padding: 12px;
@@ -497,25 +524,89 @@
         }
 
         .profile-body {
-            padding: 16px;
+            padding: 18px 14px;
         }
 
         .profile-avatar {
-            width: 80px;
-            height: 80px;
+            width: 85px;
+            height: 85px;
+            border-width: 3px;
         }
 
         .profile-avatar .initials {
-            font-size: 30px;
+            font-size: 32px;
+        }
+
+        .avatar-upload-btn {
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+            bottom: 2px;
+            right: 2px;
         }
 
         .profile-name {
             font-size: 18px;
+            margin-top: 14px;
         }
 
+        .profile-email {
+            font-size: 13px;
+        }
+
+        .profile-badges {
+            gap: 6px;
+        }
+
+        .profile-badge {
+            font-size: 10px;
+            padding: 4px 12px;
+        }
+
+        .profile-member-since {
+            font-size: 11px;
+        }
+
+        /* Tabs */
+        .profile-tabs {
+            margin-bottom: 22px;
+        }
+
+        .profile-tab {
+            padding: 9px 14px;
+            font-size: 12px;
+            gap: 6px;
+        }
+
+        .profile-tab i {
+            font-size: 14px;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+        }
+
+        .form-control {
+            padding: 11px 14px;
+            font-size: 13.5px;
+            border-radius: 10px;
+        }
+
+        .text-muted {
+            font-size: 11px;
+        }
+
+        /* Buttons */
         .btn-primary {
             width: 100%;
             justify-content: center;
+            padding: 12px 20px;
+            font-size: 13px;
         }
 
         .btn-danger {
@@ -523,9 +614,89 @@
             font-size: 13px;
         }
 
+        /* Alerts */
+        .alert-modern {
+            padding: 12px 14px;
+            font-size: 13px;
+            border-radius: 10px;
+        }
+
+        .alert-modern ul {
+            margin-left: 18px !important;
+            font-size: 12px;
+        }
+
+        .logout-section {
+            margin-top: 22px;
+            padding-top: 18px;
+        }
+    }
+
+    /* ============================================ */
+    /* ✅ RESPONSIVE - SMALL MOBILE (max 380px)     */
+    /* ============================================ */
+    @media (max-width: 380px) {
+        .profile-container {
+            padding: 8px;
+        }
+
+        .profile-header {
+            padding: 24px 12px 20px;
+        }
+
+        .profile-body {
+            padding: 16px 12px;
+        }
+
+        .profile-avatar {
+            width: 75px;
+            height: 75px;
+        }
+
+        .profile-avatar .initials {
+            font-size: 28px;
+        }
+
         .avatar-upload-btn {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
+            font-size: 11px;
+        }
+
+        .profile-name {
+            font-size: 16px;
+        }
+
+        .profile-email {
+            font-size: 12px;
+        }
+
+        .profile-badge {
+            font-size: 9px;
+            padding: 3px 10px;
+        }
+
+        .profile-badge i {
+            margin-right: 3px;
+        }
+
+        .profile-tab {
+            padding: 8px 12px;
+            font-size: 11px;
+        }
+
+        .profile-tab i {
+            font-size: 13px;
+        }
+
+        .form-control {
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+
+        .btn-primary,
+        .btn-danger {
+            padding: 11px 16px;
             font-size: 12px;
         }
     }
@@ -575,14 +746,14 @@
             @if(session('success'))
                 <div class="alert-modern success">
                     <i class="fas fa-check-circle"></i>
-                    {{ session('success') }}
+                    <span>{{ session('success') }}</span>
                 </div>
             @endif
 
             @if(session('error'))
                 <div class="alert-modern error">
                     <i class="fas fa-exclamation-circle"></i>
-                    {{ session('error') }}
+                    <span>{{ session('error') }}</span>
                 </div>
             @endif
 
@@ -683,7 +854,7 @@
                 </form>
             </div>
 
-            <!-- Logout Section - Full Width Centered -->
+            <!-- Logout Section -->
             <div class="logout-section">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -701,44 +872,42 @@
     // TAB SWITCHING
     // ============================================
     function showTab(tabId, button) {
-        // Hide all tabs
         document.querySelectorAll('.tab-content').forEach(tab => {
             tab.classList.remove('active');
         });
 
-        // Remove active class from all buttons
         document.querySelectorAll('.profile-tab').forEach(btn => {
             btn.classList.remove('active');
         });
 
-        // Show selected tab
         document.getElementById('tab-' + tabId).classList.add('active');
-
-        // Add active class to clicked button
         button.classList.add('active');
     }
 
     // ============================================
     // AVATAR UPLOAD PREVIEW
     // ============================================
-    document.querySelector('input[name="avatar"]').addEventListener('change', function(e) {
-        if (this.files && this.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const container = document.querySelector('.profile-avatar');
-                const initials = container.querySelector('.initials');
-                let img = container.querySelector('img');
-                if (!img) {
-                    img = document.createElement('img');
-                    container.appendChild(img);
-                }
-                img.src = e.target.result;
-                if (initials) {
-                    initials.remove();
-                }
-            };
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
+    const avatarInput = document.querySelector('input[name="avatar"]');
+    if (avatarInput) {
+        avatarInput.addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const container = document.querySelector('.profile-avatar');
+                    const initials = container.querySelector('.initials');
+                    let img = container.querySelector('img');
+                    if (!img) {
+                        img = document.createElement('img');
+                        container.appendChild(img);
+                    }
+                    img.src = e.target.result;
+                    if (initials) {
+                        initials.remove();
+                    }
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    }
 </script>
 @endsection

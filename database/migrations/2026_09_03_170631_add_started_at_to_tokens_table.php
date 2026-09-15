@@ -9,15 +9,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tokens', function (Blueprint $table) {
-            // ✅ foreign key exist nahi karti, is liye direct change
-            $table->unsignedBigInteger('patient_id')->nullable()->change();
+            // ✅ Add started_at column if not exists
+            if (!Schema::hasColumn('tokens', 'started_at')) {
+                $table->timestamp('started_at')->nullable()->after('called_at');
+            }
         });
     }
 
     public function down(): void
     {
         Schema::table('tokens', function (Blueprint $table) {
-            $table->unsignedBigInteger('patient_id')->nullable(false)->change();
+            if (Schema::hasColumn('tokens', 'started_at')) {
+                $table->dropColumn('started_at');
+            }
         });
     }
 };

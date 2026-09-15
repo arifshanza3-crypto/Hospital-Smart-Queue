@@ -28,7 +28,8 @@
             background-color: #f4f6f9; 
             font-family: 'Poppins', 'Segoe UI', sans-serif; 
             margin: 0; 
-            padding: 0; 
+            padding: 0;
+            overflow-x: hidden;
         }
 
         .staff-header {
@@ -55,6 +56,7 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            min-width: 0;
         }
 
         .nav-logo-img {
@@ -72,6 +74,7 @@
             display: flex;
             flex-direction: column;
             line-height: 1.1;
+            min-width: 0;
         }
 
         .brand-title {
@@ -96,6 +99,7 @@
             display: flex;
             align-items: center;
             gap: 18px;
+            flex-shrink: 0;
         }
 
         .staff-details {
@@ -176,7 +180,7 @@
             text-align: center;
             display: none;
             border: 2px solid var(--nav-bg);
-            animation: pulse-badge 1.5s ease-in-out infinite;
+            animation: pulse-badge 2s ease-in-out infinite;
         }
 
         .notification-badge.show {
@@ -510,13 +514,35 @@
             min-height: calc(100vh - 70px);
         }
 
+        /* ============================================ */
+        /* ✅ RESPONSIVE - TABLET (max 992px)           */
+        /* ============================================ */
         @media (max-width: 992px) {
             .header-container { padding: 10px 20px; }
             .brand-subtitle { display: none; }
+
+            /* Dropdowns fixed on tablet */
+            .notification-dropdown {
+                position: fixed;
+                top: 70px;
+                right: 20px;
+                left: auto;
+                min-width: 340px;
+            }
+
+            .profile-dropdown {
+                position: fixed;
+                top: 70px;
+                right: 20px;
+                left: auto;
+            }
         }
 
+        /* ============================================ */
+        /* ✅ RESPONSIVE - MOBILE (max 768px)           */
+        /* ============================================ */
         @media (max-width: 768px) {
-            .header-container { padding: 8px 15px; flex-wrap: wrap; gap: 8px; }
+            .header-container { padding: 8px 15px; gap: 8px; }
             .staff-details { display: none !important; }
             .header-divider { display: none; }
             .brand-title { font-size: 15px; }
@@ -525,10 +551,36 @@
             .notification-bell i { font-size: 17px; }
             .profile-circle { width: 38px; height: 38px; font-size: 15px; }
             main { padding: 20px 15px; }
-            .notification-dropdown { width: 320px; right: -10px; }
-            .profile-dropdown { min-width: 210px; right: -10px; }
+
+            /* Dropdowns full width on mobile */
+            .notification-dropdown {
+                position: fixed;
+                top: 64px;
+                left: 10px;
+                right: 10px;
+                min-width: auto;
+                max-width: none;
+                border-radius: 14px;
+            }
+
+            .profile-dropdown {
+                position: fixed;
+                top: 64px;
+                left: 10px;
+                right: 10px;
+                min-width: auto;
+                max-width: none;
+                border-radius: 14px;
+            }
+
+            .notification-list {
+                max-height: 55vh;
+            }
         }
 
+        /* ============================================ */
+        /* ✅ RESPONSIVE - SMALL MOBILE (max 576px)     */
+        /* ============================================ */
         @media (max-width: 576px) {
             .header-container { padding: 6px 12px; }
             .brand-title { font-size: 13px; }
@@ -537,8 +589,61 @@
             .notification-bell { padding: 5px 8px; }
             .notification-bell i { font-size: 15px; }
             .profile-circle { width: 34px; height: 34px; font-size: 13px; }
-            .notification-dropdown { width: 290px; right: -5px; }
-            .profile-dropdown { min-width: 190px; right: -5px; }
+
+            .notification-dropdown,
+            .profile-dropdown {
+                top: 58px;
+                left: 8px;
+                right: 8px;
+                border-radius: 12px;
+            }
+
+            .notification-header { padding: 12px 16px; }
+            .notification-title { font-size: 13px; }
+            .notification-item { padding: 10px 14px; gap: 10px; }
+            .notification-icon { width: 28px; height: 28px; font-size: 12px; }
+            .notification-text { font-size: 12px; }
+            .notification-text[style] { font-size: 11px !important; }
+            .notification-footer { padding: 10px 16px; }
+            .view-all-btn { font-size: 12px; }
+
+            .dropdown-item-custom { padding: 11px 16px; font-size: 13px; }
+            .dropdown-header-custom { padding: 12px 16px; }
+
+            /* Toast full width */
+            .toast-message {
+                left: 15px;
+                right: 15px;
+                bottom: 15px;
+                max-width: none;
+                padding: 12px 18px;
+                font-size: 13px;
+            }
+        }
+
+        /* ============================================ */
+        /* ✅ RESPONSIVE - EXTRA SMALL (max 380px)     */
+        /* ============================================ */
+        @media (max-width: 380px) {
+            .header-container { padding: 6px 10px; }
+            .brand-title { font-size: 12px; }
+            .nav-logo-img { height: 34px; }
+            .notification-bell { padding: 4px 7px; }
+            .notification-bell i { font-size: 14px; }
+            .profile-circle { width: 32px; height: 32px; font-size: 12px; }
+            .header-right { gap: 8px; }
+
+            .notification-dropdown,
+            .profile-dropdown {
+                top: 54px;
+                left: 6px;
+                right: 6px;
+            }
+
+            .notification-item { padding: 9px 12px; }
+            .notification-icon { width: 26px; height: 26px; font-size: 11px; }
+            .notification-text { font-size: 11px; }
+            .notification-time { font-size: 10px; }
         }
     </style>
 </head>
@@ -653,7 +758,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- ✅ FAST NOTIFICATION SYSTEM -->
+    <!-- ✅ NOTIFICATION SYSTEM -->
     <script>
         // ============================================ //
         // TOGGLE FUNCTIONS                             //
@@ -733,7 +838,6 @@
                     const unreadCount = data.unread_count || 0;
                     updateBadgeCount(unreadCount);
                     
-                    // ✅ Play sound if new notification
                     if (unreadCount > previousBadgeCount && unreadCount > 0) {
                         playNotificationSound();
                     }
@@ -853,18 +957,14 @@
             .catch(error => console.error('Error:', error));
         }
 
-        // ============================================ //
-        // UPDATE BADGE COUNT                           //
-        // ============================================ //
-
         function updateBadgeCount(count) {
             const badge = document.getElementById('notificationBadge');
             if (badge) {
                 if (count > 0) {
                     badge.textContent = count > 99 ? '99+' : count;
-                    badge.style.display = 'block';
+                    badge.classList.add('show');
                 } else {
-                    badge.style.display = 'none';
+                    badge.classList.remove('show');
                 }
             }
         }
@@ -885,10 +985,6 @@
                     console.warn('⚠️ Sound file not found');
                     notificationAudio = null;
                 };
-                
-                notificationAudio.oncanplaythrough = function() {
-                    console.log('✅ Notification sound loaded!');
-                };
             } catch (error) {
                 console.warn('Audio init failed:', error);
                 notificationAudio = null;
@@ -900,7 +996,7 @@
                 try {
                     notificationAudio.currentTime = 0;
                     notificationAudio.play()
-                        .then(() => console.log('🔊 Notification sound played!'))
+                        .then(() => {})
                         .catch(() => playFallbackSound());
                 } catch (error) {
                     playFallbackSound();
@@ -923,14 +1019,13 @@
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
                 osc.start(audioCtx.currentTime);
                 osc.stop(audioCtx.currentTime + 0.3);
-                console.log('🔊 Fallback sound played!');
             } catch (error) {
                 console.warn('Fallback sound failed:', error);
             }
         }
 
         // ============================================ //
-        // ✅ FAST - CHECK EVERY 1 SECOND              //
+        // ✅ CHECK NEW NOTIFICATIONS                   //
         // ============================================ //
 
         function checkNewNotifications() {
@@ -939,11 +1034,8 @@
                 .then(data => {
                     if (data.success) {
                         const currentCount = data.count;
-                        
-                        // ✅ Update badge immediately
                         updateBadgeCount(currentCount);
                         
-                        // ✅ Play sound if new notification
                         if (currentCount > previousBadgeCount && currentCount > 0) {
                             playNotificationSound();
                         }
@@ -958,26 +1050,15 @@
         // ============================================ //
 
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('✅ Fast notification system initialized');
-
             initAudio();
 
-            // ✅ Check immediately
             setTimeout(() => {
                 checkNewNotifications();
-                fetchNotifications();
-            }, 100);
+            }, 500);
 
-            // ✅ Check every 1 second (FAST)
-            setInterval(checkNewNotifications, 1000);
-            
-            // ✅ Refresh dropdown every 5 seconds
-            setInterval(fetchNotifications, 5000);
+            // ✅ Check every 5 seconds (performance-friendly)
+            setInterval(checkNewNotifications, 5000);
         });
-
-        // ============================================ //
-        // EXPOSE TO GLOBAL SCOPE                     //
-        // ============================================ //
 
         window.toggleNotifications = toggleNotifications;
         window.markNotificationAsRead = markNotificationAsRead;

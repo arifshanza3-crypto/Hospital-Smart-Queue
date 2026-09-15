@@ -14,7 +14,6 @@
     :root {
         --bg-primary: #f8fafc;
         --bg-card: #ffffff;
-        --bg-table: #ffffff;
         --text-primary: #1e293b;
         --text-secondary: #475569;
         --text-muted: #94a3b8;
@@ -27,7 +26,6 @@
         --success: #10b981;
         --danger: #ef4444;
         --warning: #f59e0b;
-        --info: #0ea5e9;
     }
 
     .services-management-wrapper {
@@ -49,6 +47,7 @@
     .page-header-left {
         display: flex;
         flex-direction: column;
+        min-width: 0;
     }
 
     .page-header-left h1 {
@@ -72,6 +71,11 @@
         margin: 4px 0 0 0;
     }
 
+    .page-header-left p i {
+        color: var(--accent-1);
+        margin-right: 4px;
+    }
+
     .btn-primary-gradient {
         background: var(--accent-gradient);
         color: white;
@@ -87,6 +91,7 @@
         border: none;
         cursor: pointer;
         box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25);
+        white-space: nowrap;
     }
 
     .btn-primary-gradient:hover {
@@ -118,15 +123,8 @@
     .stat-card::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
+        top: 0; left: 0; right: 0;
         height: 3px;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .stat-card:hover::before {
         opacity: 1;
     }
 
@@ -153,29 +151,6 @@
         color: var(--text-secondary);
         font-size: 13px;
         font-weight: 500;
-    }
-
-    .stat-card .stat-trend {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        font-size: 11px;
-        font-weight: 600;
-        padding: 2px 10px;
-        border-radius: 20px;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-    }
-
-    .stat-trend.up {
-        background: #d1fae5;
-        color: #065f46;
-    }
-
-    .stat-trend.down {
-        background: #fee2e2;
-        color: #991b1b;
     }
 
     .stat-card.purple::before { background: var(--accent-gradient); }
@@ -217,6 +192,7 @@
         top: 50%;
         transform: translateY(-50%);
         color: var(--text-muted);
+        pointer-events: none;
     }
 
     .search-wrapper input {
@@ -229,11 +205,11 @@
         font-size: 14px;
         transition: all 0.3s ease;
         outline: none;
+        box-sizing: border-box;
+        font-family: inherit;
     }
 
-    .search-wrapper input::placeholder {
-        color: var(--text-muted);
-    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
 
     .search-wrapper input:focus {
         border-color: var(--accent-1);
@@ -258,6 +234,7 @@
         outline: none;
         min-width: 140px;
         transition: all 0.3s ease;
+        font-family: inherit;
     }
 
     .filter-wrapper select:focus {
@@ -277,6 +254,9 @@
         align-items: center;
         gap: 6px;
         font-weight: 500;
+        font-family: inherit;
+        font-size: 13px;
+        white-space: nowrap;
     }
 
     .btn-reset:hover {
@@ -295,37 +275,66 @@
         border-left: 4px solid;
         background: var(--bg-card);
         box-shadow: var(--shadow);
+        font-size: 14px;
+        line-height: 1.5;
     }
 
     .alert-modern.success {
         border-color: var(--success);
         color: #065f46;
+        background: #f0fdf4;
     }
 
-    .alert-modern.success i {
-        color: var(--success);
-    }
+    .alert-modern.success i { color: var(--success); }
 
     .alert-modern.error {
         border-color: var(--danger);
         color: #991b1b;
+        background: #fef2f2;
     }
 
-    .alert-modern.error i {
-        color: var(--danger);
+    .alert-modern.error i { color: var(--danger); }
+
+    .alert-modern i { font-size: 18px; flex-shrink: 0; }
+
+    /* ===== TABLE SCROLL HINT ===== */
+    .table-scroll-hint {
+        display: none;
+        font-size: 12px;
+        color: var(--text-secondary);
+        margin-bottom: 10px;
+        text-align: center;
+        padding: 8px;
+        background: rgba(59, 130, 246, 0.06);
+        border-radius: 8px;
+        border: 1px solid rgba(59, 130, 246, 0.1);
+        font-weight: 500;
     }
 
-    .alert-modern i {
-        font-size: 18px;
+    .table-scroll-hint i {
+        color: var(--accent-1);
+        margin-right: 6px;
     }
+
+    /* ===== TABLE WRAPPER ===== */
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow);
+    }
+
+    .table-wrapper::-webkit-scrollbar { height: 6px; }
+    .table-wrapper::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+    .table-wrapper::-webkit-scrollbar-thumb { background: var(--accent-1); border-radius: 10px; }
 
     /* ===== TABLE ===== */
     .table-container {
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: var(--shadow);
+        width: 100%;
+        min-width: 950px;
     }
 
     .table-container table {
@@ -342,7 +351,7 @@
         padding: 14px 20px;
         text-align: left;
         font-size: 11px;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.8px;
         color: var(--text-secondary);
@@ -357,16 +366,14 @@
         font-size: 14px;
     }
 
-    .table-container tbody tr {
-        transition: all 0.3s ease;
-    }
+    .table-container tbody tr { transition: all 0.3s ease; }
+    .table-container tbody tr:hover { background: #f8fafc; }
+    .table-container tbody tr:last-child td { border-bottom: none; }
 
-    .table-container tbody tr:hover {
-        background: #f8fafc;
-    }
-
-    .table-container tbody tr:last-child td {
-        border-bottom: none;
+    .service-id {
+        color: var(--text-secondary);
+        font-weight: 600;
+        font-size: 13px;
     }
 
     /* Service Info Cell */
@@ -387,17 +394,23 @@
         color: white;
         font-size: 16px;
         flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
     }
 
     .service-name {
         font-weight: 600;
         color: var(--text-primary);
+        white-space: nowrap;
     }
 
     .service-description {
         font-size: 12px;
         color: var(--text-secondary);
         margin-top: 2px;
+        max-width: 280px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     /* Department Badge */
@@ -409,22 +422,26 @@
         font-size: 12px;
         color: #4338ca;
         display: inline-block;
+        white-space: nowrap;
+        font-weight: 500;
     }
 
     /* Price */
     .price-text {
         font-weight: 700;
         color: var(--text-primary);
-        font-size: 15px;
+        font-size: 14px;
+        white-space: nowrap;
     }
 
     /* Duration */
     .duration-text {
         color: var(--text-secondary);
         font-size: 13px;
+        white-space: nowrap;
     }
 
-    /* Status Badges - Light Theme */
+    /* Status Badges */
     .status-badge-modern {
         display: inline-flex;
         align-items: center;
@@ -433,6 +450,7 @@
         border-radius: 20px;
         font-size: 12px;
         font-weight: 600;
+        white-space: nowrap;
     }
 
     .status-badge-modern.active {
@@ -454,20 +472,16 @@
         display: inline-block;
     }
 
-    .status-badge-modern.active .status-dot {
-        background: #10b981;
-    }
+    .status-badge-modern.active .status-dot { background: #10b981; }
+    .status-badge-modern.inactive .status-dot { background: #ef4444; }
 
-    .status-badge-modern.inactive .status-dot {
-        background: #ef4444;
-    }
-
-    /* ===== ACTION BUTTONS - ICON ONLY ===== */
+    /* ===== ACTION BUTTONS ===== */
     .action-group {
         display: flex;
         gap: 6px;
         align-items: center;
         justify-content: center;
+        flex-wrap: nowrap;
     }
 
     .action-btn {
@@ -477,39 +491,21 @@
         font-size: 14px;
         font-weight: 600;
         text-decoration: none;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.3s ease;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         border: none;
         cursor: pointer;
         position: relative;
-        overflow: hidden;
-    }
-
-    .action-btn::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transition: all 0.5s ease;
-        transform: translate(-50%, -50%);
-    }
-
-    .action-btn:hover::after {
-        width: 200%;
-        height: 200%;
+        overflow: visible;
+        flex-shrink: 0;
     }
 
     .action-btn:hover {
         transform: translateY(-2px) scale(1.05);
     }
 
-    /* Edit Button */
     .action-btn.edit {
         background: #dbeafe;
         color: #1e40af;
@@ -522,7 +518,6 @@
         box-shadow: 0 4px 16px rgba(30, 64, 175, 0.3);
     }
 
-    /* Delete Button */
     .action-btn.delete {
         background: #fee2e2;
         color: #991b1b;
@@ -535,7 +530,6 @@
         box-shadow: 0 4px 16px rgba(153, 27, 27, 0.3);
     }
 
-    /* Toggle Status Button */
     .action-btn.toggle {
         background: #fef3c7;
         color: #92400e;
@@ -560,22 +554,18 @@
         box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
     }
 
-    /* Tooltip for action buttons */
-    .action-btn {
-        position: relative;
-    }
-
+    /* Tooltip - sirf desktop par dikhe */
     .action-btn .tooltip-text {
         visibility: hidden;
         opacity: 0;
-        width: 70px;
+        width: auto;
         background: #1e293b;
         color: white;
         text-align: center;
         border-radius: 6px;
-        padding: 4px 8px;
+        padding: 4px 10px;
         position: absolute;
-        z-index: 1;
+        z-index: 10;
         bottom: 110%;
         left: 50%;
         transform: translateX(-50%);
@@ -583,6 +573,7 @@
         font-weight: 500;
         transition: all 0.3s ease;
         white-space: nowrap;
+        pointer-events: none;
     }
 
     .action-btn .tooltip-text::after {
@@ -625,6 +616,10 @@
         margin-bottom: 20px;
     }
 
+    .empty-state .btn-primary-gradient {
+        display: inline-flex;
+    }
+
     /* ===== LOADER ===== */
     .loader {
         display: none;
@@ -632,9 +627,7 @@
         padding: 40px;
     }
 
-    .loader.show {
-        display: block;
-    }
+    .loader.show { display: block; }
 
     .loader i {
         font-size: 32px;
@@ -642,26 +635,37 @@
         animation: spin 1s linear infinite;
     }
 
+    .loader p { color: var(--text-secondary); margin-top: 8px; }
+
     @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ============================================ */
+    /* ✅ RESPONSIVE - LARGE TABLET (max 1200px)   */
+    /* ============================================ */
     @media (max-width: 1200px) {
-        .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
+        .stats-grid { grid-template-columns: repeat(4, 1fr); }
+        .stat-card .stat-number { font-size: 26px; }
     }
 
+    /* ============================================ */
+    /* ✅ RESPONSIVE - TABLET (max 992px)           */
+    /* ============================================ */
     @media (max-width: 992px) {
+        .services-management-wrapper { padding: 20px 18px; }
+
         .page-header {
             flex-direction: column;
             align-items: flex-start;
         }
 
-        .page-header-left h1 {
-            font-size: 22px;
+        .page-header-left h1 { font-size: 22px; }
+
+        .btn-primary-gradient {
+            width: 100%;
+            justify-content: center;
         }
 
         .search-filter-bar {
@@ -669,69 +673,255 @@
             align-items: stretch;
         }
 
-        .search-wrapper {
-            max-width: 100%;
-        }
+        .search-wrapper { max-width: 100%; }
 
-        .filter-wrapper {
-            flex-wrap: wrap;
-        }
+        .filter-wrapper { flex-wrap: wrap; }
 
-        .filter-wrapper select {
-            flex: 1;
-            min-width: 120px;
-        }
+        .filter-wrapper select { flex: 1; min-width: 120px; }
     }
 
+    /* ============================================ */
+    /* ✅ RESPONSIVE - MOBILE (max 768px)           */
+    /* ============================================ */
     @media (max-width: 768px) {
-        .stats-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
+        .services-management-wrapper { padding: 16px 12px; }
 
-        .stat-card .stat-number {
-            font-size: 24px;
-        }
+        .page-header { gap: 12px; margin-bottom: 20px; }
 
-        .table-container {
-            overflow-x: auto;
-        }
-
-        .table-container table {
-            font-size: 13px;
-            min-width: 700px;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .services-management-wrapper {
-            padding: 12px;
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr 1fr;
+        .page-header-left h1 {
+            font-size: 20px;
             gap: 8px;
+        }
+
+        .page-header-left h1 i { font-size: 20px; }
+        .page-header-left p { font-size: 13px; }
+
+        .btn-primary-gradient {
+            padding: 12px 20px;
+            font-size: 13px;
+        }
+
+        /* Stats grid - 2 columns */
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 18px;
         }
 
         .stat-card {
             padding: 14px 16px;
+            border-radius: 12px;
         }
 
+        .stat-card .stat-icon { font-size: 20px; }
         .stat-card .stat-number {
             font-size: 20px;
+            margin: 4px 0 2px;
+        }
+        .stat-card .stat-label { font-size: 11px; }
+
+        /* Search & Filter */
+        .search-filter-bar { padding: 10px 12px; gap: 10px; }
+
+        .search-wrapper input {
+            padding: 11px 14px 11px 40px;
+            font-size: 13px;
+            border-radius: 10px;
         }
 
-        .page-header-left h1 {
-            font-size: 18px;
+        .search-wrapper i { left: 13px; font-size: 13px; }
+
+        .filter-wrapper { width: 100%; gap: 8px; }
+
+        .filter-wrapper select {
+            flex: 1;
+            min-width: 0;
+            padding: 11px 14px;
+            font-size: 13px;
+            border-radius: 10px;
         }
 
-        .btn-primary-gradient {
-            padding: 10px 20px;
+        .btn-reset {
+            padding: 11px 14px;
+            font-size: 12px;
+            border-radius: 10px;
+        }
+
+        /* Swipe hint */
+        .table-scroll-hint { display: block; }
+
+        /* Table */
+        .table-wrapper { border-radius: 12px; }
+        .table-container { min-width: 850px; }
+
+        .table-container thead th {
+            padding: 10px 14px;
+            font-size: 10px;
+        }
+
+        .table-container tbody td {
+            padding: 12px 14px;
             font-size: 13px;
         }
 
+        .service-icon { width: 36px; height: 36px; font-size: 14px; }
+        .service-name { font-size: 13px; }
+        .service-description { font-size: 11px; max-width: 200px; }
+
+        .department-badge,
+        .status-badge-modern {
+            font-size: 11px;
+            padding: 4px 10px;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+        }
+
+        .action-group { gap: 4px; }
+
+        .alert-modern {
+            padding: 12px 16px;
+            font-size: 13px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .empty-state { padding: 40px 16px; }
+        .empty-state i { font-size: 42px; }
+        .empty-state h3 { font-size: 17px; }
+        .empty-state p { font-size: 13px; }
+    }
+
+    /* ============================================ */
+    /* ✅ RESPONSIVE - SMALL MOBILE (max 576px)     */
+    /* ============================================ */
+    @media (max-width: 576px) {
+        .services-management-wrapper { padding: 12px 10px; }
+
+        .page-header-left h1 { font-size: 18px; }
+        .page-header-left h1 i { font-size: 16px; }
+        .page-header-left p { font-size: 12px; }
+
+        .btn-primary-gradient {
+            padding: 11px 16px;
+            font-size: 12px;
+            border-radius: 10px;
+        }
+
+        /* Stats */
+        .stat-card { padding: 12px 10px; }
+        .stat-card .stat-icon { font-size: 16px; }
+        .stat-card .stat-number { font-size: 18px; }
+        .stat-card .stat-label { font-size: 10px; }
+
+        /* Search */
+        .search-wrapper input {
+            padding: 10px 12px 10px 36px;
+            font-size: 12.5px;
+        }
+
+        .search-wrapper i { left: 12px; font-size: 12px; }
+
         .filter-wrapper select {
-            min-width: 100%;
+            padding: 10px 12px;
+            font-size: 12.5px;
+        }
+
+        .btn-reset {
+            padding: 10px 12px;
+            font-size: 11px;
+        }
+
+        .btn-reset span { display: none; }
+
+        /* Table */
+        .table-container { min-width: 780px; }
+
+        .table-container thead th {
+            padding: 9px 12px;
+            font-size: 9.5px;
+        }
+
+        .table-container tbody td {
+            padding: 10px 12px;
+            font-size: 12px;
+        }
+
+        .service-icon { width: 32px; height: 32px; font-size: 12px; }
+        .service-name { font-size: 12px; }
+        .service-description { font-size: 10px; max-width: 150px; }
+
+        .department-badge,
+        .status-badge-modern {
+            font-size: 10px;
+            padding: 3px 8px;
+        }
+
+        .status-dot {
+            width: 5px;
+            height: 5px;
+            margin-right: 4px;
+        }
+
+        .action-btn {
+            width: 30px;
+            height: 30px;
+            font-size: 11px;
+            border-radius: 7px;
+        }
+
+        .action-group { gap: 3px; }
+
+        .table-scroll-hint {
+            font-size: 11px;
+            padding: 6px;
+        }
+    }
+
+    /* ============================================ */
+    /* ✅ RESPONSIVE - EXTRA SMALL (max 380px)     */
+    /* ============================================ */
+    @media (max-width: 380px) {
+        .services-management-wrapper { padding: 10px 8px; }
+
+        .page-header-left h1 { font-size: 16px; }
+
+        .stat-card { padding: 10px 8px; }
+        .stat-card .stat-icon { font-size: 14px; }
+        .stat-card .stat-number { font-size: 16px; }
+        .stat-card .stat-label { font-size: 9px; }
+
+        .search-wrapper input {
+            padding: 9px 10px 9px 34px;
+            font-size: 12px;
+        }
+
+        .filter-wrapper select {
+            padding: 9px 10px;
+            font-size: 12px;
+        }
+
+        .btn-reset { padding: 9px 10px; }
+
+        .table-container { min-width: 720px; }
+
+        .table-container thead th {
+            padding: 8px 10px;
+            font-size: 9px;
+        }
+
+        .table-container tbody td {
+            padding: 9px 10px;
+            font-size: 11.5px;
+        }
+
+        .action-btn {
+            width: 28px;
+            height: 28px;
+            font-size: 10px;
         }
     }
 </style>
@@ -743,7 +933,7 @@
             <h1>
                 <i class="fas fa-concierge-bell"></i> Services Management
             </h1>
-            <p><i class="fas fa-arrow-trend-up" style="color: var(--accent-1);"></i> Manage hospital medical services and procedures</p>
+            <p><i class="fas fa-arrow-trend-up"></i> Manage hospital medical services and procedures</p>
         </div>
         <div>
             <a href="{{ route('admin.services.create') }}" class="btn-primary-gradient">
@@ -811,7 +1001,7 @@
                 <option value="inactive">🔴 Inactive</option>
             </select>
             <button class="btn-reset" onclick="resetFilters()">
-                <i class="fas fa-undo"></i> Reset
+                <i class="fas fa-undo"></i> <span>Reset</span>
             </button>
         </div>
     </div>
@@ -819,95 +1009,99 @@
     <!-- Loader -->
     <div id="loader" class="loader">
         <i class="fas fa-spinner"></i>
-        <p style="color: var(--text-secondary); margin-top: 8px;">Loading...</p>
+        <p>Loading...</p>
     </div>
 
-    <!-- Table -->
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 5%;">ID</th>
-                    <th style="width: 25%;">Service</th>
-                    <th style="width: 15%;">Department</th>
-                    <th style="width: 10%;">Price</th>
-                    <th style="width: 10%;">Duration</th>
-                    <th style="width: 10%;">Status</th>
-                    <th style="width: 25%; text-align: center;">Actions</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-                @forelse($services as $service)
-                <tr>
-                    <td>
-                        <span style="color: var(--text-secondary); font-weight: 500;">#{{ $service->id }}</span>
-                    </td>
-                    <td>
-                        <div class="service-cell">
-                            <div class="service-icon">
-                                <i class="{{ $service->icon ?? 'fas fa-stethoscope' }}"></i>
+    <!-- Swipe Hint (Sirf mobile par) -->
+    <div class="table-scroll-hint">
+        <i class="fas fa-arrows-left-right"></i> Swipe to see more
+    </div>
+
+    <!-- Table Wrapper -->
+    <div class="table-wrapper">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Service</th>
+                        <th>Department</th>
+                        <th>Price</th>
+                        <th>Duration</th>
+                        <th>Status</th>
+                        <th style="text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    @forelse($services as $service)
+                    <tr>
+                        <td>
+                            <span class="service-id">#{{ $service->id }}</span>
+                        </td>
+                        <td>
+                            <div class="service-cell">
+                                <div class="service-icon">
+                                    <i class="{{ $service->icon ?? 'fas fa-stethoscope' }}"></i>
+                                </div>
+                                <div>
+                                    <div class="service-name">{{ $service->name }}</div>
+                                    <div class="service-description">{{ Str::limit($service->description, 60) }}</div>
+                                </div>
                             </div>
-                            <div>
-                                <div class="service-name">{{ $service->name }}</div>
-                                <div class="service-description">{{ Str::limit($service->description, 60) }}</div>
+                        </td>
+                        <td>
+                            <span class="department-badge">{{ $service->department ?? 'General' }}</span>
+                        </td>
+                        <td>
+                            <span class="price-text">PKR {{ number_format($service->price, 0) }}</span>
+                        </td>
+                        <td>
+                            <span class="duration-text">{{ $service->duration ?? '30 mins' }}</span>
+                        </td>
+                        <td>
+                            <span class="status-badge-modern {{ $service->status }}">
+                                <span class="status-dot"></span>
+                                {{ ucfirst($service->status) }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="action-group">
+                                <a href="{{ route('admin.services.edit', $service->id) }}" class="action-btn edit" title="Edit Service">
+                                    <i class="fas fa-edit"></i>
+                                    <span class="tooltip-text">Edit</span>
+                                </a>
+                                
+                                <button onclick="toggleStatus({{ $service->id }}, '{{ $service->status }}')" 
+                                        class="action-btn toggle {{ $service->status == 'active' ? 'active-btn' : '' }}" 
+                                        title="{{ $service->status == 'active' ? 'Deactivate' : 'Activate' }}">
+                                    <i class="fas {{ $service->status == 'active' ? 'fa-pause' : 'fa-play' }}"></i>
+                                    <span class="tooltip-text">{{ $service->status == 'active' ? 'Deactivate' : 'Activate' }}</span>
+                                </button>
+                                
+                                <button onclick="deleteService({{ $service->id }})" class="action-btn delete" title="Delete Service">
+                                    <i class="fas fa-trash"></i>
+                                    <span class="tooltip-text">Delete</span>
+                                </button>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="department-badge">{{ $service->department ?? 'General' }}</span>
-                    </td>
-                    <td>
-                        <span class="price-text">PKR {{ number_format($service->price, 0) }}</span>
-                    </td>
-                    <td>
-                        <span class="duration-text">{{ $service->duration ?? '30 mins' }}</span>
-                    </td>
-                    <td>
-                        <span class="status-badge-modern {{ $service->status }}">
-                            <span class="status-dot"></span>
-                            {{ ucfirst($service->status) }}
-                        </span>
-                    </td>
-                    <td>
-                        <div class="action-group">
-                            <!-- Edit Button -->
-                            <a href="{{ route('admin.services.edit', $service->id) }}" class="action-btn edit" title="Edit Service">
-                                <i class="fas fa-edit"></i>
-                                <span class="tooltip-text">Edit</span>
-                            </a>
-                            
-                            <!-- Toggle Status Button -->
-                            <button onclick="toggleStatus({{ $service->id }}, '{{ $service->status }}')" 
-                                    class="action-btn toggle {{ $service->status == 'active' ? 'active-btn' : '' }}" 
-                                    title="{{ $service->status == 'active' ? 'Deactivate' : 'Activate' }}">
-                                <i class="fas {{ $service->status == 'active' ? 'fa-pause' : 'fa-play' }}"></i>
-                                <span class="tooltip-text">{{ $service->status == 'active' ? 'Deactivate' : 'Activate' }}</span>
-                            </button>
-                            
-                            <!-- Delete Button -->
-                            <button onclick="deleteService({{ $service->id }})" class="action-btn delete" title="Delete Service">
-                                <i class="fas fa-trash"></i>
-                                <span class="tooltip-text">Delete</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="7">
-                        <div class="empty-state">
-                            <i class="fas fa-concierge-bell"></i>
-                            <h3>No Services Found</h3>
-                            <p>Get started by adding your first service to the system.</p>
-                            <a href="{{ route('admin.services.create') }}" class="btn-primary-gradient" style="display: inline-flex;">
-                                <i class="fas fa-plus"></i> Add New Service
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="7">
+                            <div class="empty-state">
+                                <i class="fas fa-concierge-bell"></i>
+                                <h3>No Services Found</h3>
+                                <p>Get started by adding your first service to the system.</p>
+                                <a href="{{ route('admin.services.create') }}" class="btn-primary-gradient">
+                                    <i class="fas fa-plus"></i> Add New Service
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -916,9 +1110,9 @@
     // DELETE SERVICE
     // ============================================
     function deleteService(id) {
-        if(confirm('⚠️ Are you sure you want to delete this service?\n\nThis action cannot be undone!')) {
+        if (confirm('⚠️ Are you sure you want to delete this service?\n\nThis action cannot be undone!')) {
             showLoader();
-            
+
             fetch('/admin/services/' + id, {
                 method: 'DELETE',
                 headers: {
@@ -930,8 +1124,8 @@
             .then(response => response.json())
             .then(data => {
                 hideLoader();
-                if(data.success) {
-                    showNotification('success', data.message);
+                if (data.success) {
+                    showNotification('success', data.message || 'Service deleted');
                     setTimeout(() => location.reload(), 1000);
                 } else {
                     showNotification('error', data.message || 'Error deleting service');
@@ -951,10 +1145,10 @@
     function toggleStatus(id, currentStatus) {
         let newStatus = currentStatus === 'active' ? 'inactive' : 'active';
         let action = newStatus === 'active' ? 'activate' : 'deactivate';
-        
-        if(confirm(`Are you sure you want to ${action} this service?`)) {
+
+        if (confirm(`Are you sure you want to ${action} this service?`)) {
             showLoader();
-            
+
             fetch(`/admin/services/${id}/status/${newStatus}`, {
                 method: 'PATCH',
                 headers: {
@@ -966,7 +1160,7 @@
             .then(response => response.json())
             .then(data => {
                 hideLoader();
-                if(data.success) {
+                if (data.success) {
                     showNotification('success', `Service ${action}d successfully!`);
                     setTimeout(() => location.reload(), 1000);
                 } else {
@@ -984,30 +1178,34 @@
     // ============================================
     // SEARCH & FILTER
     // ============================================
-    document.getElementById('search').addEventListener('keyup', filterTable);
-    document.getElementById('filterStatus').addEventListener('change', filterTable);
+    const searchInput = document.getElementById('search');
+    const filterStatus = document.getElementById('filterStatus');
+
+    if (searchInput) searchInput.addEventListener('keyup', filterTable);
+    if (filterStatus) filterStatus.addEventListener('change', filterTable);
 
     function filterTable() {
-        let searchValue = document.getElementById('search').value.toLowerCase();
-        let statusValue = document.getElementById('filterStatus').value;
+        let searchValue = (document.getElementById('search')?.value || '').toLowerCase();
+        let statusValue = document.getElementById('filterStatus')?.value || '';
         let rows = document.querySelectorAll('#tableBody tr');
         let visibleCount = 0;
-        
+
         rows.forEach(row => {
-            if(row.querySelector('td')) {
+            if (row.id === 'noResultsMsg') return;
+            if (row.querySelector('td')) {
                 let text = row.textContent.toLowerCase();
                 let statusCell = row.querySelector('.status-badge-modern');
                 let status = '';
-                
-                if(statusCell) {
+
+                if (statusCell) {
                     let statusText = statusCell.textContent.trim().toLowerCase();
-                    if(statusText.includes('active')) status = 'active';
-                    if(statusText.includes('inactive')) status = 'inactive';
+                    if (statusText.includes('active') && !statusText.includes('inactive')) status = 'active';
+                    if (statusText.includes('inactive')) status = 'inactive';
                 }
-                
+
                 let matchesSearch = text.includes(searchValue);
                 let matchesStatus = !statusValue || status === statusValue;
-                
+
                 if (matchesSearch && matchesStatus) {
                     row.style.display = '';
                     visibleCount++;
@@ -1016,8 +1214,7 @@
                 }
             }
         });
-        
-        // Show/hide no results message
+
         let noResultsMsg = document.getElementById('noResultsMsg');
         if (visibleCount === 0 && rows.length > 0) {
             if (!noResultsMsg) {
@@ -1028,8 +1225,8 @@
                     <td colspan="7" style="padding: 40px; text-align: center;">
                         <div class="empty-state" style="padding: 20px;">
                             <i class="fas fa-search" style="font-size: 40px;"></i>
-                            <h3 style="color: var(--text-primary); font-weight: 600;">No Matching Services</h3>
-                            <p style="color: var(--text-secondary);">Try adjusting your search or filter criteria</p>
+                            <h3>No Matching Services</h3>
+                            <p>Try adjusting your search or filter criteria</p>
                         </div>
                     </td>
                 `;
@@ -1044,13 +1241,15 @@
     // RESET FILTERS
     // ============================================
     function resetFilters() {
-        document.getElementById('search').value = '';
-        document.getElementById('filterStatus').value = '';
+        const s = document.getElementById('search');
+        const f = document.getElementById('filterStatus');
+        if (s) s.value = '';
+        if (f) f.value = '';
         filterTable();
     }
 
     // ============================================
-    // NOTIFICATION SYSTEM
+    // NOTIFICATION - Mobile friendly
     // ============================================
     function showNotification(type, message) {
         let notification = document.createElement('div');
@@ -1058,31 +1257,36 @@
         let borderColor = type === 'success' ? '#10b981' : '#ef4444';
         let textColor = type === 'success' ? '#065f46' : '#991b1b';
         let icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
-        
+
+        const isMobile = window.innerWidth <= 576;
+        const styles = isMobile
+            ? `left: 12px; right: 12px; top: 70px;`
+            : `right: 24px; top: 80px; min-width: 280px; max-width: 400px;`;
+
         notification.style.cssText = `
             position: fixed;
-            top: 80px;
-            right: 24px;
-            padding: 16px 24px;
+            ${styles}
+            padding: 14px 20px;
             background: ${bgColor};
             border-left: 4px solid ${borderColor};
             color: ${textColor};
             border-radius: 12px;
             z-index: 9999;
-            animation: slideIn 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            animation: svcSlideIn 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
             display: flex;
             align-items: center;
             gap: 12px;
             font-weight: 500;
             font-size: 14px;
-            min-width: 280px;
+            font-family: inherit;
+            box-sizing: border-box;
         `;
-        notification.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+        notification.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
         document.body.appendChild(notification);
-        
+
         setTimeout(() => {
-            notification.style.animation = 'slideOut 0.3s ease';
+            notification.style.animation = 'svcSlideOut 0.3s ease';
             setTimeout(() => notification.remove(), 300);
         }, 4000);
     }
@@ -1105,11 +1309,11 @@
     // ============================================
     const style = document.createElement('style');
     style.textContent = `
-        @keyframes slideIn {
+        @keyframes svcSlideIn {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
-        @keyframes slideOut {
+        @keyframes svcSlideOut {
             from { transform: translateX(0); opacity: 1; }
             to { transform: translateX(100%); opacity: 0; }
         }

@@ -9,15 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tokens', function (Blueprint $table) {
-            // ✅ foreign key exist nahi karti, is liye direct change
-            $table->unsignedBigInteger('patient_id')->nullable()->change();
+            $table->integer('estimated_time')->default(0)->change();
         });
     }
 
     public function down(): void
     {
         Schema::table('tokens', function (Blueprint $table) {
-            $table->unsignedBigInteger('patient_id')->nullable(false)->change();
+            $table->integer('estimated_time')->default(15)->change();
         });
     }
 };

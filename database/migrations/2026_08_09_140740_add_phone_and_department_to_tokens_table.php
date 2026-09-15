@@ -9,14 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tokens', function (Blueprint $table) {
-            // ✅ Add phone column if not exists
+            // ✅ Add phone column
             if (!Schema::hasColumn('tokens', 'phone')) {
-                $table->string('phone')->nullable()->after('patient_name');
+                $table->string('phone', 20)->nullable();
             }
             
-            // ✅ Add department column if not exists
+            // ✅ Add department column
             if (!Schema::hasColumn('tokens', 'department')) {
-                $table->string('department')->default('General')->after('phone');
+                $table->string('department')->default('General');
             }
         });
     }

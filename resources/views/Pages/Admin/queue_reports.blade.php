@@ -49,6 +49,7 @@
     .page-header-left {
         display: flex;
         flex-direction: column;
+        min-width: 0;
     }
 
     .page-header-left h1 {
@@ -86,6 +87,7 @@
         font-weight: 600;
         font-size: 14px;
         box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+        white-space: nowrap;
     }
 
     .btn-export:hover {
@@ -115,15 +117,8 @@
     .stat-card::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
+        top: 0; left: 0; right: 0;
         height: 3px;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .stat-card:hover::before {
         opacity: 1;
     }
 
@@ -225,6 +220,7 @@
         padding: 20px 24px;
         box-shadow: var(--shadow);
         transition: all 0.3s ease;
+        min-width: 0;
     }
 
     .chart-card:hover {
@@ -243,6 +239,12 @@
 
     .chart-card .chart-title i {
         color: var(--accent-1);
+    }
+
+    .chart-card .chart-container {
+        position: relative;
+        height: 280px;
+        width: 100%;
     }
 
     .chart-card canvas {
@@ -289,6 +291,8 @@
         font-size: 14px;
         transition: all 0.3s ease;
         outline: none;
+        box-sizing: border-box;
+        font-family: inherit;
     }
 
     .filter-control:focus {
@@ -314,6 +318,10 @@
         font-size: 14px;
         cursor: pointer;
         transition: all 0.3s ease;
+        font-family: inherit;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .btn-filter:hover {
@@ -339,15 +347,58 @@
 
     .btn-reset:hover {
         background: #cbd5e1;
+        color: var(--text-primary);
+        text-decoration: none;
+    }
+
+    /* ===== TABLE SCROLL HINT ===== */
+    .table-scroll-hint {
+        display: none;
+        font-size: 12px;
+        color: var(--text-secondary);
+        margin-bottom: 10px;
+        text-align: center;
+        padding: 8px;
+        background: rgba(59, 130, 246, 0.06);
+        border-radius: 8px;
+        border: 1px solid rgba(59, 130, 246, 0.1);
+        font-weight: 500;
+    }
+
+    .table-scroll-hint i {
+        color: var(--accent-1);
+        margin-right: 6px;
+    }
+
+    /* ===== TABLE WRAPPER ===== */
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow);
+    }
+
+    .table-wrapper::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 10px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+        background: var(--accent-1);
+        border-radius: 10px;
     }
 
     /* ===== TABLE ===== */
     .table-container {
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: var(--shadow);
+        width: 100%;
+        min-width: 950px;
     }
 
     .table-container table {
@@ -364,7 +415,7 @@
         padding: 14px 18px;
         text-align: left;
         font-size: 11px;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.8px;
         color: var(--text-secondary);
@@ -377,6 +428,7 @@
         vertical-align: middle;
         color: var(--text-primary);
         font-size: 14px;
+        white-space: nowrap;
     }
 
     .table-container tbody tr {
@@ -396,7 +448,7 @@
         color: var(--accent-1);
     }
 
-    /* Status Badges */
+    /* ===== STATUS BADGES ===== */
     .status-badge {
         padding: 4px 14px;
         border-radius: 20px;
@@ -405,6 +457,7 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
+        white-space: nowrap;
     }
 
     .status-badge.waiting {
@@ -438,6 +491,12 @@
 
     .pagination-wrapper .pagination {
         justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .pagination-wrapper nav {
+        display: flex;
+        justify-content: center;
     }
 
     /* ===== EMPTY STATE ===== */
@@ -464,16 +523,31 @@
         margin-bottom: 0;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ============================================ */
+    /* ✅ RESPONSIVE - LARGE TABLET (max 1200px)   */
+    /* ============================================ */
     @media (max-width: 1200px) {
-        .stats-grid, .status-summary-grid {
-            grid-template-columns: repeat(2, 1fr);
+        .stats-grid,
+        .status-summary-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .stat-card .stat-number {
+            font-size: 26px;
         }
     }
 
+    /* ============================================ */
+    /* ✅ RESPONSIVE - TABLET (max 992px)           */
+    /* ============================================ */
     @media (max-width: 992px) {
+        .reports-wrapper {
+            padding: 20px 18px;
+        }
+
         .charts-grid {
             grid-template-columns: 1fr;
+            gap: 16px;
         }
 
         .page-header {
@@ -484,65 +558,374 @@
         .page-header-left h1 {
             font-size: 22px;
         }
-    }
 
-    @media (max-width: 768px) {
-        .reports-wrapper {
-            padding: 16px;
+        .btn-export {
+            width: 100%;
+            justify-content: center;
         }
 
-        .stats-grid, .status-summary-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+        .chart-card .chart-container {
+            height: 250px;
         }
 
         .stat-card .stat-number {
             font-size: 24px;
         }
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        .table-container table {
-            font-size: 13px;
-            min-width: 700px;
-        }
-
-        .filters-grid {
-            grid-template-columns: 1fr 1fr;
-        }
     }
 
-    @media (max-width: 576px) {
+    /* ============================================ */
+    /* ✅ RESPONSIVE - MOBILE (max 768px)           */
+    /* ============================================ */
+    @media (max-width: 768px) {
         .reports-wrapper {
-            padding: 12px;
+            padding: 16px 12px;
         }
 
-        .stats-grid, .status-summary-grid {
-            grid-template-columns: 1fr 1fr;
+        .page-header {
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .page-header-left h1 {
+            font-size: 20px;
             gap: 8px;
+        }
+
+        .page-header-left h1 i {
+            font-size: 20px;
+        }
+
+        .page-header-left p {
+            font-size: 13px;
+        }
+
+        /* Stats grid - 2 columns on mobile */
+        .stats-grid,
+        .status-summary-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 18px;
         }
 
         .stat-card {
             padding: 14px 16px;
+            border-radius: 12px;
+        }
+
+        .stat-card .stat-icon {
+            font-size: 20px;
         }
 
         .stat-card .stat-number {
-            font-size: 20px;
+            font-size: 22px;
+            margin: 4px 0 2px;
+        }
+
+        .stat-card .stat-label {
+            font-size: 11px;
+        }
+
+        .status-item {
+            padding: 12px 14px;
+            border-radius: 10px;
+        }
+
+        .status-item .status-icon {
+            font-size: 18px;
+        }
+
+        .status-item .status-number {
+            font-size: 22px;
+        }
+
+        .status-item .status-label {
+            font-size: 11px;
+        }
+
+        /* Charts */
+        .chart-card {
+            padding: 16px 16px;
+            border-radius: 12px;
+        }
+
+        .chart-card .chart-title {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .chart-card .chart-container {
+            height: 220px;
+        }
+
+        .chart-card canvas {
+            max-height: 220px;
+        }
+
+        /* Filters */
+        .filters-card {
+            padding: 16px 14px;
+            border-radius: 12px;
+        }
+
+        .filters-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .filter-control {
+            padding: 10px 12px;
+            font-size: 13.5px;
+            border-radius: 9px;
+        }
+
+        .filter-actions {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-filter,
+        .btn-reset {
+            width: 100%;
+            justify-content: center;
+            padding: 11px 20px;
+            font-size: 13px;
+        }
+
+        /* Swipe hint */
+        .table-scroll-hint {
+            display: block;
+        }
+
+        /* Table */
+        .table-wrapper {
+            border-radius: 12px;
+        }
+
+        .table-container {
+            min-width: 850px;
+        }
+
+        .table-container thead th {
+            padding: 10px 12px;
+            font-size: 10px;
+        }
+
+        .table-container tbody td {
+            padding: 11px 12px;
+            font-size: 12.5px;
+        }
+
+        .status-badge {
+            font-size: 11px;
+            padding: 4px 10px;
+        }
+
+        .empty-state {
+            padding: 40px 16px;
+        }
+
+        .empty-state i {
+            font-size: 42px;
+        }
+
+        .empty-state h3 {
+            font-size: 17px;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+        }
+    }
+
+    /* ============================================ */
+    /* ✅ RESPONSIVE - SMALL MOBILE (max 576px)     */
+    /* ============================================ */
+    @media (max-width: 576px) {
+        .reports-wrapper {
+            padding: 12px 10px;
         }
 
         .page-header-left h1 {
             font-size: 18px;
         }
 
+        .page-header-left p {
+            font-size: 12px;
+        }
+
         .btn-export {
-            padding: 10px 20px;
+            padding: 11px 16px;
+            font-size: 12px;
+            border-radius: 10px;
+        }
+
+        /* Stats grid */
+        .stat-card {
+            padding: 12px 10px;
+        }
+
+        .stat-card .stat-icon {
+            font-size: 16px;
+        }
+
+        .stat-card .stat-number {
+            font-size: 18px;
+        }
+
+        .stat-card .stat-label {
+            font-size: 10px;
+            letter-spacing: 0.2px;
+        }
+
+        .status-item {
+            padding: 10px 10px;
+        }
+
+        .status-item .status-icon {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .status-item .status-number {
+            font-size: 18px;
+        }
+
+        .status-item .status-label {
+            font-size: 10px;
+        }
+
+        /* Charts */
+        .chart-card {
+            padding: 14px 12px;
+        }
+
+        .chart-card .chart-title {
             font-size: 13px;
+        }
+
+        .chart-card .chart-container {
+            height: 200px;
+        }
+
+        .chart-card canvas {
+            max-height: 200px;
+        }
+
+        /* Filters */
+        .filters-card {
+            padding: 14px 12px;
         }
 
         .filters-grid {
             grid-template-columns: 1fr;
+        }
+
+        .filter-group label {
+            font-size: 12px;
+        }
+
+        .filter-control {
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+
+        .btn-filter,
+        .btn-reset {
+            padding: 10px 16px;
+            font-size: 12px;
+        }
+
+        /* Table */
+        .table-container {
+            min-width: 780px;
+        }
+
+        .table-container thead th {
+            padding: 9px 10px;
+            font-size: 9.5px;
+        }
+
+        .table-container tbody td {
+            padding: 10px 10px;
+            font-size: 12px;
+        }
+
+        .status-badge {
+            font-size: 10px;
+            padding: 3px 8px;
+        }
+
+        .table-scroll-hint {
+            font-size: 11px;
+            padding: 6px;
+        }
+
+        /* Pagination */
+        .pagination-wrapper {
+            margin-top: 15px;
+        }
+    }
+
+    /* ============================================ */
+    /* ✅ RESPONSIVE - EXTRA SMALL (max 380px)     */
+    /* ============================================ */
+    @media (max-width: 380px) {
+        .reports-wrapper {
+            padding: 10px 8px;
+        }
+
+        .page-header-left h1 {
+            font-size: 16px;
+        }
+
+        .page-header-left h1 i {
+            font-size: 16px;
+        }
+
+        .stat-card {
+            padding: 10px 8px;
+        }
+
+        .stat-card .stat-icon {
+            font-size: 14px;
+        }
+
+        .stat-card .stat-number {
+            font-size: 16px;
+        }
+
+        .stat-card .stat-label {
+            font-size: 9px;
+        }
+
+        .status-item .status-number {
+            font-size: 16px;
+        }
+
+        .status-item .status-label {
+            font-size: 9px;
+        }
+
+        .chart-card .chart-container {
+            height: 180px;
+        }
+
+        .chart-card canvas {
+            max-height: 180px;
+        }
+
+        .table-container {
+            min-width: 720px;
+        }
+
+        .table-container thead th {
+            padding: 8px 9px;
+            font-size: 9px;
+        }
+
+        .table-container tbody td {
+            padding: 9px 9px;
+            font-size: 11.5px;
         }
     }
 </style>
@@ -554,7 +937,7 @@
             <h1>
                 <i class="fas fa-chart-line"></i> Queue Reports
             </h1>
-            <p><i class="fas fa-arrow-trend-up" style="color: var(--accent-1);"></i> Monitor and analyze queue performance metrics</p>
+            <p><i class="fas fa-arrow-trend-up"></i> Monitor and analyze queue performance metrics</p>
         </div>
         <button onclick="exportReport()" class="btn-export">
             <i class="fas fa-download"></i> Export Report
@@ -576,12 +959,12 @@
         <div class="stat-card blue">
             <div class="stat-icon"><i class="fas fa-clock"></i></div>
             <div class="stat-number">{{ round($avgWaitingTime ?? 0) }} min</div>
-            <div class="stat-label">Average Waiting Time</div>
+            <div class="stat-label">Avg Waiting Time</div>
         </div>
         <div class="stat-card cyan">
             <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
             <div class="stat-number">{{ round($avgServiceTime ?? 0) }} min</div>
-            <div class="stat-label">Average Service Time</div>
+            <div class="stat-label">Avg Service Time</div>
         </div>
     </div>
 
@@ -611,20 +994,22 @@
 
     <!-- Charts -->
     <div class="charts-grid">
-        <!-- Department Distribution Chart -->
         <div class="chart-card">
             <h4 class="chart-title">
                 <i class="fas fa-chart-pie"></i> Department Distribution
             </h4>
-            <canvas id="departmentChart"></canvas>
+            <div class="chart-container">
+                <canvas id="departmentChart"></canvas>
+            </div>
         </div>
         
-        <!-- Daily Trend Chart -->
         <div class="chart-card">
             <h4 class="chart-title">
                 <i class="fas fa-chart-line"></i> Last 7 Days Trend
             </h4>
-            <canvas id="trendChart"></canvas>
+            <div class="chart-container">
+                <canvas id="trendChart"></canvas>
+            </div>
         </div>
     </div>
 
@@ -675,53 +1060,60 @@
         </form>
     </div>
 
-    <!-- Table -->
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Token #</th>
-                    <th>Patient Name</th>
-                    <th>Doctor</th>
-                    <th>Department</th>
-                    <th>Status</th>
-                    <th>Waiting Time</th>
-                    <th>Service Time</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($reports ?? [] as $report)
-                <tr>
-                    <td><span class="token-badge">#{{ $report->token_number ?? $report->id }}</span></td>
-                    <td>{{ $report->patient_name ?? 'N/A' }}</td>
-                    <td>{{ $report->doctor_name ?? 'N/A' }}</td>
-                    <td>{{ $report->department ?? 'General' }}</td>
-                    <td>
-                        <span class="status-badge {{ str_replace('_', '-', $report->status ?? 'waiting') }}">
-                            @if(($report->status ?? 'waiting') == 'waiting') ⏳ Waiting
-                            @elseif(($report->status ?? 'waiting') == 'in_progress') 🔄 In Progress
-                            @elseif(($report->status ?? 'waiting') == 'completed') ✅ Completed
-                            @else ❌ Cancelled @endif
-                        </span>
-                    </td>
-                    <td>{{ $report->waiting_time ?? 0 }} min</td>
-                    <td>{{ $report->service_time ?? 0 }} min</td>
-                    <td>{{ isset($report->date) ? \Carbon\Carbon::parse($report->date)->format('d M Y') : 'N/A' }}</td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="8">
-                        <div class="empty-state">
-                            <i class="fas fa-chart-line"></i>
-                            <h3>No Reports Found</h3>
-                            <p>No queue data available for the selected filters.</p>
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+    <!-- Swipe Hint (Sirf mobile par) -->
+    <div class="table-scroll-hint">
+        <i class="fas fa-arrows-left-right"></i> Swipe to see more
+    </div>
+
+    <!-- Table Wrapper -->
+    <div class="table-wrapper">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Token #</th>
+                        <th>Patient Name</th>
+                        <th>Doctor</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th>Waiting Time</th>
+                        <th>Service Time</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($reports ?? [] as $report)
+                    <tr>
+                        <td><span class="token-badge">#{{ $report->token_number ?? $report->id }}</span></td>
+                        <td>{{ $report->patient_name ?? 'N/A' }}</td>
+                        <td>{{ $report->doctor_name ?? 'N/A' }}</td>
+                        <td>{{ $report->department ?? 'General' }}</td>
+                        <td>
+                            <span class="status-badge {{ str_replace('_', '-', $report->status ?? 'waiting') }}">
+                                @if(($report->status ?? 'waiting') == 'waiting') ⏳ Waiting
+                                @elseif(($report->status ?? 'waiting') == 'in_progress') 🔄 In Progress
+                                @elseif(($report->status ?? 'waiting') == 'completed') ✅ Completed
+                                @else ❌ Cancelled @endif
+                            </span>
+                        </td>
+                        <td>{{ $report->waiting_time ?? 0 }} min</td>
+                        <td>{{ $report->service_time ?? 0 }} min</td>
+                        <td>{{ isset($report->date) ? \Carbon\Carbon::parse($report->date)->format('d M Y') : 'N/A' }}</td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="8">
+                            <div class="empty-state">
+                                <i class="fas fa-chart-line"></i>
+                                <h3>No Reports Found</h3>
+                                <p>No queue data available for the selected filters.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
     
     <!-- Pagination -->
@@ -742,12 +1134,17 @@ function exportReport() {
 }
 
 // ============================================
+// CHARTS - Responsive Setup
+// ============================================
+const isMobile = window.innerWidth <= 768;
+
+// ============================================
 // DEPARTMENT DISTRIBUTION CHART
 // ============================================
 const deptCtx = document.getElementById('departmentChart');
 const deptData = @json($departmentStats ?? []);
 
-if (deptData.length > 0) {
+if (deptData.length > 0 && deptCtx) {
     new Chart(deptCtx, {
         type: 'pie',
         data: {
@@ -760,20 +1157,24 @@ if (deptData.length > 0) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: { 
-                    position: 'bottom',
+                    position: isMobile ? 'bottom' : 'bottom',
                     labels: {
-                        padding: 20,
+                        padding: isMobile ? 10 : 20,
                         usePointStyle: true,
-                        pointStyle: 'circle'
+                        pointStyle: 'circle',
+                        font: {
+                            size: isMobile ? 10 : 12
+                        },
+                        boxWidth: isMobile ? 8 : 12
                     }
                 }
             }
         }
     });
-} else {
+} else if (deptCtx) {
     deptCtx.parentElement.innerHTML = '<p style="text-align:center;color:#94a3b8;padding:40px 0;">No department data available</p>';
 }
 
@@ -783,7 +1184,7 @@ if (deptData.length > 0) {
 const trendCtx = document.getElementById('trendChart');
 const trendData = @json($dailyStats ?? []);
 
-if (trendData.length > 0) {
+if (trendData.length > 0 && trendCtx) {
     new Chart(trendCtx, {
         type: 'line',
         data: {
@@ -797,32 +1198,43 @@ if (trendData.length > 0) {
                 fill: true,
                 pointBackgroundColor: '#3b82f6',
                 pointBorderColor: '#fff',
-                pointRadius: 5,
-                pointHoverRadius: 7,
+                pointRadius: isMobile ? 3 : 5,
+                pointHoverRadius: isMobile ? 5 : 7,
                 borderWidth: 2
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: { 
                     position: 'top',
                     labels: {
                         usePointStyle: true,
-                        pointStyle: 'circle'
+                        pointStyle: 'circle',
+                        font: {
+                            size: isMobile ? 11 : 12
+                        }
                     }
                 }
             },
             scales: {
+                x: {
+                    ticks: {
+                        font: { size: isMobile ? 9 : 11 }
+                    }
+                },
                 y: {
                     beginAtZero: true,
-                    ticks: { stepSize: 1 }
+                    ticks: { 
+                        stepSize: 1,
+                        font: { size: isMobile ? 9 : 11 }
+                    }
                 }
             }
         }
     });
-} else {
+} else if (trendCtx) {
     trendCtx.parentElement.innerHTML = '<p style="text-align:center;color:#94a3b8;padding:40px 0;">No trend data available</p>';
 }
 </script>

@@ -1,17 +1,22 @@
+/* ============================================ */
+/* GET TOKEN PAGE - RESPONSIVE                  */
+/* ============================================ */
+
 /* --- PAGE LAYOUT --- */
 .token-status-section {
     min-height: 80vh;
-    background-color: #ffffff; /* Page Background */
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
 }
 
 /* --- CENTERED DARK CARD --- */
 .token-display-card {
-    background: #071a1c; /* Deep Dark Teal */
+    background: #071a1c;
     width: 100%;
     max-width: 650px;
     border-radius: 40px;
@@ -21,6 +26,56 @@
     border: 1px solid rgba(0, 212, 255, 0.1);
     position: relative;
     overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* ============================================ */
+/* TOKEN HEADER                                 */
+/* ============================================ */
+.token-header {
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.status-badge {
+    display: inline-block;
+    border: 1px solid #00d4ff;
+    color: #00d4ff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    background: rgba(0, 212, 255, 0.08);
+}
+
+.status-badge.pulse {
+    animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 0 0px rgba(0, 212, 255, 0.3); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 212, 255, 0); }
+    100% { box-shadow: 0 0 0 0px rgba(0, 212, 255, 0); }
+}
+
+.card-title {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 16px 0 0 0;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================ */
+/* TOKEN MAIN CONTENT                           */
+/* ============================================ */
+.token-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* --- TOKEN VISUALS --- */
@@ -36,10 +91,12 @@
 
 .token-ring {
     position: absolute;
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     border: 2px dashed rgba(0, 212, 255, 0.3);
     border-radius: 50%;
     animation: rotateRing 20s linear infinite;
+    pointer-events: none;
 }
 
 @keyframes rotateRing {
@@ -47,20 +104,95 @@
     to { transform: rotate(360deg); }
 }
 
+.token-data {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.token-label {
+    display: block;
+    color: #00d4ff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
 .token-value {
     color: #ffffff;
     font-size: 5.5rem;
     font-weight: 900;
     text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    line-height: 1;
+    margin: 0;
+}
+
+/* ============================================ */
+/* STATUS GRID                                  */
+/* ============================================ */
+.status-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 20px;
+}
+
+/* --- TIME BOX --- */
+.time-box {
+    text-align: center;
+    flex: 1;
 }
 
 .time-value {
     font-size: 3.5rem;
     font-weight: 800;
     color: #00d4ff;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
 }
 
-/* --- NO TOKEN STATE BUTTON --- */
+.time-label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
+/* --- INFO BOX --- */
+.info-box {
+    text-align: right;
+    flex: 1;
+}
+
+.info-item {
+    margin-bottom: 8px;
+}
+
+.info-item:last-child {
+    margin-bottom: 0;
+}
+
+.info-label {
+    display: block;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.75rem;
+}
+
+.info-value {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* ============================================ */
+/* BUTTON                                       */
+/* ============================================ */
 .btn-get-token {
     display: inline-block;
     background: linear-gradient(135deg, #00d4ff, #0088ff);
@@ -74,23 +206,325 @@
     text-transform: uppercase;
     transition: 0.3s;
     margin-top: 20px;
+    white-space: nowrap;
+    font-family: inherit;
+    font-size: 0.95rem;
 }
 
 .btn-get-token:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0, 212, 255, 0.4);
+    color: #ffffff;
 }
 
-.status-badge {
-    border: 1px solid #00d4ff;
-    color: #00d4ff;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+/* ============================================ */
+/* NO TOKEN STATE (Custom classes)              */
+/* ============================================ */
+.no-token-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
 }
 
-.pulse { animation: pulse-glow 2s infinite; }
-@keyframes pulse-glow {
-    0% { box-shadow: 0 0 0 0px rgba(0, 212, 255, 0.3); }
-    70% { box-shadow: 0 0 0 10px rgba(0, 212, 255, 0); }
+.no-token-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    animation: iconGlow 3s ease-in-out infinite;
+}
+
+@keyframes iconGlow {
+    0%, 100% { filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.3)); }
+    50% { filter: drop-shadow(0 0 25px rgba(0, 212, 255, 0.6)); }
+}
+
+.no-token-title {
+    color: #ffffff;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+}
+
+.no-token-desc {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 28px 0;
+    max-width: 420px;
+}
+
+/* ============================================ */
+/* ✅ RESPONSIVE - TABLET (max 768px)           */
+/* ============================================ */
+@media (max-width: 768px) {
+    .token-status-section {
+        padding: 30px 16px;
+        min-height: auto;
+    }
+
+    .token-display-card {
+        padding: 35px 25px;
+        border-radius: 30px;
+    }
+
+    .card-title {
+        font-size: 0.9rem;
+        margin-top: 12px;
+    }
+
+    .status-badge {
+        padding: 5px 12px;
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+    }
+
+    .token-number-wrapper {
+        width: 200px;
+        height: 200px;
+        margin: 25px auto;
+    }
+
+    .token-label {
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+    }
+
+    .token-value {
+        font-size: 4rem;
+    }
+
+    .status-grid {
+        margin-top: 25px;
+        padding-top: 25px;
+        gap: 15px;
+    }
+
+    .time-value {
+        font-size: 2.5rem;
+    }
+
+    .time-label {
+        font-size: 0.7rem;
+    }
+
+    .info-value {
+        font-size: 1rem;
+    }
+
+    .info-label {
+        font-size: 0.7rem;
+    }
+
+    /* No token view */
+    .no-token-icon-box svg {
+        width: 65px;
+        height: 65px;
+    }
+
+    .no-token-title {
+        font-size: 1.5rem;
+    }
+
+    .no-token-desc {
+        font-size: 0.9rem;
+        margin-bottom: 24px;
+    }
+}
+
+/* ============================================ */
+/* ✅ RESPONSIVE - SMALL MOBILE (max 576px)     */
+/* ============================================ */
+@media (max-width: 576px) {
+    .token-status-section {
+        padding: 20px 12px;
+    }
+
+    .token-display-card {
+        padding: 28px 18px;
+        border-radius: 24px;
+    }
+
+    .token-header {
+        margin-bottom: 15px;
+    }
+
+    .status-badge {
+        padding: 4px 12px;
+        font-size: 0.65rem;
+        letter-spacing: 0.8px;
+    }
+
+    .card-title {
+        font-size: 0.85rem;
+        margin-top: 10px;
+    }
+
+    .token-number-wrapper {
+        width: 160px;
+        height: 160px;
+        margin: 20px auto;
+    }
+
+    .token-label {
+        font-size: 0.65rem;
+        letter-spacing: 1.2px;
+        margin-bottom: 4px;
+    }
+
+    .token-value {
+        font-size: 3.2rem;
+    }
+
+    /* Status grid stack on mobile */
+    .status-grid {
+        flex-direction: column;
+        align-items: stretch;
+        margin-top: 20px;
+        padding-top: 20px;
+        gap: 20px;
+    }
+
+    .time-box,
+    .info-box {
+        text-align: center;
+        flex: none;
+        width: 100%;
+    }
+
+    .time-value {
+        font-size: 2.2rem;
+    }
+
+    .time-label {
+        font-size: 0.7rem;
+        margin-top: 4px;
+    }
+
+    .info-item {
+        margin-bottom: 6px;
+    }
+
+    .info-label {
+        font-size: 0.7rem;
+    }
+
+    .info-value {
+        font-size: 1rem;
+    }
+
+    .btn-get-token {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 0.85rem;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    /* No token view */
+    .no-token-view {
+        padding: 15px 5px;
+    }
+
+    .no-token-icon-box {
+        margin-bottom: 18px;
+    }
+
+    .no-token-icon-box svg {
+        width: 55px;
+        height: 55px;
+    }
+
+    .no-token-title {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+
+    .no-token-desc {
+        font-size: 0.85rem;
+        margin-bottom: 20px;
+        line-height: 1.55;
+    }
+}
+
+/* ============================================ */
+/* ✅ RESPONSIVE - EXTRA SMALL (max 380px)     */
+/* ============================================ */
+@media (max-width: 380px) {
+    .token-status-section {
+        padding: 15px 10px;
+    }
+
+    .token-display-card {
+        padding: 22px 14px;
+        border-radius: 20px;
+    }
+
+    .status-badge {
+        padding: 4px 10px;
+        font-size: 0.6rem;
+    }
+
+    .card-title {
+        font-size: 0.8rem;
+    }
+
+    .token-number-wrapper {
+        width: 140px;
+        height: 140px;
+    }
+
+    .token-label {
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+    }
+
+    .token-value {
+        font-size: 2.6rem;
+    }
+
+    .status-grid {
+        margin-top: 16px;
+        padding-top: 16px;
+        gap: 16px;
+    }
+
+    .time-value {
+        font-size: 1.9rem;
+    }
+
+    .time-label {
+        font-size: 0.65rem;
+    }
+
+    .info-label {
+        font-size: 0.65rem;
+    }
+
+    .info-value {
+        font-size: 0.95rem;
+    }
+
+    .btn-get-token {
+        padding: 13px 16px;
+        font-size: 0.8rem;
+    }
+
+    /* No token view */
+    .no-token-icon-box svg {
+        width: 48px;
+        height: 48px;
+    }
+
+    .no-token-title {
+        font-size: 1.15rem;
+    }
+
+    .no-token-desc {
+        font-size: 0.8rem;
+    }
 }

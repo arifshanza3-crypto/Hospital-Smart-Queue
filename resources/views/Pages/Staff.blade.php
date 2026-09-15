@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/Staff.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <section class="hero-header" style="background-color: #0b2e33;">
+    <section class="hero-header">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
@@ -21,15 +21,15 @@
             <div class="stats-grid">
                 <div class="stat-item">
                     <span class="stat-label">Total in Queue</span>
-                    <h2 id="stat-total">0</h2>
+                    <h2 id="stat-total">{{ $totalQueue ?? 0 }}</h2>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Now Serving</span>
-                    <h2 id="stat-serving">--</h2>
+                    <h2 id="stat-serving">{{ $nowServingToken ?? '--' }}</h2>
                 </div>
                 <div class="stat-item">
                     <span class="stat-label">Total Pending Wait</span>
-                    <h2 id="stat-avg-time">0m</h2>
+                    <h2 id="stat-avg-time">{{ $avgWaitTime ?? 0 }}m</h2>
                 </div>
             </div>
         </div>
@@ -37,37 +37,87 @@
 
     <main class="container">
         <div class="data-card">
-            <table class="queue-table">
-                <thead>
-                    <tr>
-                        <th>Token #</th>
-                        <th>Patient Info</th>
-                        <th>Type</th>
-                        <th>Est. Time</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="queue-body"></tbody>
-            </table>
+            <div class="table-scroll-hint">
+                <i class="fas fa-arrows-left-right"></i> Swipe to see more
+            </div>
+            <div class="table-wrapper">
+                <table class="queue-table">
+                    <thead>
+                        <tr>
+                            <th>Token #</th>
+                            <th>Patient Info</th>
+                            <th>Type</th>
+                            <th>Est. Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="queue-body">
+                        @if(isset($tokens) && $tokens->count() > 0)
+                            @foreach($tokens as $token)
+                            <tr id="token-row-{{ $token->id }}">
+                                <td><strong>{{ $token->token_number }}</strong></td>
+                                <td>
+                                    <div>{{ $token->patient_name ?? 'N/A' }}</div>
+                                    <small class="patient-phone">{{ $token->phone ?? '' }}</small>
+                                </td>
+                                <td>{{ ucfirst($token->type ?? 'online') }}</td>
+                                <td>{{ $token->estimated_time ?? 0 }} min</td>
+                                <td class="status-td">
+                                    <span class="status-badge {{ $token->status }}">
+                                        {{ ucfirst($token->status) }}
+                                    </span>
+                                </td>
+                                <td class="action-td">
+                                    @if($token->status == 'waiting')
+                                        <button onclick="updateTokenStatus({{ $token->id }}, 'calling')" class="btn-sm btn-call">
+                                            <i class="fas fa-phone"></i> Call
+                                        </button>
+                                        <button onclick="updateTokenStatus({{ $token->id }}, 'cancelled')" class="btn-sm btn-cancel">
+                                            <i class="fas fa-times"></i> Cancel
+                                        </button>
+
+                                    @elseif($token->status == 'calling')
+                                        <button onclick="updateTokenStatus({{ $token->id }}, 'serving')" class="btn-sm btn-start">
+                                            <i class="fas fa-play"></i> Start
+                                        </button>
+                                        <button onclick="updateTokenStatus({{ $token->id }}, 'cancelled')" class="btn-sm btn-cancel">
+                                            <i class="fas fa-times"></i> Cancel
+                                        </button>
+
+                                    @elseif($token->status == 'serving')
+                                        <button onclick="updateTokenStatus({{ $token->id }}, 'completed')" class="btn-sm btn-complete">
+                                            <i class="fas fa-check"></i> Complete
+                                        </button>
+
+                                    @elseif($token->status == 'completed')
+                                        <span class="badge-served">
+                                            <i class="fas fa-check-circle"></i> Served
+                                        </span>
+
+                                    @elseif($token->status == 'cancelled')
+                                        <span class="badge-cancelled">
+                                            <i class="fas fa-times-circle"></i> Cancelled
+                                        </span>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        @else
+                            <tr id="empty-row">
+                                <td colspan="6" class="empty-cell">
+                                    <i class="fas fa-inbox"></i>
+                                    No patients in queue
+                                </td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 
-    <!-- ✅ Timer Modal with Patient Arrived Button -->
-    <div id="timerModal" class="modal" style="display: none;">
-        <div class="modal-content" style="text-align: center;">
-            <h3>⏰ Waiting for Patient</h3>
-            <div id="timerDisplay" style="font-size: 48px; font-weight: bold; margin: 20px 0;">05:00</div>
-            <p>Patient has <span id="minutesLeft">5</span> minutes to arrive</p>
-            <div class="modal-footer" style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-                <button class="btn btn-success" onclick="patientArrived()" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">✅ Patient Arrived - Start Service</button>
-                <button class="btn btn-primary" onclick="extendTimer()" style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">⏰ Extend (2 min)</button>
-                <button class="btn btn-danger" onclick="cancelCurrentPatient()" style="background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">❌ Cancel & Next</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Patient Modal - Updated with Mobile Number -->
+    <!-- Patient Modal -->
     <div id="patientModal" class="modal">
         <div class="modal-content">
             <h3>Add New Patient</h3>
@@ -75,11 +125,10 @@
                 <label>Full Name</label>
                 <input type="text" id="p_name" placeholder="Enter name..." required>
             </div>
-            {{-- ✅ NEW: Mobile Number Field --}}
             <div class="form-group">
                 <label>Mobile Number</label>
                 <input type="tel" id="p_mobile" placeholder="03XX-XXXXXXX" required maxlength="11">
-                <small id="mobileError" style="color: #ff4b2b; display: none;">Please enter a valid 11-digit number starting with 03</small>
+                <small id="mobileError" class="error-msg">Please enter a valid 11-digit number starting with 03</small>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-text" onclick="closeModal('patientModal')">Cancel</button>
@@ -88,6 +137,7 @@
         </div>
     </div>
 
+    <!-- Time Modal -->
     <div id="timeModal" class="modal">
         <div class="modal-content">
             <h3>Set Global Est. Time</h3>
@@ -102,92 +152,6 @@
         </div>
     </div>
 
-    <div id="detailModal" class="modal">
-        <div class="modal-content">
-            <h3>Queue Positioning</h3>
-            <div id="detail-content" style="margin-top:20px; line-height: 1.8;"></div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="closeModal('detailModal')">Got it</button>
-            </div>
-        </div>
-    </div>
-
+    <!-- External Script File -->
     <script src="{{ asset('js/Staff.js') }}"></script>
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileInput = document.getElementById('p_mobile');
-        const mobileError = document.getElementById('mobileError');
-
-        if (mobileInput) {
-            mobileInput.addEventListener('input', function(e) {
-                this.value = this.value.replace(/[^0-9]/g, '');
-                if (this.value.length > 11) {
-                    this.value = this.value.slice(0, 11);
-                }
-
-                const isValid = /^(03)\d{9}$/.test(this.value);
-                if (this.value.length > 0 && !isValid) {
-                    mobileError.style.display = 'block';
-                    this.style.border = "1px solid #ff4b2b";
-                } else {
-                    mobileError.style.display = 'none';
-                    this.style.border = "1px solid rgba(255,255,255,0.1)";
-                }
-            });
-        }
-    });
-
-    // ✅ Override submitPatient function to include mobile number
-    function submitPatient() {
-        const name = document.getElementById('p_name')?.value?.trim();
-        const mobile = document.getElementById('p_mobile')?.value?.trim();
-
-        if (!name) {
-            alert('Please enter patient name');
-            return;
-        }
-
-        if (!mobile) {
-            alert('Please enter mobile number');
-            return;
-        }
-
-        // Validate mobile number
-        const isValid = /^(03)\d{9}$/.test(mobile);
-        if (!isValid) {
-            document.getElementById('mobileError').style.display = 'block';
-            document.getElementById('p_mobile').style.border = "1px solid #ff4b2b";
-            return;
-        }
-
-        fetch('/staff/add-patient', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: JSON.stringify({
-                name: name,
-                mobile_number: mobile
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                closeModal('patientModal');
-                document.getElementById('p_name').value = '';
-                document.getElementById('p_mobile').value = '';
-                loadQueue();
-                alert('✅ ' + data.message);
-            } else {
-                alert('❌ ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('❌ Error adding patient');
-        });
-    }
-    </script>
 @endsection

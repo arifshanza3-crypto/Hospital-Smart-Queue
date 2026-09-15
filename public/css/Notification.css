@@ -1,11 +1,11 @@
 /* ============================================ */
-/* NOTIFICATIONS PAGE STYLES                    */
+/* NOTIFICATIONS PAGE - LIGHT THEME + DARK CARDS */
 /* ============================================ */
 
 .notifications-page {
     padding: 30px 0;
-    background: #0b2e33;
     min-height: 100vh;
+    background: linear-gradient(135deg, #f0f7fa 0%, #e0ecf0 50%, #d4e4e8 100%);
 }
 
 .container {
@@ -14,6 +14,7 @@
     padding: 0 20px;
 }
 
+/* --- Header --- */
 .notifications-header {
     display: flex;
     justify-content: space-between;
@@ -31,23 +32,22 @@
 }
 
 .header-left h1 {
-    color: #fff;
+    color: #0a2a3a;
     font-size: 28px;
     margin: 0;
+    font-weight: 700;
 }
 
 .notification-count {
-    background: #00d4ff;
-    color: #0b2e33;
+    background: #0a2a3a;
+    color: #ffffff;
     padding: 2px 12px;
     border-radius: 20px;
     font-size: 14px;
     font-weight: bold;
 }
 
-.user-role-badge {
-    margin-left: 5px;
-}
+.user-role-badge { margin-left: 5px; }
 
 .role-tag {
     display: inline-flex;
@@ -61,307 +61,285 @@
     letter-spacing: 0.5px;
 }
 
-.role-tag.admin {
-    background: rgba(239, 68, 68, 0.15);
-    color: #ef4444;
-    border: 1px solid rgba(239, 68, 68, 0.2);
-}
+.role-tag.admin { background: rgba(239, 68, 68, 0.12); color: #b03030; border: 1px solid rgba(239, 68, 68, 0.15); }
+.role-tag.staff { background: rgba(11, 46, 51, 0.08); color: #0a2a3a; border: 1px solid rgba(11, 46, 51, 0.1); }
+.role-tag.user { background: rgba(16, 185, 129, 0.12); color: #1a7a4a; border: 1px solid rgba(16, 185, 129, 0.15); }
 
-.role-tag.staff {
-    background: rgba(59, 130, 246, 0.15);
-    color: #3b82f6;
-    border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-.role-tag.user {
-    background: rgba(16, 185, 129, 0.15);
-    color: #10b981;
-    border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-.header-right {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.btn-mark-all,
-.btn-refresh {
-    padding: 8px 18px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-mark-all {
-    background: #00d4ff;
-    color: #0b2e33;
-}
-
-.btn-mark-all:hover {
-    background: #00b8e6;
-    transform: translateY(-2px);
-}
-
-.btn-refresh {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-}
-
-.btn-refresh:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-}
-
+/* --- Filter Buttons --- */
 .notifications-filter {
     display: flex;
     gap: 10px;
     margin-bottom: 25px;
     flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(11, 46, 51, 0.06);
 }
 
 .filter-btn {
     padding: 8px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(11, 46, 51, 0.1);
     border-radius: 8px;
     background: transparent;
-    color: rgba(255, 255, 255, 0.6);
+    color: #0a2a3a;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: 500;
+    font-weight: 600;
 }
 
-.filter-btn:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
-}
-
-.filter-btn.active {
-    background: rgba(0, 212, 255, 0.15);
-    border-color: #00d4ff;
-    color: #00d4ff;
-}
+.filter-btn:hover { background: rgba(11, 46, 51, 0.06); color: #0a2a3a; }
+.filter-btn.active { background: rgba(11, 46, 51, 0.1); border-color: #0a2a3a; color: #0a2a3a; }
 
 .filter-btn .count {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(11, 46, 51, 0.06);
     padding: 1px 10px;
     border-radius: 20px;
     font-size: 11px;
     margin-left: 6px;
-    color: rgba(255, 255, 255, 0.3);
+    color: #0a2a3a;
 }
 
-.filter-btn.active .count {
-    background: rgba(0, 212, 255, 0.15);
-    color: #00d4ff;
-}
+.filter-btn.active .count { background: rgba(11, 46, 51, 0.12); color: #0a2a3a; }
 
+/* --- Notifications List (Dark Cards) --- */
 .notifications-list {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: transparent;
+    padding: 0;
+    border: none;
     min-height: 200px;
 }
 
+/* --- Notification Item (Dark Card) --- */
 .notification-item {
     display: flex;
     align-items: flex-start;
-    gap: 15px;
+    gap: 16px;
     padding: 16px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    margin-bottom: 12px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
     cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.notification-item:last-child {
-    border-bottom: none;
-}
-
-.notification-item:hover {
-    background: rgba(255, 255, 255, 0.04);
 }
 
 .notification-item.unread {
-    background: rgba(0, 212, 255, 0.05);
-    border-left: 3px solid #00d4ff;
+    background: #0d3b42;
+    border-left: 5px solid #00d2d3;
 }
 
 .notification-item.read {
-    opacity: 0.6;
+    background: #144850;
+    border-left: 5px solid transparent;
 }
 
 .notification-icon {
-    font-size: 24px;
-    min-width: 40px;
-    padding-top: 2px;
+    color: #ffffff;
+    font-size: 18px;
+    margin-top: 2px;
+    min-width: 24px;
 }
 
-.notification-content {
-    flex: 1;
-}
+.notification-content { flex: 1; }
 
 .notification-title {
-    color: #fff;
-    font-weight: 600;
+    color: #ffffff;
+    font-weight: 700;
     font-size: 15px;
-    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
+.notification-title span { color: #ffffff; }
+
 .notification-message {
-    color: rgba(255, 255, 255, 0.6);
+    color: #ffffff;
     font-size: 14px;
+    font-weight: 500;
+    margin-top: 4px;
+    margin-bottom: 6px;
+    opacity: 0.95;
 }
 
 .notification-token {
-    color: #00d4ff;
-    font-size: 13px;
-    font-weight: 500;
-    margin-top: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 6px;
 }
 
 .notification-time {
-    color: rgba(255, 255, 255, 0.3);
+    color: #80f6f7;
     font-size: 12px;
-    margin-top: 6px;
+    font-weight: 600;
+    margin-top: 4px;
 }
 
-.notification-status {
-    min-width: 30px;
-    text-align: right;
+/* --- Badges & Dots --- */
+.new-tag {
+    background: #00d2d3;
+    color: #0d3b42;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 800;
 }
 
-.unread-dot {
-    color: #00d4ff;
-    font-size: 12px;
-    animation: pulse 2s ease-in-out infinite;
+.unread-dot { color: #00d2d3; font-size: 12px; animation: pulse 2s ease-in-out infinite; }
+.read-check { color: #80f6f7; font-size: 16px; }
+
+/* --- Empty State --- */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #3a6a75;
 }
 
-.read-check {
-    color: rgba(255, 255, 255, 0.15);
+.empty-icon { font-size: 60px; margin-bottom: 15px; opacity: 0.4; }
+.empty-state h3 { color: #0a2a3a; font-size: 20px; margin-bottom: 8px; font-weight: 700; }
+.empty-state p { font-size: 14px; color: #4a6a75; }
+
+/* --- Footer --- */
+.notifications-footer {
+    text-align: center;
+    padding: 15px;
+    color: #5a7a85;
+    font-size: 13px;
+    font-weight: 600;
+    border-top: 1px solid rgba(11, 46, 51, 0.06);
+    margin-top: 15px;
+}
+
+/* --- Back Link --- */
+.back-link {
+    display: inline-block;
+    padding: 10px 24px;
+    background: rgba(11, 46, 51, 0.06);
+    color: #0a2a3a;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    font-weight: 600;
     font-size: 14px;
+    border: 1px solid rgba(11, 46, 51, 0.08);
 }
+
+.back-link:hover { background: rgba(11, 46, 51, 0.12); color: #0a2a3a; }
+
+.text-center { text-align: center; }
+.mt-3 { margin-top: 20px; }
 
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
 }
 
-.empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: rgba(255, 255, 255, 0.3);
-}
+/* ============================================ */
+/* ✅ RESPONSIVE FIXES (SIRF MOBILE KE LIYE)     */
+/* ============================================ */
 
-.empty-icon {
-    font-size: 60px;
-    margin-bottom: 15px;
-    opacity: 0.4;
-}
-
-.empty-state h3 {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 20px;
-    margin-bottom: 8px;
-}
-
-.empty-state p {
-    font-size: 14px;
-}
-
-.loading-spinner {
-    text-align: center;
-    padding: 40px;
-    color: rgba(255, 255, 255, 0.3);
-}
-
-.loading-spinner i {
-    font-size: 28px;
-}
-
-.error-message {
-    text-align: center;
-    padding: 40px;
-    color: #ef4444;
-}
-
-.notifications-footer {
-    text-align: center;
-    padding: 15px;
-    color: rgba(255, 255, 255, 0.2);
-    font-size: 13px;
-    border-top: 1px solid rgba(255,255,255,0.03);
-    margin-top: 15px;
-}
-
-.back-link {
-    display: inline-block;
-    padding: 10px 24px;
-    background: rgba(0, 212, 255, 0.08);
-    color: #00d4ff;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    font-size: 14px;
-    border: 1px solid rgba(0, 212, 255, 0.1);
-}
-
-.back-link:hover {
-    background: rgba(0, 212, 255, 0.15);
-    border-color: rgba(0, 212, 255, 0.2);
-}
-
-.text-center {
-    text-align: center;
-}
-
-.mt-3 {
-    margin-top: 20px;
-}
-
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+    .notifications-page { padding: 20px 0; }
+
+    .container { padding: 0 15px; }
+
+    /* 1. Header stack kiya */
     .notifications-header {
         flex-direction: column;
         align-items: flex-start;
+        margin-bottom: 18px;
     }
 
-    .header-right {
-        width: 100%;
+    .header-left h1 { font-size: 22px; }
+
+    .notification-count {
+        font-size: 12px;
+        padding: 2px 10px;
     }
 
-    .btn-mark-all,
-    .btn-refresh {
-        flex: 1;
-        text-align: center;
+    /* 2. Filter buttons scrollable */
+    .notifications-filter {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding: 8px 12px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
     }
 
+    .notifications-filter::-webkit-scrollbar { display: none; }
+
+    .filter-btn {
+        padding: 7px 16px;
+        font-size: 13px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    /* 3. Notification items ko compact kiya */
     .notification-item {
-        padding: 12px 15px;
-        flex-wrap: wrap;
+        padding: 13px 15px;
+        gap: 12px;
+        border-radius: 10px;
+        margin-bottom: 10px;
     }
 
-    .notification-status {
+    .notification-icon {
+        font-size: 16px;
+        min-width: 20px;
+    }
+
+    .notification-title { font-size: 14px; }
+    .notification-message { font-size: 13px; }
+    .notification-token { font-size: 10px; padding: 2px 8px; }
+    .notification-time { font-size: 11px; }
+    .new-tag { font-size: 9px; padding: 2px 7px; }
+
+    /* 4. Footer chota kiya */
+    .notifications-footer { font-size: 12px; padding: 12px; }
+
+    /* 5. Back button full width */
+    .back-link {
         width: 100%;
-        text-align: left;
-        padding-left: 55px;
+        text-align: center;
+        padding: 12px;
+        font-size: 13px;
     }
 }
 
+/* Choti screens (iPhone SE) ke liye */
 @media (max-width: 480px) {
+    .container { padding: 0 12px; }
+
+    .header-left h1 { font-size: 19px; gap: 8px; }
+    .header-left { gap: 8px; }
+
+    .notification-count { font-size: 11px; padding: 2px 8px; }
+
     .notifications-filter {
         gap: 6px;
+        padding: 8px 10px;
     }
 
     .filter-btn {
-        padding: 6px 14px;
+        padding: 6px 12px;
         font-size: 12px;
     }
 
-    .header-left h1 {
-        font-size: 22px;
-    }
+    .filter-btn .count { font-size: 10px; padding: 1px 7px; }
+
+    .notification-item { padding: 12px 12px; gap: 10px; }
+    .notification-icon { font-size: 15px; min-width: 18px; }
+    .notification-title { font-size: 13px; }
+    .notification-message { font-size: 12px; }
+    .notification-time { font-size: 10px; }
+
+    .empty-icon { font-size: 48px; }
+    .empty-state h3 { font-size: 17px; }
+    .empty-state p { font-size: 13px; }
 }

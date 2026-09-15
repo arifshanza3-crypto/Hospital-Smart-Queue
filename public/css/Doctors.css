@@ -5,6 +5,7 @@
     color: white;
     font-family: 'Poppins', sans-serif;
     position: relative;
+    overflow-x: hidden; /* Horizontal scroll rokne ke liye */
 }
 
 .mesh-bg {
@@ -111,8 +112,7 @@
     padding: 4px 10px; border-radius: 15px; font-size: 10px; font-weight: bold;
 }
 
-/* --- Modal Popup (CRITICAL FIX) --- */
-/* --- Overlay Background --- */
+/* --- Modal Popup --- */
 .dr-popup-overlay {
     display: none; 
     position: fixed;
@@ -126,20 +126,19 @@
     padding: 20px;
 }
 
-/* --- Main Card Container --- */
 .dr-popup-content {
     background: #0b2e33;
     max-width: 800px; 
     width: 100%;
     border-radius: 25px;
     border: 1px solid #00d4ff;
-    position: relative; /* Essential for absolute positioning of the X button */
-    max-height: 90vh;
-    overflow: hidden; /* Keeps the image corners rounded */
+    position: relative;
+    max-height: 90vh; /* Desktop ke liye theek hai */
+    overflow: hidden;
     box-shadow: 0 10px 50px rgba(0, 212, 255, 0.3);
 }
 
-/* --- FIXED CLOSE BUTTON (The X) --- */
+/* --- Close Button (X) --- */
 .dr-popup-close {
     position: absolute;
     top: 15px;
@@ -153,7 +152,7 @@
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
-    z-index: 10001; /* Higher than image and details */
+    z-index: 10001;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -161,7 +160,7 @@
 }
 
 .dr-popup-close:hover {
-    background: #ff4b2b; /* Red hover effect */
+    background: #ff4b2b;
     transform: rotate(90deg);
 }
 
@@ -173,7 +172,7 @@
 
 .dr-popup-image-container {
     flex: 1; 
-    min-width: 300px; 
+    min-width: 300px; /* ⚠️ Yeh mobile par masla karta hai, neeche fix kiya hai */
     height: 400px; 
     position: relative;
     background: #072529;
@@ -220,20 +219,132 @@
     transform: scale(1.02);
 }
 
-/* --- Mobile Responsiveness --- */
+/* ============================================ */
+/* ✅ RESPONSIVE FIXES (SIRF MOBILE KE LIYE)     */
+/* ============================================ */
+
 @media (max-width: 768px) {
+    /* 1. FIX: Hero slider ki height fix ki */
+    .hero-slider-section {
+        height: auto;
+        min-height: 420px;
+    }
+
+    /* 2. FIX: Info card ka padding kam kiya taake screen par fit aaye */
+    .dr-info-card {
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .dr-name { 
+        font-size: 1.8rem; 
+        line-height: 1.2;
+    }
+
+    .dr-intro {
+        font-size: 0.9rem;
+    }
+
+    .exp-badge {
+        font-size: 10px;
+        padding: 5px 12px;
+    }
+
+    /* 3. FIX: Search input ka padding kam kiya */
+    #drSearchInput {
+        padding: 12px 15px 12px 45px;
+        font-size: 14px;
+    }
+
+    .search-icon {
+        left: 15px;
+    }
+
+    /* 4. FIX: Section title chota kiya */
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    /* 5. MODAL FIXES (SABSE ZAROORI) */
+    .dr-popup-overlay {
+        padding: 10px;
+    }
+
+    .dr-popup-content {
+        max-height: 95vh;
+        border-radius: 20px;
+        overflow-y: auto; /* Content scroll ho sake */
+    }
+
+    /* 6. FIX: Image container ka min-width hata diya (asli masla) */
     .dr-popup-flex {
         flex-direction: column;
+        flex-wrap: nowrap;
     }
+
     .dr-popup-image-container {
-        height: 250px;
+        min-width: 100%; /* 300px se 100% kiya */
+        width: 100%;
+        height: 220px; /* Height fix ki */
+        flex: none;
     }
-    .dr-popup-content {
-        overflow-y: auto;
+
+    .dr-popup-details {
+        padding: 25px 20px;
+        flex: none;
+    }
+
+    .pop-title {
+        font-size: 1.3rem;
+    }
+
+    .join-btn {
+        padding: 13px;
+        font-size: 0.9rem;
+    }
+
+    /* 7. FIX: Close button chota kiya */
+    .dr-popup-close {
+        width: 35px;
+        height: 35px;
+        font-size: 24px;
+        top: 10px;
+        right: 12px;
+    }
+
+    /* 8. FIX: Doctors grid ek column mein */
+    .dr-card-img {
+        height: 240px;
     }
 }
-/* Responsive */
-@media (max-width: 768px) {
-    .dr-popup-flex { flex-direction: column; }
-    .dr-name { font-size: 2rem; }
+
+/* Choti screens (iPhone SE) ke liye */
+@media (max-width: 480px) {
+    .hero-slider-section {
+        min-height: 380px;
+    }
+
+    .dr-info-card {
+        padding: 15px;
+    }
+
+    .dr-name {
+        font-size: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+    }
+
+    .dr-popup-image-container {
+        height: 180px;
+    }
+
+    .dr-popup-details {
+        padding: 20px 15px;
+    }
+
+    .pop-info p {
+        font-size: 0.9rem;
+    }
 }
