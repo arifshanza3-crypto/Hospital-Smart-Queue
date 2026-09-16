@@ -1,6 +1,6 @@
 /**
  * Patient Token Status - JavaScript
- * Real-time countdown + Dynamic wait time (HH:MM:SS)
+ * Countdown only DECREASES (never increases)
  */
 
 (function() {
@@ -9,17 +9,16 @@
     const tokenNumberElement = document.getElementById('patientTokenNumber');
     const tokenNumber = tokenNumberElement ? tokenNumberElement.textContent.trim() : null;
 
-    // Store total seconds remaining
     let remainingSeconds = 0;
     let countdownTimer = null;
     let tokenStatus = 'waiting';
+    let isFirstLoad = true;
 
     /**
      * Fetch token status from server
      */
     function fetchTokenStatus() {
         if (!tokenNumber || tokenNumber === '--' || tokenNumber === 'N/A' || tokenNumber === '') {
-            console.warn('⚠️ Invalid token number');
             return;
         }
 
@@ -47,41 +46,47 @@
         tokenStatus = token.status || 'waiting';
         updateStatusBadge(tokenStatus);
 
-        // ✅ Calculate remaining seconds
-        // Priority: waiting_time > estimated_time
-        let totalMinutes = 0;
-        if (token.waiting_time !== undefined && token.waiting_time > 0) {
-            totalMinutes = token.waiting_time;
-        } else if (token.estimated_time && token.estimated_time > 0) {
-            totalMinutes = token.estimated_time;
+        // ✅ Get remaining seconds from server
+        let serverSeconds = 0;
+        if (token.remaining_seconds !== undefined && token.remaining_seconds !== null) {
+            serverSeconds = parseInt(token.remaining_seconds);
         }
 
-        // ✅ Set remaining seconds (minutes * 60)
-        remainingSeconds = totalMinutes * 60;
+        console.log('🕐 Server seconds:', serverSeconds, '| Client remaining:', remainingSeconds);
 
-        // ✅ Start countdown
-        startCountdown();
+        // ✅ ONLY update countdown if:
+        // 1. First load, OR
+        // 2. Server says LESS than current (real decrease)
+        if (isFirstLoad) {
+            remainingSeconds = serverSeconds;
+            isFirstLoad = false;
+            startCountdown();
+        } else if (serverSeconds < remainingSeconds) {
+            // ✅ Server value is less → trust it
+            console.log('📉 Updating: ' + remainingSeconds + 's → ' + serverSeconds + 's');
+            remainingSeconds = serverSeconds;
+            startCountdown();
+        } else {
+            // ✅ Server value is >= current → IGNORE (countdown continues)
+            console.log('⏭️ Server value (' + serverSeconds + 's) >= client (' + remainingSeconds + 's) — ignored');
+        }
     }
 
     /**
-     * ✅ Start countdown timer (decreases every second)
+     * Start countdown (ticks every 1 second)
      */
     function startCountdown() {
-        // Clear existing timer
         if (countdownTimer) {
             clearInterval(countdownTimer);
         }
 
-        // Show initial values
         displayTime(remainingSeconds);
 
-        // Update every 1 second
         countdownTimer = setInterval(function() {
             if (remainingSeconds > 0) {
                 remainingSeconds--;
                 displayTime(remainingSeconds);
             } else {
-                // Time up - stop countdown
                 clearInterval(countdownTimer);
                 displayTime(0);
             }
@@ -89,34 +94,26 @@
     }
 
     /**
-     * ✅ Display time in HH:MM:SS format
+     * Display HH:MM:SS
      */
     function displayTime(totalSecs) {
         const hours = Math.floor(totalSecs / 3600);
         const minutes = Math.floor((totalSecs % 3600) / 60);
         const seconds = totalSecs % 60;
 
-        // Pad with leading zeros
         setElementText('waitHours', String(hours).padStart(2, '0'));
         setElementText('waitMinutes', String(minutes).padStart(2, '0'));
         setElementText('waitSeconds', String(seconds).padStart(2, '0'));
     }
 
-    /**
-     * Capitalize first letter
-     */
     function capitalize(str) {
         if (!str) return '';
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    /**
-     * Update status badge
-     */
     function updateStatusBadge(status) {
         const statusBadge = document.getElementById('patientStatus');
         const badge = document.getElementById('tokenBadge');
-
         if (!statusBadge) return;
 
         const statusLower = status.toLowerCase();
@@ -129,9 +126,6 @@
         }
     }
 
-    /**
-     * Helper: Set element text safely
-     */
     function setElementText(id, text) {
         const element = document.getElementById(id);
         if (element) {
@@ -139,23 +133,18 @@
         }
     }
 
-    /**
-     * Manual refresh
-     */
     window.refreshStatus = function() {
         fetchTokenStatus();
     };
 
-    // ============================================ //
-    // INITIAL LOAD                                 //
-    // ============================================ //
+    // Initial load
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', fetchTokenStatus);
     } else {
         fetchTokenStatus();
     }
 
-    // ✅ Refresh data every 30 seconds (server se latest position)
+    // Refresh from server every 30 seconds
     setInterval(fetchTokenStatus, 30000);
 
 })();

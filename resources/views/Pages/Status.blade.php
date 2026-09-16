@@ -33,13 +33,13 @@
                     <span class="value status-{{ $token->status ?? 'waiting' }}" id="patientStatus">{{ ucfirst($token->status ?? 'Waiting') }}</span>
                 </div>
 
-                {{-- POSITION NUMBER --}}
+                {{-- POSITION --}}
                 <div class="status-item">
                     <span class="label">POSITION</span>
                     <span class="value" id="patientPosition">#{{ $token->position ?? 'N/A' }}</span>
                 </div>
 
-                {{-- ✅ ESTIMATED WAITING TIME - Dynamic + HH:MM:SS --}}
+                {{-- ✅ DYNAMIC EST. WAIT (HH:MM:SS) --}}
                 <div class="status-item">
                     <span class="label">EST. WAIT</span>
                     <span class="value wait-time-update" id="patientWaitTime">
@@ -86,7 +86,6 @@
 <script src="{{ asset('js/status.js') }}"></script>
 
 <style>
-    /* ✅ Countdown digits style */
     #waitHours, #waitMinutes, #waitSeconds {
         font-weight: 700;
         color: #0a2a3a;
