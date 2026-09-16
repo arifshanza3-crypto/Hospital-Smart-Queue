@@ -70,6 +70,25 @@
                         </select>
                         @error('status') <span class="error-text">{{ $message }}</span> @enderror
                     </div>
+
+                    {{-- ✅ NEW: Assign Staff Dropdown --}}
+                    <div class="form-group">
+                        <label>Assign Staff <span class="optional">(Optional)</span></label>
+                        <select name="staff_id" class="form-control">
+                            <option value="">-- Select Staff Member --</option>
+                            @forelse($staffMembers ?? [] as $staff)
+                                <option value="{{ $staff->id }}" {{ old('staff_id', $doctor->staff_id) == $staff->id ? 'selected' : '' }}>
+                                    {{ $staff->name }} ({{ $staff->email }})
+                                </option>
+                            @empty
+                                <option value="" disabled>No staff members available</option>
+                            @endforelse
+                        </select>
+                        @error('staff_id') <span class="error-text">{{ $message }}</span> @enderror
+                        <span class="field-hint">
+                            <i class="fas fa-info-circle"></i> Select a staff member to assign this doctor
+                        </span>
+                    </div>
                 </div>
 
                 <div class="form-actions">
@@ -193,6 +212,15 @@
     color: #dc3545;
 }
 
+.form-group .optional {
+    color: #94a3b8;
+    font-weight: 400;
+    font-size: 11px;
+    text-transform: none;
+    letter-spacing: 0;
+    margin-left: 4px;
+}
+
 .form-control {
     width: 100%;
     padding: 10px 14px;
@@ -233,6 +261,21 @@ select.form-control {
     font-size: 12px;
     margin-top: 4px;
     display: block;
+}
+
+.field-hint {
+    display: block;
+    color: #94a3b8;
+    font-size: 12px;
+    margin-top: 6px;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.field-hint i {
+    color: #0ea5e9;
+    margin-right: 4px;
 }
 
 .form-actions {

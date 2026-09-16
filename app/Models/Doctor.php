@@ -18,7 +18,8 @@ class Doctor extends Model
         'qualification',
         'email',
         'phone',
-        'status',  // ✅ active / inactive only
+        'status',
+        'staff_id',  // ✅ Added
         'profile_image',
         'shift',
         'experience',
@@ -41,6 +42,14 @@ class Doctor extends Model
                 $doctor->slug = Str::slug($doctor->name);
             }
         });
+    }
+
+    /**
+     * ✅ Relationship with Staff User
+     */
+    public function staff()
+    {
+        return $this->belongsTo(User::class, 'staff_id');
     }
 
     // ✅ Get profile image URL

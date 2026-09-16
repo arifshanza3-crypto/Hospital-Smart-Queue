@@ -20,19 +20,25 @@ class DoctorController extends Controller
 
     public function create()
     {
-        return view('Component.Admin.add_doctor');
+        // ✅ Get all active staff users
+        $staffMembers = User::where('role', 'staff')
+                            ->where('status', 'active')
+                            ->orderBy('name')
+                            ->get();
+        
+        return view('Component.Admin.add_doctor', compact('staffMembers'));
     }
 
     public function store(Request $request)
     {
-        // ✅ Only active/inactive allowed
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'specialization' => 'required|string|max:255',
             'qualification' => 'nullable|string|max:255',
             'email' => 'required|email|unique:doctors,email',
             'phone' => 'required|string|max:20',
-            'status' => 'nullable|in:active,inactive'
+            'status' => 'nullable|in:active,inactive',
+            'staff_id' => 'nullable|exists:users,id',  // ✅ Staff validation
         ]);
 
         try {
@@ -43,6 +49,7 @@ class DoctorController extends Controller
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'status' => $request->status ?? 'active',
+                'staff_id' => $request->staff_id,  // ✅ Save staff
                 'slug' => Str::slug($request->name)
             ]);
 
@@ -81,19 +88,26 @@ class DoctorController extends Controller
     public function edit($id)
     {
         $doctor = Doctor::findOrFail($id);
-        return view('Layout.edit-doctor', compact('doctor'));
+        
+        // ✅ Get all active staff users
+        $staffMembers = User::where('role', 'staff')
+                            ->where('status', 'active')
+                            ->orderBy('name')
+                            ->get();
+        
+        return view('Layout.edit-doctor', compact('doctor', 'staffMembers'));
     }
 
     public function update(Request $request, $id)
     {
-        // ✅ Only active/inactive allowed
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'specialization' => 'required|string|max:255',
             'qualification' => 'nullable|string|max:255',
             'email' => 'required|email|unique:doctors,email,' . $id,
             'phone' => 'required|string|max:20',
-            'status' => 'nullable|in:active,inactive'
+            'status' => 'nullable|in:active,inactive',
+            'staff_id' => 'nullable|exists:users,id',  // ✅ Staff validation
         ]);
 
         try {
@@ -108,6 +122,7 @@ class DoctorController extends Controller
             $doctor->email = $request->email;
             $doctor->phone = $request->phone;
             $doctor->status = $request->status ?? $doctor->status;
+            $doctor->staff_id = $request->staff_id;  // ✅ Update staff
             $doctor->slug = Str::slug($request->name);
             $doctor->save();
 
@@ -145,11 +160,9 @@ class DoctorController extends Controller
         }
     }
 
-    // ✅ Update Status - Only Active/Inactive
     public function updateStatus($id, $status)
     {
         try {
-            // ✅ Only allow active/inactive
             if (!in_array($status, ['active', 'inactive'])) {
                 return response()->json([
                     'success' => false,
@@ -162,7 +175,6 @@ class DoctorController extends Controller
             $doctor->status = $status;
             $doctor->save();
 
-            // ✅ Send notification to all admins
             $admins = User::where('role', 'admin')->get();
             
             foreach ($admins as $admin) {
@@ -209,7 +221,6 @@ class DoctorController extends Controller
             $doctorId = $doctor->id;
             $doctor->delete();
 
-            // ✅ Send notification to all admins
             $admins = User::where('role', 'admin')->get();
             
             foreach ($admins as $admin) {
