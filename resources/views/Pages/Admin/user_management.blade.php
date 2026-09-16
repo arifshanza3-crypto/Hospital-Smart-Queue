@@ -44,11 +44,7 @@
         gap: 16px;
     }
 
-    .page-header-left {
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-    }
+    .page-header-left { display: flex; flex-direction: column; min-width: 0; }
 
     .page-header-left h1 {
         font-size: 28px;
@@ -60,21 +56,10 @@
         gap: 12px;
     }
 
-    .page-header-left h1 i {
-        color: var(--accent-1);
-        font-size: 28px;
-    }
+    .page-header-left h1 i { color: var(--accent-1); font-size: 28px; }
 
-    .page-header-left p {
-        color: var(--text-secondary);
-        font-size: 14px;
-        margin: 4px 0 0 0;
-    }
-
-    .page-header-left p i {
-        color: var(--accent-1);
-        margin-right: 4px;
-    }
+    .page-header-left p { color: var(--text-secondary); font-size: 14px; margin: 4px 0 0 0; }
+    .page-header-left p i { color: var(--accent-1); margin-right: 4px; }
 
     .btn-primary-gradient {
         background: var(--accent-gradient);
@@ -135,24 +120,9 @@
         border-color: #dbeafe;
     }
 
-    .stat-card .stat-icon {
-        font-size: 28px;
-        margin-bottom: 8px;
-    }
-
-    .stat-card .stat-number {
-        font-size: 26px;
-        font-weight: 800;
-        color: var(--text-primary);
-        line-height: 1.2;
-    }
-
-    .stat-card .stat-label {
-        color: var(--text-secondary);
-        font-size: 12px;
-        font-weight: 500;
-        margin-top: 4px;
-    }
+    .stat-card .stat-icon { font-size: 28px; margin-bottom: 8px; }
+    .stat-card .stat-number { font-size: 26px; font-weight: 800; color: var(--text-primary); line-height: 1.2; }
+    .stat-card .stat-label { color: var(--text-secondary); font-size: 12px; font-weight: 500; margin-top: 4px; }
 
     .stat-card.purple::before { background: var(--accent-gradient); }
     .stat-card.purple .stat-icon { color: #6366f1; }
@@ -170,19 +140,8 @@
     .stat-card.orange .stat-icon { color: #f59e0b; }
 
     /* ===== SEARCH ===== */
-    .search-box {
-        display: flex;
-        gap: 15px;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
-    }
-
-    .search-wrapper {
-        position: relative;
-        flex: 1;
-        min-width: 250px;
-    }
-
+    .search-box { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+    .search-wrapper { position: relative; flex: 1; min-width: 250px; }
     .search-wrapper i {
         position: absolute;
         left: 14px;
@@ -229,22 +188,10 @@
         line-height: 1.5;
     }
 
-    .alert-modern.success {
-        border-color: var(--success);
-        color: #065f46;
-        background: #f0fdf4;
-    }
-
+    .alert-modern.success { border-color: var(--success); color: #065f46; background: #f0fdf4; }
     .alert-modern.success i { color: var(--success); }
-
-    .alert-modern.error {
-        border-color: var(--danger);
-        color: #991b1b;
-        background: #fef2f2;
-    }
-
+    .alert-modern.error { border-color: var(--danger); color: #991b1b; background: #fef2f2; }
     .alert-modern.error i { color: var(--danger); }
-
     .alert-modern i { font-size: 18px; flex-shrink: 0; }
 
     /* ===== TABLE SCROLL HINT ===== */
@@ -261,10 +208,7 @@
         font-weight: 500;
     }
 
-    .table-scroll-hint i {
-        color: var(--accent-1);
-        margin-right: 6px;
-    }
+    .table-scroll-hint i { color: var(--accent-1); margin-right: 6px; }
 
     /* ===== TABLE WRAPPER ===== */
     .table-wrapper {
@@ -282,20 +226,9 @@
     .table-wrapper::-webkit-scrollbar-thumb { background: var(--accent-1); border-radius: 10px; }
 
     /* ===== TABLE ===== */
-    .table-container {
-        width: 100%;
-        min-width: 900px;
-    }
-
-    .table-container table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .table-container thead {
-        background: #f8fafc;
-        border-bottom: 1px solid var(--border-color);
-    }
+    .table-container { width: 100%; min-width: 1000px; }
+    .table-container table { width: 100%; border-collapse: collapse; }
+    .table-container thead { background: #f8fafc; border-bottom: 1px solid var(--border-color); }
 
     .table-container thead th {
         padding: 14px 18px;
@@ -320,24 +253,11 @@
     .table-container tbody tr:hover { background: #f8fafc; }
     .table-container tbody tr:last-child td { border-bottom: none; }
 
-    .user-id {
-        color: var(--text-secondary);
-        font-weight: 600;
-        font-size: 13px;
-    }
-
-    .email-cell {
-        color: var(--text-secondary);
-        word-break: break-word;
-        font-size: 13px;
-    }
+    .user-id { color: var(--text-secondary); font-weight: 600; font-size: 13px; }
+    .email-cell { color: var(--text-secondary); word-break: break-word; font-size: 13px; }
 
     /* User Info Cell */
-    .user-cell {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
+    .user-cell { display: flex; align-items: center; gap: 12px; }
 
     .user-avatar {
         width: 36px;
@@ -354,11 +274,7 @@
         box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
     }
 
-    .user-name {
-        font-weight: 600;
-        color: var(--text-primary);
-        white-space: nowrap;
-    }
+    .user-name { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
 
     /* Role Badges */
     .role-badge {
@@ -370,23 +286,9 @@
         white-space: nowrap;
     }
 
-    .role-badge.admin {
-        background: #fee2e2;
-        color: #991b1b;
-        border: 1px solid #fca5a5;
-    }
-
-    .role-badge.staff {
-        background: #dbeafe;
-        color: #1e40af;
-        border: 1px solid #bfdbfe;
-    }
-
-    .role-badge.user {
-        background: #d1fae5;
-        color: #065f46;
-        border: 1px solid #a7f3d0;
-    }
+    .role-badge.admin { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+    .role-badge.staff { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+    .role-badge.user { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
 
     /* Status Badges */
     .status-badge {
@@ -400,25 +302,10 @@
         white-space: nowrap;
     }
 
-    .status-badge.active {
-        background: #d1fae5;
-        color: #065f46;
-        border: 1px solid #a7f3d0;
-    }
+    .status-badge.active { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+    .status-badge.inactive { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
 
-    .status-badge.inactive {
-        background: #fee2e2;
-        color: #991b1b;
-        border: 1px solid #fca5a5;
-    }
-
-    .status-badge .status-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        display: inline-block;
-    }
-
+    .status-badge .status-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
     .status-badge.active .status-dot { background: #10b981; }
     .status-badge.inactive .status-dot { background: #ef4444; }
 
@@ -448,45 +335,28 @@
         flex-shrink: 0;
     }
 
-    .action-btn:hover {
-        transform: translateY(-2px) scale(1.05);
+    .action-btn:hover { transform: translateY(-2px) scale(1.05); }
+
+    .action-btn.view {
+        background: #d1fae5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
     }
 
-    .action-btn.edit {
-        background: #dbeafe;
-        color: #1e40af;
-        border: 1px solid #bfdbfe;
-    }
-
-    .action-btn.edit:hover {
-        background: #1e40af;
+    .action-btn.view:hover {
+        background: #065f46;
         color: white;
-        box-shadow: 0 4px 16px rgba(30, 64, 175, 0.3);
+        box-shadow: 0 4px 16px rgba(6, 95, 70, 0.3);
     }
 
-    .action-btn.delete {
-        background: #fee2e2;
-        color: #991b1b;
-        border: 1px solid #fca5a5;
-    }
+    .action-btn.edit { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+    .action-btn.edit:hover { background: #1e40af; color: white; box-shadow: 0 4px 16px rgba(30, 64, 175, 0.3); }
 
-    .action-btn.delete:hover {
-        background: #991b1b;
-        color: white;
-        box-shadow: 0 4px 16px rgba(153, 27, 27, 0.3);
-    }
+    .action-btn.delete { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+    .action-btn.delete:hover { background: #991b1b; color: white; box-shadow: 0 4px 16px rgba(153, 27, 27, 0.3); }
 
-    .action-btn.toggle {
-        background: #fef3c7;
-        color: #92400e;
-        border: 1px solid #fde68a;
-    }
-
-    .action-btn.toggle:hover {
-        background: #d97706;
-        color: white;
-        box-shadow: 0 4px 16px rgba(217, 119, 6, 0.3);
-    }
+    .action-btn.toggle { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .action-btn.toggle:hover { background: #d97706; color: white; box-shadow: 0 4px 16px rgba(217, 119, 6, 0.3); }
 
     /* Tooltip */
     .action-btn .tooltip-text {
@@ -521,293 +391,324 @@
         border-color: #1e293b transparent transparent transparent;
     }
 
-    .action-btn:hover .tooltip-text {
-        visibility: visible;
-        opacity: 1;
-    }
+    .action-btn:hover .tooltip-text { visibility: visible; opacity: 1; }
 
     /* ===== EMPTY STATE ===== */
-    .empty-state {
+    .empty-state { text-align: center; padding: 60px 20px; }
+    .empty-state i { font-size: 56px; color: var(--text-muted); display: block; margin-bottom: 16px; }
+    .empty-state h3 { color: var(--text-primary); font-weight: 600; margin-bottom: 8px; }
+    .empty-state p { color: var(--text-secondary); margin-bottom: 20px; }
+    .empty-state .btn-primary-gradient { display: inline-flex; }
+
+    /* ============================================ */
+    /* ✅ VIEW USER MODAL                          */
+    /* ============================================ */
+    .user-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 20px;
+        animation: modalFadeIn 0.3s ease;
+    }
+
+    .user-modal-overlay.active {
+        display: flex;
+    }
+
+    @keyframes modalFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .user-modal {
+        background: white;
+        border-radius: 20px;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: modalSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        overflow: hidden;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    @keyframes modalSlideIn {
+        from { transform: translateY(-30px) scale(0.95); opacity: 0; }
+        to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    .user-modal-header {
+        background: linear-gradient(135deg, #3b82f6, #6366f1);
+        padding: 24px;
+        color: white;
+        position: relative;
         text-align: center;
-        padding: 60px 20px;
     }
 
-    .empty-state i {
-        font-size: 56px;
-        color: var(--text-muted);
-        display: block;
-        margin-bottom: 16px;
+    .user-modal-header .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
     }
 
-    .empty-state h3 {
-        color: var(--text-primary);
+    .user-modal-header .modal-close:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg);
+    }
+
+    .user-modal-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border: 3px solid rgba(255, 255, 255, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 12px;
+        font-size: 28px;
+        font-weight: 700;
+        color: white;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .user-modal-header h3 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .user-modal-header p {
+        margin: 4px 0 0 0;
+        font-size: 13px;
+        opacity: 0.9;
+    }
+
+    .user-modal-body {
+        padding: 24px;
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    .user-detail-row {
+        display: flex;
+        align-items: center;
+        padding: 14px 0;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .user-detail-row:last-child {
+        border-bottom: none;
+    }
+
+    .user-detail-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b82f6;
+        font-size: 16px;
+        margin-right: 14px;
+        flex-shrink: 0;
+    }
+
+    .user-detail-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .user-detail-label {
+        font-size: 11px;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
         font-weight: 600;
-        margin-bottom: 8px;
+        margin-bottom: 3px;
     }
 
-    .empty-state p {
-        color: var(--text-secondary);
-        margin-bottom: 20px;
+    .user-detail-value {
+        font-size: 14px;
+        color: #1e293b;
+        font-weight: 600;
+        word-break: break-word;
     }
 
-    .empty-state .btn-primary-gradient {
-        display: inline-flex;
+    .user-detail-value.password-mask {
+        font-family: monospace;
+        letter-spacing: 2px;
+        color: #94a3b8;
+    }
+
+    .user-modal-footer {
+        padding: 16px 24px;
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .user-modal-footer .btn-close-modal {
+        padding: 10px 24px;
+        background: #e2e8f0;
+        color: #475569;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .user-modal-footer .btn-close-modal:hover {
+        background: #cbd5e1;
+        color: #1e293b;
     }
 
     /* ============================================ */
-    /* ✅ RESPONSIVE - LARGE TABLET (max 1200px)   */
+    /* ✅ RESPONSIVE                                */
     /* ============================================ */
     @media (max-width: 1200px) {
-        .stats-grid {
-            grid-template-columns: repeat(3, 1fr);
-        }
+        .stats-grid { grid-template-columns: repeat(3, 1fr); }
         .stat-card .stat-number { font-size: 24px; }
     }
 
-    /* ============================================ */
-    /* ✅ RESPONSIVE - TABLET (max 992px)           */
-    /* ============================================ */
     @media (max-width: 992px) {
         .user-management-wrapper { padding: 20px 18px; }
-
-        .page-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
+        .page-header { flex-direction: column; align-items: flex-start; }
         .page-header-left h1 { font-size: 22px; }
-
-        .btn-primary-gradient {
-            width: 100%;
-            justify-content: center;
-        }
+        .btn-primary-gradient { width: 100%; justify-content: center; }
     }
 
-    /* ============================================ */
-    /* ✅ RESPONSIVE - MOBILE (max 768px)           */
-    /* ============================================ */
     @media (max-width: 768px) {
         .user-management-wrapper { padding: 16px 12px; }
-
         .page-header { gap: 12px; margin-bottom: 20px; }
-
-        .page-header-left h1 {
-            font-size: 20px;
-            gap: 8px;
-        }
-
+        .page-header-left h1 { font-size: 20px; gap: 8px; }
         .page-header-left h1 i { font-size: 20px; }
         .page-header-left p { font-size: 13px; }
+        .btn-primary-gradient { padding: 12px 20px; font-size: 13px; }
 
-        .btn-primary-gradient {
-            padding: 12px 20px;
-            font-size: 13px;
-        }
+        .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; }
+        .stat-card { padding: 12px 8px; border-radius: 12px; }
+        .stat-card .stat-icon { font-size: 18px; margin-bottom: 4px; }
+        .stat-card .stat-number { font-size: 18px; }
+        .stat-card .stat-label { font-size: 10px; margin-top: 2px; }
 
-        /* Stats grid - 3 columns on mobile */
-        .stats-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 18px;
-        }
-
-        .stat-card {
-            padding: 12px 8px;
-            border-radius: 12px;
-        }
-
-        .stat-card .stat-icon {
-            font-size: 18px;
-            margin-bottom: 4px;
-        }
-        .stat-card .stat-number {
-            font-size: 18px;
-        }
-        .stat-card .stat-label {
-            font-size: 10px;
-            margin-top: 2px;
-        }
-
-        /* Search */
-        .search-box {
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
+        .search-box { gap: 10px; margin-bottom: 15px; }
         .search-wrapper { min-width: 100%; }
-
-        .search-input {
-            padding: 11px 14px 11px 40px;
-            font-size: 13px;
-            border-radius: 10px;
-        }
-
+        .search-input { padding: 11px 14px 11px 40px; font-size: 13px; border-radius: 10px; }
         .search-wrapper i { left: 13px; font-size: 13px; }
 
-        /* Swipe hint */
         .table-scroll-hint { display: block; }
-
-        /* Table */
         .table-wrapper { border-radius: 12px; }
-        .table-container { min-width: 800px; }
+        .table-container { min-width: 900px; }
 
-        .table-container thead th {
-            padding: 10px 12px;
-            font-size: 10px;
-        }
-
-        .table-container tbody td {
-            padding: 12px 12px;
-            font-size: 13px;
-        }
+        .table-container thead th { padding: 10px 12px; font-size: 10px; }
+        .table-container tbody td { padding: 12px 12px; font-size: 13px; }
 
         .user-avatar { width: 32px; height: 32px; font-size: 11px; }
         .user-name { font-size: 13px; }
-
-        .role-badge,
-        .status-badge {
-            font-size: 11px;
-            padding: 4px 10px;
-        }
-
-        .action-btn {
-            width: 32px;
-            height: 32px;
-            font-size: 12px;
-        }
-
+        .role-badge, .status-badge { font-size: 11px; padding: 4px 10px; }
+        .action-btn { width: 32px; height: 32px; font-size: 12px; }
         .action-group { gap: 4px; }
 
-        .alert-modern {
-            padding: 12px 16px;
-            font-size: 13px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-
+        .alert-modern { padding: 12px 16px; font-size: 13px; border-radius: 10px; margin-bottom: 15px; }
         .empty-state { padding: 40px 16px; }
         .empty-state i { font-size: 42px; }
         .empty-state h3 { font-size: 17px; }
         .empty-state p { font-size: 13px; }
+
+        /* Modal Mobile */
+        .user-modal-overlay { padding: 12px; }
+        .user-modal { border-radius: 16px; }
+        .user-modal-header { padding: 20px 16px; }
+        .user-modal-avatar { width: 70px; height: 70px; font-size: 24px; }
+        .user-modal-header h3 { font-size: 17px; }
+        .user-modal-header p { font-size: 12px; }
+        .user-modal-body { padding: 18px; }
+        .user-detail-row { padding: 12px 0; }
+        .user-detail-icon { width: 36px; height: 36px; font-size: 14px; margin-right: 12px; }
+        .user-detail-value { font-size: 13px; }
+        .user-modal-footer { padding: 14px 18px; }
+        .user-modal-footer .btn-close-modal { padding: 10px 20px; font-size: 13px; }
     }
 
-    /* ============================================ */
-    /* ✅ RESPONSIVE - SMALL MOBILE (max 576px)     */
-    /* ============================================ */
     @media (max-width: 576px) {
         .user-management-wrapper { padding: 12px 10px; }
-
         .page-header-left h1 { font-size: 18px; }
         .page-header-left h1 i { font-size: 16px; }
         .page-header-left p { font-size: 12px; }
+        .btn-primary-gradient { padding: 11px 16px; font-size: 12px; border-radius: 10px; }
 
-        .btn-primary-gradient {
-            padding: 11px 16px;
-            font-size: 12px;
-            border-radius: 10px;
-        }
-
-        /* Stats grid - still 3 columns but tiny */
-        .stats-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-        }
-
-        .stat-card {
-            padding: 10px 6px;
-        }
-
+        .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .stat-card { padding: 10px 6px; }
         .stat-card .stat-icon { font-size: 16px; margin-bottom: 2px; }
         .stat-card .stat-number { font-size: 16px; }
         .stat-card .stat-label { font-size: 9px; }
 
-        /* Search */
-        .search-input {
-            padding: 10px 12px 10px 36px;
-            font-size: 12.5px;
-        }
-
+        .search-input { padding: 10px 12px 10px 36px; font-size: 12.5px; }
         .search-wrapper i { left: 12px; font-size: 12px; }
 
-        /* Table */
-        .table-container { min-width: 750px; }
-
-        .table-container thead th {
-            padding: 9px 10px;
-            font-size: 9.5px;
-        }
-
-        .table-container tbody td {
-            padding: 10px 10px;
-            font-size: 12px;
-        }
+        .table-container { min-width: 850px; }
+        .table-container thead th { padding: 9px 10px; font-size: 9.5px; }
+        .table-container tbody td { padding: 10px 10px; font-size: 12px; }
 
         .user-avatar { width: 28px; height: 28px; font-size: 10px; }
         .user-name { font-size: 12px; }
         .email-cell { font-size: 11px; }
-
-        .role-badge,
-        .status-badge {
-            font-size: 10px;
-            padding: 3px 8px;
-        }
-
-        .status-dot {
-            width: 5px;
-            height: 5px;
-            margin-right: 4px;
-        }
-
-        .action-btn {
-            width: 30px;
-            height: 30px;
-            font-size: 11px;
-            border-radius: 7px;
-        }
-
+        .role-badge, .status-badge { font-size: 10px; padding: 3px 8px; }
+        .status-dot { width: 5px; height: 5px; margin-right: 4px; }
+        .action-btn { width: 30px; height: 30px; font-size: 11px; border-radius: 7px; }
         .action-group { gap: 3px; }
+        .table-scroll-hint { font-size: 11px; padding: 6px; }
 
-        .table-scroll-hint {
-            font-size: 11px;
-            padding: 6px;
-        }
+        /* Modal Mobile Small */
+        .user-modal-header { padding: 18px 14px; }
+        .user-modal-avatar { width: 60px; height: 60px; font-size: 20px; }
+        .user-modal-header h3 { font-size: 16px; }
+        .user-modal-body { padding: 16px; }
+        .user-detail-icon { width: 32px; height: 32px; font-size: 13px; margin-right: 10px; }
+        .user-detail-label { font-size: 10px; }
+        .user-detail-value { font-size: 12.5px; }
     }
 
-    /* ============================================ */
-    /* ✅ RESPONSIVE - EXTRA SMALL (max 380px)     */
-    /* ============================================ */
     @media (max-width: 380px) {
         .user-management-wrapper { padding: 10px 8px; }
-
         .page-header-left h1 { font-size: 16px; }
-
         .stat-card { padding: 8px 4px; }
         .stat-card .stat-icon { font-size: 14px; }
         .stat-card .stat-number { font-size: 14px; }
         .stat-card .stat-label { font-size: 8px; }
-
-        .search-input {
-            padding: 9px 10px 9px 34px;
-            font-size: 12px;
-        }
-
-        .table-container { min-width: 700px; }
-
-        .table-container thead th {
-            padding: 8px 8px;
-            font-size: 9px;
-        }
-
-        .table-container tbody td {
-            padding: 9px 8px;
-            font-size: 11.5px;
-        }
-
-        .action-btn {
-            width: 28px;
-            height: 28px;
-            font-size: 10px;
-        }
+        .search-input { padding: 9px 10px 9px 34px; font-size: 12px; }
+        .table-container { min-width: 800px; }
+        .table-container thead th { padding: 8px 8px; font-size: 9px; }
+        .table-container tbody td { padding: 9px 8px; font-size: 11.5px; }
+        .action-btn { width: 28px; height: 28px; font-size: 10px; }
     }
 </style>
 
@@ -928,6 +829,22 @@
                         </td>
                         <td>
                             <div class="action-group">
+                                {{-- ✅ NEW: View Button --}}
+                                <button type="button"
+                                        class="action-btn view"
+                                        title="View User"
+                                        onclick="viewUser(
+                                            '{{ addslashes($user->name) }}',
+                                            '{{ addslashes($user->email) }}',
+                                            '{{ addslashes($user->phone ?? 'N/A') }}',
+                                            '{{ addslashes($user->role) }}',
+                                            '{{ addslashes($user->status) }}',
+                                            '{{ $user->id }}'
+                                        )">
+                                    <i class="fas fa-eye"></i>
+                                    <span class="tooltip-text">View</span>
+                                </button>
+
                                 <a href="{{ route('admin.users.edit', $user->id) }}" class="action-btn edit" title="Edit User">
                                     <i class="fas fa-edit"></i>
                                     <span class="tooltip-text">Edit</span>
@@ -963,7 +880,151 @@
     </div>
 </div>
 
+{{-- ============================================ --}}
+{{-- ✅ VIEW USER MODAL                          --}}
+{{-- ============================================ --}}
+<div class="user-modal-overlay" id="userModal">
+    <div class="user-modal">
+        {{-- Header --}}
+        <div class="user-modal-header">
+            <button type="button" class="modal-close" onclick="closeUserModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="user-modal-avatar" id="modalAvatar">U</div>
+            <h3 id="modalName">User Name</h3>
+            <p id="modalRole">Role</p>
+        </div>
+
+        {{-- Body --}}
+        <div class="user-modal-body">
+            {{-- User ID --}}
+            <div class="user-detail-row">
+                <div class="user-detail-icon">
+                    <i class="fas fa-hashtag"></i>
+                </div>
+                <div class="user-detail-content">
+                    <div class="user-detail-label">User ID</div>
+                    <div class="user-detail-value" id="modalUserId">#0</div>
+                </div>
+            </div>
+
+            {{-- Full Name --}}
+            <div class="user-detail-row">
+                <div class="user-detail-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-detail-content">
+                    <div class="user-detail-label">Full Name</div>
+                    <div class="user-detail-value" id="modalFullName">-</div>
+                </div>
+            </div>
+
+            {{-- Email --}}
+            <div class="user-detail-row">
+                <div class="user-detail-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="user-detail-content">
+                    <div class="user-detail-label">Email Address</div>
+                    <div class="user-detail-value" id="modalEmail">-</div>
+                </div>
+            </div>
+
+            {{-- Phone --}}
+            <div class="user-detail-row">
+                <div class="user-detail-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="user-detail-content">
+                    <div class="user-detail-label">Phone Number</div>
+                    <div class="user-detail-value" id="modalPhone">-</div>
+                </div>
+            </div>
+
+            {{-- Password --}}
+            <div class="user-detail-row">
+                <div class="user-detail-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="user-detail-content">
+                    <div class="user-detail-label">Password</div>
+                    <div class="user-detail-value password-mask" id="modalPassword">••••••••</div>
+                </div>
+            </div>
+
+            {{-- Role --}}
+            <div class="user-detail-row">
+                <div class="user-detail-icon">
+                    <i class="fas fa-user-tag"></i>
+                </div>
+                <div class="user-detail-content">
+                    <div class="user-detail-label">Role</div>
+                    <div class="user-detail-value" id="modalRoleValue">-</div>
+                </div>
+            </div>
+
+            {{-- Status --}}
+            <div class="user-detail-row">
+                <div class="user-detail-icon">
+                    <i class="fas fa-toggle-on"></i>
+                </div>
+                <div class="user-detail-content">
+                    <div class="user-detail-label">Status</div>
+                    <div class="user-detail-value" id="modalStatus">-</div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Footer --}}
+        <div class="user-modal-footer">
+            <button type="button" class="btn-close-modal" onclick="closeUserModal()">
+                <i class="fas fa-times"></i> Close
+            </button>
+        </div>
+    </div>
+</div>
+
 <script>
+    // ============================================
+    // ✅ VIEW USER MODAL
+    // ============================================
+    function viewUser(name, email, phone, role, status, userId) {
+        // Set modal data
+        document.getElementById('modalAvatar').textContent = name.substring(0, 2).toUpperCase();
+        document.getElementById('modalName').textContent = name;
+        document.getElementById('modalRole').textContent = role.charAt(0).toUpperCase() + role.slice(1);
+        document.getElementById('modalUserId').textContent = '#' + userId;
+        document.getElementById('modalFullName').textContent = name;
+        document.getElementById('modalEmail').textContent = email;
+        document.getElementById('modalPhone').textContent = phone || 'N/A';
+        document.getElementById('modalPassword').textContent = '••••••••'; // Hashed - cannot show real
+        document.getElementById('modalRoleValue').textContent = role.charAt(0).toUpperCase() + role.slice(1);
+        document.getElementById('modalStatus').textContent = status.charAt(0).toUpperCase() + status.slice(1);
+
+        // Show modal
+        document.getElementById('userModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeUserModal() {
+        document.getElementById('userModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Close modal on overlay click
+    document.getElementById('userModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeUserModal();
+        }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeUserModal();
+        }
+    });
+
     // ============================================
     // DELETE USER
     // ============================================
