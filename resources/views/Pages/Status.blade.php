@@ -39,11 +39,13 @@
                     <span class="value" id="patientPosition">#{{ $token->position ?? 'N/A' }}</span>
                 </div>
 
-                {{-- ESTIMATED WAITING TIME --}}
+                {{-- ✅ ESTIMATED WAITING TIME - Dynamic + HH:MM:SS --}}
                 <div class="status-item">
                     <span class="label">EST. WAIT</span>
                     <span class="value wait-time-update" id="patientWaitTime">
-                        {{ $token->estimated_time ?? 'N/A' }} min
+                        <span id="waitHours">00</span>h
+                        <span id="waitMinutes">00</span>m
+                        <span id="waitSeconds">00</span>s
                     </span>
                 </div>
 
@@ -82,5 +84,26 @@
 
 {{-- ✅ JavaScript --}}
 <script src="{{ asset('js/status.js') }}"></script>
+
+<style>
+    /* ✅ Countdown digits style */
+    #waitHours, #waitMinutes, #waitSeconds {
+        font-weight: 700;
+        color: #0a2a3a;
+        display: inline-block;
+        min-width: 20px;
+    }
+
+    .wait-time-update {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .wait-time-update.changed {
+        color: #0088b3;
+        transform: scale(1.05);
+    }
+</style>
 
 @endsection

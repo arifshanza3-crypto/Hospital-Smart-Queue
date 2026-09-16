@@ -1,124 +1,113 @@
 /**
  * Patient Token Status - JavaScript
- * Handles fetching and updating token status in real-time
+ * Real-time countdown + Dynamic wait time (HH:MM:SS)
  */
 
 (function() {
     'use strict';
 
-    // Get token from Blade (passed via PHP)
     const tokenNumberElement = document.getElementById('patientTokenNumber');
-    const tokenNumber = tokenNumberElement ? tokenNumberElement.textContent : null;
+    const tokenNumber = tokenNumberElement ? tokenNumberElement.textContent.trim() : null;
 
-    // Store initial values
-    let initialEstimatedTime = 0;
+    // Store total seconds remaining
+    let remainingSeconds = 0;
+    let countdownTimer = null;
     let tokenStatus = 'waiting';
 
     /**
-     * Main function to fetch token status from server
+     * Fetch token status from server
      */
     function fetchTokenStatus() {
-        console.log('🔄 Fetching token status...');
-
-        if (!tokenNumber || tokenNumber === '--' || tokenNumber === 'N/A') {
-            const badge = document.getElementById('tokenBadge');
-            if (badge) {
-                badge.textContent = '✕ Invalid';
-                badge.style.background = '#dc3545';
-                badge.style.color = 'white';
-            }
+        if (!tokenNumber || tokenNumber === '--' || tokenNumber === 'N/A' || tokenNumber === '') {
+            console.warn('⚠️ Invalid token number');
             return;
         }
 
         fetch(`/patient/token-status?token=${encodeURIComponent(tokenNumber)}`)
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    updatePatientUI(data);
-                } else {
-                    showError('Token not found');
+                if (data.success && data.token) {
+                    updatePatientUI(data.token);
                 }
             })
-            .catch(error => {
-                console.error('Error fetching token status:', error);
-                showError('Error loading');
-            });
+            .catch(error => console.error('❌ Error:', error));
     }
 
     /**
      * Update UI with token data
      */
-    function updatePatientUI(data) {
-        console.log('📦 Token Data:', data);
+    function updatePatientUI(token) {
+        // ✅ Basic Info
+        setElementText('patientTokenNumber', token.token_number || '--');
+        setElementText('patientName', token.patient_name || '--');
+        setElementText('patientPosition', '#' + (token.position || '--'));
+        setElementText('patientServing', token.now_serving || '--');
 
-        // Update basic info
-        setElementText('patientTokenNumber', data.token_number || '--');
-        setElementText('patientName', data.patient_name || '--');
-        setElementText('patientPosition', '#' + (data.position || '--'));
+        // ✅ Status
+        tokenStatus = token.status || 'waiting';
+        updateStatusBadge(tokenStatus);
 
-        // Update estimated time
-        initialEstimatedTime = data.estimated_time || 0;
-        updateWaitTimeDisplay();
+        // ✅ Calculate remaining seconds
+        // Priority: waiting_time > estimated_time
+        let totalMinutes = 0;
+        if (token.waiting_time !== undefined && token.waiting_time > 0) {
+            totalMinutes = token.waiting_time;
+        } else if (token.estimated_time && token.estimated_time > 0) {
+            totalMinutes = token.estimated_time;
+        }
 
-        setElementText('patientServing', data.serving || '--');
+        // ✅ Set remaining seconds (minutes * 60)
+        remainingSeconds = totalMinutes * 60;
 
-        // Update status badge
-        updateStatusBadge(data.status || 'waiting');
-        tokenStatus = data.status || 'waiting';
+        // ✅ Start countdown
+        startCountdown();
     }
 
     /**
-     * Update waiting time dynamically
+     * ✅ Start countdown timer (decreases every second)
      */
-    function updateWaitTimeDisplay() {
-        const timeElement = document.getElementById('patientWaitTime');
-        if (!timeElement) return;
+    function startCountdown() {
+        // Clear existing timer
+        if (countdownTimer) {
+            clearInterval(countdownTimer);
+        }
 
-        // Get generated time
-        const generatedTimeStr = document.getElementById('patientTime')?.textContent || '';
-        let remainingMinutes = initialEstimatedTime;
+        // Show initial values
+        displayTime(remainingSeconds);
 
-        if (generatedTimeStr && generatedTimeStr !== 'N/A') {
-            const now = new Date();
-            const generated = parseTimeString(generatedTimeStr);
-            
-            if (generated) {
-                const elapsedMinutes = Math.floor((now - generated) / (1000 * 60));
-                remainingMinutes = Math.max(0, initialEstimatedTime - elapsedMinutes);
+        // Update every 1 second
+        countdownTimer = setInterval(function() {
+            if (remainingSeconds > 0) {
+                remainingSeconds--;
+                displayTime(remainingSeconds);
+            } else {
+                // Time up - stop countdown
+                clearInterval(countdownTimer);
+                displayTime(0);
             }
-        }
-
-        // Update display
-        if (remainingMinutes > 0) {
-            timeElement.textContent = Math.ceil(remainingMinutes) + ' min';
-        } else {
-            timeElement.textContent = '0 min';
-        }
-
-        // Animation effect
-        timeElement.classList.add('changed');
-        setTimeout(() => {
-            timeElement.classList.remove('changed');
-        }, 500);
+        }, 1000);
     }
 
     /**
-     * Parse time string (HH:MM AM/PM) to Date object
+     * ✅ Display time in HH:MM:SS format
      */
-    function parseTimeString(timeStr) {
-        const parts = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/);
-        if (!parts) return null;
+    function displayTime(totalSecs) {
+        const hours = Math.floor(totalSecs / 3600);
+        const minutes = Math.floor((totalSecs % 3600) / 60);
+        const seconds = totalSecs % 60;
 
-        let hours = parseInt(parts[1]);
-        const minutes = parseInt(parts[2]);
-        const ampm = parts[3];
+        // Pad with leading zeros
+        setElementText('waitHours', String(hours).padStart(2, '0'));
+        setElementText('waitMinutes', String(minutes).padStart(2, '0'));
+        setElementText('waitSeconds', String(seconds).padStart(2, '0'));
+    }
 
-        if (ampm === 'PM' && hours !== 12) hours += 12;
-        if (ampm === 'AM' && hours === 12) hours = 0;
-
-        const date = new Date();
-        date.setHours(hours, minutes, 0, 0);
-        return date;
+    /**
+     * Capitalize first letter
+     */
+    function capitalize(str) {
+        if (!str) return '';
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
     /**
@@ -130,48 +119,18 @@
 
         if (!statusBadge) return;
 
-        statusBadge.className = 'value status-badge';
         const statusLower = status.toLowerCase();
+        statusBadge.className = 'value status-' + statusLower;
+        statusBadge.textContent = capitalize(status);
 
-        switch (statusLower) {
-            case 'serving':
-            case 'calling':
-                statusBadge.classList.add('status-serving');
-                statusBadge.textContent = 'In Progress';
-                if (badge) {
-                    badge.textContent = '● In Progress';
-                    badge.className = 'badge status-serving';
-                }
-                break;
-            case 'completed':
-                statusBadge.classList.add('status-completed');
-                statusBadge.textContent = 'Completed';
-                if (badge) {
-                    badge.textContent = '● Completed';
-                    badge.className = 'badge status-completed';
-                }
-                break;
-            case 'cancelled':
-                statusBadge.classList.add('status-cancelled');
-                statusBadge.textContent = 'Cancelled';
-                if (badge) {
-                    badge.textContent = '● Cancelled';
-                    badge.className = 'badge status-cancelled';
-                }
-                break;
-            default:
-                statusBadge.classList.add('status-waiting');
-                statusBadge.textContent = 'Waiting';
-                if (badge) {
-                    badge.textContent = '● Waiting';
-                    badge.className = 'badge status-waiting';
-                }
-                break;
+        if (badge) {
+            badge.className = 'badge status-' + statusLower;
+            badge.textContent = capitalize(status);
         }
     }
 
     /**
-     * Helper: Set element text
+     * Helper: Set element text safely
      */
     function setElementText(id, text) {
         const element = document.getElementById(id);
@@ -181,63 +140,22 @@
     }
 
     /**
-     * Show error message
-     */
-    function showError(message) {
-        const statusBadge = document.getElementById('patientStatus');
-        if (statusBadge) {
-            statusBadge.textContent = message;
-            statusBadge.className = 'value status-badge status-cancelled';
-        }
-
-        const badge = document.getElementById('tokenBadge');
-        if (badge) {
-            badge.textContent = '✕ Error';
-            badge.className = 'badge status-cancelled';
-        }
-    }
-
-    /**
-     * Manual refresh function
+     * Manual refresh
      */
     window.refreshStatus = function() {
-        console.log('🔄 Refresh button clicked!');
-        location.reload();
+        fetchTokenStatus();
     };
 
     // ============================================ //
-    // AUTO-REFRESH SETUP                          //
+    // INITIAL LOAD                                 //
     // ============================================ //
-
-    // Initial fetch
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set generated time (only once)
-            const timeElement = document.getElementById('patientTime');
-            if (timeElement && timeElement.textContent === '--') {
-                const now = new Date();
-                const hours12 = now.getHours() % 12 || 12;
-                const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
-                timeElement.textContent = hours12 + ':' + 
-                    String(now.getMinutes()).padStart(2, '0') + ' ' + ampm;
-            }
-            fetchTokenStatus();
-        });
+        document.addEventListener('DOMContentLoaded', fetchTokenStatus);
     } else {
         fetchTokenStatus();
     }
 
-    // Auto-update every 10 seconds
-    setInterval(function() {
-        fetchTokenStatus();
-        updateWaitTimeDisplay();
-    }, 10000);
-
-    // Full page refresh every 60 seconds (if waiting)
-    setInterval(function() {
-        if (tokenStatus === 'waiting' || tokenStatus === 'calling') {
-            location.reload();
-        }
-    }, 60000);
+    // ✅ Refresh data every 30 seconds (server se latest position)
+    setInterval(fetchTokenStatus, 30000);
 
 })();

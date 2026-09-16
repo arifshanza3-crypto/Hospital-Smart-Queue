@@ -19,14 +19,60 @@ class TokenController extends Controller
         return view('Pages.Token_form');
     }
 
+    /**
+     * ✅ Show Token Status Page (Yeh missing tha!)
+     */
+    public function showStatus(Request $request)
+    {
+        // Get token number from URL or session
+        $tokenNumber = $request->query('token') ?? session('current_token');
+        
+        $token = null;
+        $nowServing = 'N/A';
+
+        if ($tokenNumber) {
+            // ✅ Fetch token from database
+            $token = Token::where('token_number', $tokenNumber)->first();
+
+            if ($token) {
+                // ✅ Dynamic Position Calculate
+                $position = Token::whereIn('status', ['waiting', 'calling'])
+                    ->where('created_at', '<', $token->created_at)
+                    ->count() + 1;
+
+                // ✅ Dynamic Estimated Time
+                $estimatedTime = ($position - 1) * 15;
+
+                // ✅ Attach to token object
+                $token->position = $position;
+                $token->estimated_time = $estimatedTime;
+
+                Log::info('Status Page - Token Found: ' . $token->token_number . ' | Patient: ' . $token->patient_name);
+            } else {
+                Log::warning('Status Page - Token Not Found: ' . $tokenNumber);
+            }
+        }
+
+        // ✅ Get currently serving token
+        $servingToken = Token::where('status', 'serving')
+            ->orderBy('created_at', 'desc')
+            ->first();
+            
+        if ($servingToken) {
+            $nowServing = $servingToken->token_number;
+        }
+
+        return view('Pages.Status', compact('token', 'nowServing'));
+    }
+
     public function generateToken(Request $request)
     {
         try {
             // ✅ Validation - Email is nullable (optional)
             $validated = $request->validate([
                 'patient_name' => 'required|string|max:255',
-                'email' => 'nullable|email|max:255',  // ✅ Email Optional
-                'mobile_number' => 'required|string|max:11|regex:/^03\d{9}$/',
+                'email' => 'nullable|email|max:255',
+                'phone' => 'required|string|max:11|regex:/^03\d{9}$/',
             ]);
 
             // ✅ Check if user is logged in
@@ -48,14 +94,14 @@ class TokenController extends Controller
             // ✅ Get last position
             $lastPosition = Token::whereIn('status', ['waiting', 'calling'])->count();
 
-            // ✅ Create token with mobile_number as phone
+            // ✅ Create token
             $token = Token::create([
                 'token_number' => $tokenNumber,
                 'patient_name' => $request->patient_name,
                 'patient_id' => $userId,
                 'department' => 'General',
-                'phone' => $request->mobile_number,
-                'email' => $request->email,  // ✅ Can be null
+                'phone' => $request->phone,
+                'email' => $request->email,
                 'status' => 'waiting',
                 'type' => 'online',
                 'position' => $lastPosition + 1,
@@ -95,6 +141,7 @@ class TokenController extends Controller
                 ]
             );
 
+            // ✅ Redirect to status page
             return redirect()->route('status.page', ['token' => $tokenNumber])
                 ->with('success', 'Token ' . $tokenNumber . ' generated successfully!');
 
@@ -110,7 +157,7 @@ class TokenController extends Controller
     {
         try {
             $tokenNumber = $request->query('token');
-            
+
             if (!$tokenNumber) {
                 return response()->json([
                     'success' => false,
