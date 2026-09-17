@@ -4,7 +4,6 @@
 
 @section('content')
 
-{{-- ✅ Include CSS --}}
 <link rel="stylesheet" href="{{ asset('css/status.css') }}">
 
 <div class="status-container">
@@ -12,6 +11,17 @@
         <h2>Patient Portal</h2>
         <h3>Your Token Status</h3>
         <p class="subtitle">Real-time update of your queue position</p>
+
+        {{-- ✅ Notification Permission Banner --}}
+        <div id="notificationBanner" style="display: none; background: linear-gradient(135deg, #f0f7fa, #e0ecf0); border: 1px solid rgba(26, 122, 130, 0.15); border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; text-align: center;">
+            <p style="margin: 0 0 10px 0; color: #0a2a3a; font-size: 0.85rem; font-weight: 600;">
+                🔔 Enable notifications to get alerts when your turn comes
+            </p>
+            <button onclick="enableNotifications()" 
+                    style="background: linear-gradient(135deg, #0b2e33, #1a5a63); color: #fff; border: none; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 0.8rem; cursor: pointer;">
+                Enable Notifications
+            </button>
+        </div>
 
         <div class="token-status-display">
             <div class="token-number">
@@ -21,25 +31,21 @@
             </div>
 
             <div class="status-grid">
-                {{-- PATIENT NAME --}}
                 <div class="status-item">
                     <span class="label">PATIENT</span>
                     <span class="value" id="patientName">{{ $token->patient_name ?? 'N/A' }}</span>
                 </div>
 
-                {{-- STATUS --}}
                 <div class="status-item">
                     <span class="label">STATUS</span>
                     <span class="value status-{{ $token->status ?? 'waiting' }}" id="patientStatus">{{ ucfirst($token->status ?? 'Waiting') }}</span>
                 </div>
 
-                {{-- POSITION --}}
                 <div class="status-item">
                     <span class="label">POSITION</span>
                     <span class="value" id="patientPosition">#{{ $token->position ?? 'N/A' }}</span>
                 </div>
 
-                {{-- ✅ DYNAMIC EST. WAIT (HH:MM:SS) --}}
                 <div class="status-item">
                     <span class="label">EST. WAIT</span>
                     <span class="value wait-time-update" id="patientWaitTime">
@@ -49,13 +55,11 @@
                     </span>
                 </div>
 
-                {{-- NOW SERVING --}}
                 <div class="status-item">
                     <span class="label">NOW SERVING</span>
                     <span class="value now-serving-value" id="patientServing">{{ $nowServing ?? 'N/A' }}</span>
                 </div>
 
-                {{-- GENERATED TIME --}}
                 <div class="status-item">
                     <span class="label">GENERATED</span>
                     <span class="value" id="patientTime">
@@ -82,8 +86,41 @@
     </div>
 </div>
 
-{{-- ✅ JavaScript --}}
 <script src="{{ asset('js/status.js') }}"></script>
+
+<script>
+    // ✅ Show banner if permission not granted
+    document.addEventListener('DOMContentLoaded', function() {
+        if ('Notification' in window) {
+            if (Notification.permission === 'default') {
+                document.getElementById('notificationBanner').style.display = 'block';
+            } else if (Notification.permission === 'denied') {
+                // Show a different message if denied
+                document.getElementById('notificationBanner').innerHTML = 
+                    '<p style="margin: 0; color: #8a3030; font-size: 0.85rem;">🔕 Notifications blocked. Browser settings se enable karein.</p>';
+                document.getElementById('notificationBanner').style.display = 'block';
+            }
+        }
+    });
+
+    // ✅ Enable notifications button
+    function enableNotifications() {
+        if (!('Notification' in window)) {
+            alert('Aap ka browser notifications support nahi karta');
+            return;
+        }
+
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                document.getElementById('notificationBanner').style.display = 'none';
+                new Notification('🔔 Notifications Enabled', {
+                    body: 'Aap ko aap ke token ke updates milenge.',
+                    icon: '/Assert/logo.png'
+                });
+            }
+        });
+    }
+</script>
 
 <style>
     #waitHours, #waitMinutes, #waitSeconds {
