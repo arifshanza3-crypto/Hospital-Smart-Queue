@@ -81,8 +81,8 @@ class ServiceController extends Controller
                 'description' => $request->description,
                 'icon' => $request->icon,
                 'image' => $imagePath,
-                'price' => $request->price,
-                'duration' => $request->duration,
+                'price' => $request->price ?? 0,
+                'duration' => $request->duration ?? 15,
                 'status' => $request->status,
                 'display_order' => $request->display_order ?? 0,
                 'department' => $request->department
@@ -166,8 +166,8 @@ class ServiceController extends Controller
             $service->name = $request->name;
             $service->description = $request->description;
             $service->icon = $request->icon;
-            $service->price = $request->price;
-            $service->duration = $request->duration;
+            $service->price = $request->price ?? 0;
+            $service->duration = $request->duration ?? 15;
             $service->status = $request->status;
             $service->display_order = $request->display_order ?? 0;
             $service->department = $request->department;
@@ -198,12 +198,24 @@ class ServiceController extends Controller
     }
     
     /**
-     * Remove the specified service from storage.
+     * ✅ Remove the specified service from storage (FIXED)
      */
     public function destroy($id)
     {
         try {
-            $service = Service::findOrFail($id);
+            // ✅ FIX: Use find() instead of findOrFail() to handle missing services gracefully
+            $service = Service::find($id);
+            
+            // If service doesn't exist (already deleted)
+            if (!$service) {
+                Log::warning('Service already deleted or not found: ID ' . $id);
+                return response()->json([
+                    'success' => true,
+                    'already_deleted' => true,
+                    'message' => 'Service was already deleted.'
+                ]);
+            }
+            
             $serviceName = $service->name;
             
             // Delete image if exists
@@ -223,6 +235,7 @@ class ServiceController extends Controller
                 'success' => true,
                 'message' => 'Service "' . $serviceName . '" deleted successfully!'
             ]);
+            
         } catch (\Exception $e) {
             Log::error('Error deleting service: ' . $e->getMessage());
             
@@ -239,7 +252,17 @@ class ServiceController extends Controller
     public function updateStatus($id, $status)
     {
         try {
-            $service = Service::findOrFail($id);
+            // ✅ FIX: Use find() for graceful handling
+            $service = Service::find($id);
+            
+            if (!$service) {
+                return response()->json([
+                    'success' => false,
+                    'already_deleted' => true,
+                    'message' => 'Service not found or already deleted.'
+                ], 404);
+            }
+            
             $oldStatus = $service->status;
             
             if (!in_array($status, ['active', 'inactive'])) {

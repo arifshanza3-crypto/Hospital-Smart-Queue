@@ -9,6 +9,10 @@
     --bg-light: #f0f7fa;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 /* ============================================ */
 /* SERVICES HERO SECTION                       */
 /* ============================================ */
@@ -77,7 +81,6 @@
     padding: 0 20px;
 }
 
-/* --- Section Header --- */
 .section-header {
     text-align: center;
     margin-bottom: 40px;
@@ -126,12 +129,14 @@
 .service-card {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 26px 22px;
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(10, 42, 58, 0.04);
     border: 1px solid rgba(10, 42, 58, 0.04);
     text-align: center;
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .service-card:hover {
@@ -163,12 +168,43 @@
     color: #3a5a6a;
     line-height: 1.7;
     font-size: 0.9rem;
+    margin: 0;
 }
 
 /* ============================================ */
-/* ✅ RESPONSIVE FIXES (MOBILE KE LIYE)         */
+/* NO SERVICES STATE                           */
 /* ============================================ */
+.no-services {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #64748b;
+}
 
+.no-services i {
+    font-size: 48px;
+    color: #1a7a82;
+    opacity: 0.5;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.no-services h3 {
+    color: #0a2a3a;
+    font-size: 20px;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.no-services p {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* ============================================ */
+/* RESPONSIVE - TABLET (max 992px)             */
+/* ============================================ */
 @media (max-width: 992px) {
     .services-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -180,6 +216,9 @@
     }
 }
 
+/* ============================================ */
+/* RESPONSIVE - MOBILE (max 768px)             */
+/* ============================================ */
 @media (max-width: 768px) {
     .services-hero {
         padding: 70px 18px 50px;
@@ -236,6 +275,9 @@
     }
 }
 
+/* ============================================ */
+/* RESPONSIVE - SMALL MOBILE (max 576px)       */
+/* ============================================ */
 @media (max-width: 576px) {
     .services-hero {
         padding: 60px 15px 45px;
