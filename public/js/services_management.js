@@ -3,7 +3,7 @@
  */
 
 // ============================================
-// DELETE SERVICE
+// DELETE SERVICE (FIXED - Handle Already Deleted)
 // ============================================
 function deleteService(id) {
     if (confirm('⚠️ Are you sure you want to delete this service?\n\nThis action cannot be undone!')) {
@@ -19,14 +19,29 @@ function deleteService(id) {
                 'Accept': 'application/json'
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            // ✅ Handle 404 (service already deleted) as success
+            if (response.status === 404) {
+                return { success: true, already_deleted: true, message: 'Service already deleted.' };
+            }
+            return response.json();
+        })
         .then(data => {
             hideLoader();
+            
             if (data.success) {
-                showNotification('success', data.message || 'Service deleted');
+                // ✅ Different message if already deleted
+                if (data.already_deleted) {
+                    showNotification('success', data.message || 'Service was already deleted. Refreshing...');
+                } else {
+                    showNotification('success', data.message || 'Service deleted');
+                }
+                // ✅ Always reload to sync state
                 setTimeout(() => location.reload(), 1000);
             } else {
                 showNotification('error', data.message || 'Error deleting service');
+                // ✅ Still reload after error to sync state
+                setTimeout(() => location.reload(), 1500);
             }
         })
         .catch(error => {
@@ -38,7 +53,7 @@ function deleteService(id) {
 }
 
 // ============================================
-// TOGGLE STATUS
+// TOGGLE STATUS (FIXED - Handle Not Found)
 // ============================================
 function toggleStatus(id, currentStatus) {
     let newStatus = currentStatus === 'active' ? 'inactive' : 'active';
@@ -57,14 +72,25 @@ function toggleStatus(id, currentStatus) {
                 'Accept': 'application/json'
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            // ✅ Handle 404 (service not found)
+            if (response.status === 404) {
+                return { success: false, already_deleted: true, message: 'Service not found or already deleted.' };
+            }
+            return response.json();
+        })
         .then(data => {
             hideLoader();
+            
             if (data.success) {
                 showNotification('success', `Service ${action}d successfully!`);
                 setTimeout(() => location.reload(), 1000);
             } else {
                 showNotification('error', data.message || 'Error updating status');
+                // ✅ Reload to sync state if service not found
+                if (data.already_deleted) {
+                    setTimeout(() => location.reload(), 1500);
+                }
             }
         })
         .catch(error => {

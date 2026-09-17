@@ -1,14 +1,14 @@
 @extends('Layout.admin-layout')
 
-@section('page-title', 'Add New Doctor')
-@section('breadcrumb', 'Create Doctor')
+@section('page-title', 'Add New Service')
+@section('breadcrumb', 'Create Service')
 
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <style>
     /* ============================================
-       ADD DOCTOR - LIGHT THEME
+       ADD SERVICE - LIGHT THEME
        ============================================ */
     
     :root {
@@ -26,11 +26,9 @@
         --danger: #ef4444;
     }
 
-    * {
-        box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    .add-doctor-wrapper {
+    .add-service-wrapper {
         padding: 24px 28px;
         background: var(--bg-primary);
         min-height: 100vh;
@@ -234,10 +232,52 @@
         padding-right: 40px;
     }
 
+    textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .form-text {
+        display: block;
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 6px;
+    }
+
     .invalid-feedback {
         font-size: 12px;
         color: var(--danger);
         margin-top: 4px;
+        display: block;
+    }
+
+    /* ===== ICON PREVIEW ===== */
+    .icon-preview-box {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 8px;
+    }
+
+    .icon-preview {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: var(--accent-gradient);
+        color: white;
+        font-size: 20px;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        flex-shrink: 0;
+    }
+
+    /* ===== TWO COLUMN ROW ===== */
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
     }
 
     /* ===== ALERTS ===== */
@@ -264,10 +304,7 @@
         background: #f0fdf4;
     }
 
-    .alert-modern.success i {
-        color: var(--success);
-        margin-top: 2px;
-    }
+    .alert-modern.success i { color: var(--success); margin-top: 2px; }
 
     .alert-modern.error {
         border-color: var(--danger);
@@ -275,15 +312,9 @@
         background: #fef2f2;
     }
 
-    .alert-modern.error i {
-        color: var(--danger);
-        margin-top: 2px;
-    }
+    .alert-modern.error i { color: var(--danger); margin-top: 2px; }
 
-    .alert-modern i {
-        font-size: 18px;
-        flex-shrink: 0;
-    }
+    .alert-modern i { font-size: 18px; flex-shrink: 0; }
 
     .alert-modern ul {
         margin: 4px 0 0 20px;
@@ -317,27 +348,13 @@
     /* ✅ RESPONSIVE - TABLET (max 768px)           */
     /* ============================================ */
     @media (max-width: 768px) {
-        .add-doctor-wrapper {
-            padding: 16px 12px;
-        }
+        .add-service-wrapper { padding: 16px 12px; }
 
-        .page-header {
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+        .page-header { gap: 12px; margin-bottom: 20px; }
 
-        .page-header-left h1 {
-            font-size: 20px;
-            gap: 8px;
-        }
-
-        .page-header-left h1 i {
-            font-size: 20px;
-        }
-
-        .page-header-left p {
-            font-size: 13px;
-        }
+        .page-header-left h1 { font-size: 20px; gap: 8px; }
+        .page-header-left h1 i { font-size: 20px; }
+        .page-header-left p { font-size: 13px; }
 
         .btn-secondary-gradient {
             width: 100%;
@@ -346,29 +363,13 @@
             font-size: 13px;
         }
 
-        .form-card {
-            border-radius: 12px;
-        }
+        .form-card { border-radius: 12px; }
+        .form-card-header { padding: 16px 18px; }
+        .form-card-header h3 { font-size: 16px; }
+        .form-card-body { padding: 18px 16px; }
 
-        .form-card-header {
-            padding: 16px 18px;
-        }
-
-        .form-card-header h3 {
-            font-size: 16px;
-        }
-
-        .form-card-body {
-            padding: 18px 16px;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            font-size: 13px;
-        }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { font-size: 13px; }
 
         .form-control {
             padding: 11px 14px;
@@ -381,7 +382,8 @@
             background-position: right 12px center;
         }
 
-        /* Form actions - column-reverse (Submit upar) */
+        .form-row { grid-template-columns: 1fr; gap: 0; }
+
         .form-actions {
             flex-direction: column-reverse;
             gap: 10px;
@@ -401,62 +403,25 @@
             font-size: 13px;
             border-radius: 10px;
         }
-
-        .alert-modern ul {
-            margin-left: 18px;
-            font-size: 12.5px;
-        }
     }
 
     /* ============================================ */
     /* ✅ RESPONSIVE - SMALL MOBILE (max 576px)     */
     /* ============================================ */
     @media (max-width: 576px) {
-        .add-doctor-wrapper {
-            padding: 12px 10px;
-        }
+        .add-service-wrapper { padding: 12px 10px; }
 
-        .page-header-left h1 {
-            font-size: 18px;
-        }
+        .page-header-left h1 { font-size: 18px; }
+        .page-header-left h1 i { font-size: 16px; }
+        .page-header-left p { font-size: 12px; }
 
-        .page-header-left h1 i {
-            font-size: 16px;
-        }
+        .form-card-header { padding: 14px 14px; }
+        .form-card-header h3 { font-size: 15px; }
+        .form-card-body { padding: 14px 12px; }
 
-        .page-header-left p {
-            font-size: 12px;
-        }
-
-        .btn-secondary-gradient {
-            padding: 10px 16px;
-            font-size: 12px;
-        }
-
-        .form-card-header {
-            padding: 14px 14px;
-        }
-
-        .form-card-header h3 {
-            font-size: 15px;
-        }
-
-        .form-card-body {
-            padding: 14px 12px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            font-size: 12.5px;
-        }
-
-        .form-group label i {
-            width: 16px;
-            margin-right: 4px;
-        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { font-size: 12.5px; }
+        .form-group label i { width: 16px; margin-right: 4px; }
 
         .form-control {
             padding: 10px 12px;
@@ -471,97 +436,46 @@
             border-radius: 9px;
         }
 
-        .alert-modern {
-            padding: 10px 12px;
-            font-size: 12px;
-        }
-
-        .alert-modern i {
-            font-size: 15px;
-        }
-
-        .alert-modern ul {
-            margin-left: 16px;
-            font-size: 11.5px;
-        }
+        .icon-preview { width: 42px; height: 42px; font-size: 18px; }
     }
 
     /* ============================================ */
     /* ✅ RESPONSIVE - EXTRA SMALL (max 380px)     */
     /* ============================================ */
     @media (max-width: 380px) {
-        .add-doctor-wrapper {
-            padding: 10px 8px;
-        }
+        .add-service-wrapper { padding: 10px 8px; }
 
-        .page-header-left h1 {
-            font-size: 16px;
-        }
+        .page-header-left h1 { font-size: 16px; }
+        .page-header-left h1 i { font-size: 14px; }
 
-        .page-header-left h1 i {
-            font-size: 14px;
-        }
+        .form-card { border-radius: 10px; }
+        .form-card-header { padding: 12px 12px; }
+        .form-card-header h3 { font-size: 14px; }
+        .form-card-body { padding: 12px 10px; }
 
-        .form-card {
-            border-radius: 10px;
-        }
-
-        .form-card-header {
-            padding: 12px 12px;
-        }
-
-        .form-card-header h3 {
-            font-size: 14px;
-        }
-
-        .form-card-body {
-            padding: 12px 10px;
-        }
-
-        .form-group {
-            margin-bottom: 14px;
-        }
-
-        .form-group label {
-            font-size: 12px;
-        }
+        .form-group { margin-bottom: 14px; }
+        .form-group label { font-size: 12px; }
 
         .form-control {
             padding: 9px 11px;
             font-size: 12.5px;
             border-radius: 8px;
         }
-
-        .form-actions .btn,
-        .form-actions .btn-secondary-gradient {
-            padding: 10px 14px;
-            font-size: 11.5px;
-        }
-
-        .alert-modern {
-            padding: 9px 11px;
-            font-size: 11.5px;
-        }
-
-        .alert-modern ul {
-            font-size: 11px;
-            margin-left: 14px;
-        }
     }
 </style>
 
-<div class="add-doctor-wrapper">
+<div class="add-service-wrapper">
     <!-- Page Header -->
     <div class="page-header">
         <div class="page-header-left">
             <h1>
-                <i class="fas fa-user-md"></i> Add New Doctor
+                <i class="fas fa-concierge-bell"></i> Add New Service
             </h1>
-            <p><i class="fas fa-arrow-trend-up"></i> Register a new doctor in the system</p>
+            <p><i class="fas fa-arrow-trend-up"></i> Register a new service in the system</p>
         </div>
         <div>
-            <a href="{{ route('admin.doctors.index') }}" class="btn-secondary-gradient">
-                <i class="fas fa-arrow-left"></i> Back to Doctors
+            <a href="{{ route('admin.services.index') }}" class="btn-secondary-gradient">
+                <i class="fas fa-arrow-left"></i> Back to Services
             </a>
         </div>
     </div>
@@ -599,105 +513,113 @@
     <div class="form-card">
         <div class="form-card-header">
             <h3>
-                <i class="fas fa-user-md"></i> Doctor Information
+                <i class="fas fa-concierge-bell"></i> Service Information
             </h3>
         </div>
 
         <div class="form-card-body">
-            <form method="POST" action="{{ route('admin.doctors.store') }}">
+            <form method="POST" action="{{ route('admin.services.store') }}">
                 @csrf
 
-                <!-- Full Name -->
+                <!-- Service Name -->
                 <div class="form-group">
                     <label for="name">
-                        <i class="fas fa-user"></i> Full Name <span class="required">*</span>
+                        <i class="fas fa-tag"></i> Service Name <span class="required">*</span>
                     </label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                           id="name" name="name" placeholder="Enter doctor's full name" 
+                           id="name" name="name" placeholder="e.g., Cardiology Consultation" 
                            value="{{ old('name') }}" required>
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <!-- Specialization -->
+                <!-- Description -->
                 <div class="form-group">
-                    <label for="specialization">
-                        <i class="fas fa-stethoscope"></i> Specialization <span class="required">*</span>
+                    <label for="description">
+                        <i class="fas fa-align-left"></i> Description <span class="required">*</span>
                     </label>
-                    <input type="text" class="form-control @error('specialization') is-invalid @enderror" 
-                           id="specialization" name="specialization" placeholder="e.g., Cardiologist" 
-                           value="{{ old('specialization') }}" required>
-                    @error('specialization')
+                    <textarea class="form-control @error('description') is-invalid @enderror" 
+                              id="description" name="description" 
+                              placeholder="Describe the service in detail..." required>{{ old('description') }}</textarea>
+                    @error('description')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <!-- Qualification -->
+                <!-- Icon -->
                 <div class="form-group">
-                    <label for="qualification">
-                        <i class="fas fa-graduation-cap"></i> Qualification
+                    <label for="icon">
+                        <i class="fas fa-icons"></i> Icon (FontAwesome Class)
                     </label>
-                    <input type="text" class="form-control @error('qualification') is-invalid @enderror" 
-                           id="qualification" name="qualification" placeholder="e.g., MBBS, MD, PhD" 
-                           value="{{ old('qualification') }}">
-                    @error('qualification')
+                    <input type="text" class="form-control @error('icon') is-invalid @enderror" 
+                           id="icon" name="icon" placeholder="fas fa-stethoscope" 
+                           value="{{ old('icon', 'fas fa-stethoscope') }}">
+                    <small class="form-text">Examples: fas fa-user-md, fas fa-heartbeat, fas fa-pills, fas fa-tooth</small>
+                    <div class="icon-preview-box">
+                        <div class="icon-preview" id="iconPreview">
+                            <i class="{{ old('icon', 'fas fa-stethoscope') }}"></i>
+                        </div>
+                        <span style="color: var(--text-muted); font-size: 12px;">Live Preview</span>
+                    </div>
+                    @error('icon')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <!-- Email -->
-                <div class="form-group">
-                    <label for="email">
-                        <i class="fas fa-envelope"></i> Email Address <span class="required">*</span>
-                    </label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                           id="email" name="email" placeholder="doctor@hospital.com" 
-                           value="{{ old('email') }}" required>
-                    @error('email')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                <!-- Department & Status -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="department">
+                            <i class="fas fa-building"></i> Department
+                        </label>
+                        <input type="text" class="form-control @error('department') is-invalid @enderror" 
+                               id="department" name="department" placeholder="e.g., Cardiology" 
+                               value="{{ old('department') }}">
+                        @error('department')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                <!-- Phone -->
-                <div class="form-group">
-                    <label for="phone">
-                        <i class="fas fa-phone"></i> Phone Number <span class="required">*</span>
-                    </label>
-                    <input type="text" class="form-control @error('phone') is-invalid @enderror" 
-                           id="phone" name="phone" placeholder="+92 123 4567890" 
-                           value="{{ old('phone') }}" required>
-                    @error('phone')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- ✅ Status - Only Active/Inactive --}}
-                <div class="form-group">
-                    <label for="status">
-                        <i class="fas fa-toggle-on"></i> Status <span class="required">*</span>
-                    </label>
-                    <select class="form-control @error('status') is-invalid @enderror" 
-                            id="status" name="status" required>
-                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>🟢 Active</option>
-                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>🔴 Inactive</option>
-                    </select>
-                    @error('status')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <div class="form-group">
+                        <label for="status">
+                            <i class="fas fa-toggle-on"></i> Status <span class="required">*</span>
+                        </label>
+                        <select class="form-control @error('status') is-invalid @enderror" 
+                                id="status" name="status" required>
+                            <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>🟢 Active</option>
+                            <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>🔴 Inactive</option>
+                        </select>
+                        @error('status')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
 
                 <!-- Form Actions -->
                 <div class="form-actions">
-                    <a href="{{ route('admin.doctors.index') }}" class="btn btn-secondary-gradient">
+                    <a href="{{ route('admin.services.index') }}" class="btn btn-secondary-gradient">
                         <i class="fas fa-times"></i> Cancel
                     </a>
                     <button type="submit" class="btn btn-primary-gradient">
-                        <i class="fas fa-save"></i> Save Doctor
+                        <i class="fas fa-save"></i> Save Service
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    // ✅ Icon live preview
+    const iconInput = document.getElementById('icon');
+    const iconPreview = document.getElementById('iconPreview');
+
+    if (iconInput && iconPreview) {
+        iconInput.addEventListener('input', function() {
+            iconPreview.innerHTML = `<i class="${this.value}"></i>`;
+        });
+    }
+</script>
+
 @endsection

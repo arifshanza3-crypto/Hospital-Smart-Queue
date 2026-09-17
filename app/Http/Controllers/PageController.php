@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Token;
 use App\Models\Doctor;
+use App\Models\Service;
 
 class PageController extends Controller
 {
@@ -50,9 +51,18 @@ class PageController extends Controller
         return view('Pages.about');
     }
     
+    // ✅ SERVICES METHOD - UPDATED (Dynamic)
     public function services()
     {
-        return view('Pages.services');
+        try {
+            $services = Service::where('status', 'active')
+                               ->orderBy('display_order', 'asc')
+                               ->get();
+            
+            return view('Pages.services', compact('services'));
+        } catch (\Exception $e) {
+            return view('Pages.services', ['services' => collect([])]);
+        }
     }
     
     public function contact()
