@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Token;
 use App\Models\User;
+use App\Models\Doctor;
 use App\Models\Notification;
 use App\Traits\NotificationTrait;
 use Illuminate\Http\Request;
@@ -16,7 +17,12 @@ class TokenController extends Controller
 
     public function showForm()
     {
-        return view('Pages.Token_form');
+        // ✅ Get all active doctors
+        $doctors = Doctor::where('status', 'active')
+                         ->orderBy('name')
+                         ->get();
+        
+        return view('Pages.Token_form', compact('doctors'));
     }
 
     /**
@@ -30,7 +36,8 @@ class TokenController extends Controller
         $nowServing = 'N/A';
 
         if ($tokenNumber) {
-            $token = Token::where('token_number', $tokenNumber)->first();
+            // ✅ Load doctor relationship
+            $token = Token::with('doctor')->where('token_number', $tokenNumber)->first();
 
             if ($token) {
                 // ✅ Dynamic Position
@@ -66,6 +73,7 @@ class TokenController extends Controller
                 'patient_name' => 'required|string|max:255',
                 'email' => 'nullable|email|max:255',
                 'phone' => 'required|string|max:11|regex:/^03\d{9}$/',
+                'doctor_id' => 'required|exists:doctors,id',  // ✅ Doctor validation
             ]);
 
             $userId = Auth::check() ? Auth::id() : null;
@@ -85,6 +93,7 @@ class TokenController extends Controller
                 'token_number' => $tokenNumber,
                 'patient_name' => $request->patient_name,
                 'patient_id' => $userId,
+                'doctor_id' => $request->doctor_id,  // ✅ Save doctor
                 'department' => 'General',
                 'phone' => $request->phone,
                 'email' => $request->email,
@@ -97,7 +106,7 @@ class TokenController extends Controller
 
             session(['current_token' => $tokenNumber]);
 
-            Log::info('Token generated: ' . $tokenNumber);
+            Log::info('Token generated: ' . $tokenNumber . ' | Doctor ID: ' . $request->doctor_id);
 
             if ($userId) {
                 $this->notifyUser(
@@ -142,7 +151,7 @@ class TokenController extends Controller
                 ], 400);
             }
 
-            $token = Token::where('token_number', $tokenNumber)->first();
+            $token = Token::with('doctor')->where('token_number', $tokenNumber)->first();
 
             if (!$token) {
                 return response()->json([
@@ -161,19 +170,15 @@ class TokenController extends Controller
             $remainingSeconds = 0;
 
             if ($token->status === 'waiting') {
-                // Tokens ahead (waiting only)
                 $aheadCount = Token::where('status', 'waiting')
                     ->where('created_at', '<', $token->created_at)
                     ->count();
 
-                // Total wait from creation
                 $totalWaitMinutes = $aheadCount * 15;
 
-                // ✅ FIXED: Use timestamp for reliable elapsed calc
                 $elapsedSeconds = now()->timestamp - $token->created_at->timestamp;
                 $elapsedMinutes = max(0, floor($elapsedSeconds / 60));
 
-                // Remaining = Total - Elapsed
                 $waitingTimeMinutes = max(0, $totalWaitMinutes - $elapsedMinutes);
                 $remainingSeconds = $waitingTimeMinutes * 60;
 
@@ -191,8 +196,10 @@ class TokenController extends Controller
                 'token' => [
                     'token_number'      => $token->token_number,
                     'patient_name'      => $token->patient_name,
+                    'doctor_name'       => $token->doctor ? 'Dr. ' . $token->doctor->name : 'N/A',  // ✅ Doctor name
+                    'doctor_specialization' => $token->doctor ? $token->doctor->specialization : 'N/A',
                     'status'            => $token->status,
-                    'position'          => $dynamicPosition,   // ✅ Dynamic position
+                    'position'          => $dynamicPosition,
                     'estimated_time'    => $token->estimated_time,
                     'waiting_time'      => $waitingTimeMinutes,
                     'remaining_seconds' => $remainingSeconds,

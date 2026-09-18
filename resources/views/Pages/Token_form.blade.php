@@ -52,6 +52,27 @@
                            value="{{ old('patient_name') }}">
                 </div>
 
+                {{-- ✅ NEW: Select Doctor Dropdown --}}
+                <div class="input-container">
+                    <label class="input-label">Select Doctor</label>
+                    <select name="doctor_id" 
+                            id="doctor_id" 
+                            class="form-control token-input" 
+                            required>
+                        <option value="">-- Select Doctor --</option>
+                        @forelse($doctors ?? [] as $doctor)
+                            <option value="{{ $doctor->id }}" {{ old('doctor_id') == $doctor->id ? 'selected' : '' }}>
+                                Dr. {{ $doctor->name }} - {{ $doctor->specialization }}
+                            </option>
+                        @empty
+                            <option value="" disabled>No doctors available</option>
+                        @endforelse
+                    </select>
+                    @error('doctor_id')
+                        <div class="validation-error">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 {{-- Email Field (Optional) --}}
                 <div class="input-container">
                     <label class="input-label">Email <span class="optional-tag">(Optional)</span></label>

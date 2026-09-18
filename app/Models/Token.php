@@ -13,6 +13,7 @@ class Token extends Model
         'token_number',
         'patient_id',
         'patient_name',
+        'doctor_id',  // ✅ Added
         'phone',
         'email',
         'department',
@@ -42,25 +43,27 @@ class Token extends Model
     }
 
     /**
+     * ✅ Relationship with Doctor
+     */
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class, 'doctor_id');
+    }
+
+    /**
      * ✅ Dynamic Estimated Time Calculate Karne Ke Liye
-     * Queue mein aage kitne patients hain us ke hisaab se time calculate karein
      */
     public function getDynamicEstimatedTime()
     {
-        // Agar token complete ya serving hai toh time 0
         if (in_array($this->status, ['completed', 'serving', 'cancelled', 'missed'])) {
             return 0;
         }
 
-        // Waiting queue mein aage kitne patients hain
         $aheadCount = Token::where('status', 'waiting')
             ->where('position', '<', $this->position)
             ->count();
 
-        // Har patient 15 minutes
         $timePerPatient = 15;
-        
-        // Total estimated time = aage walo ka time
         $totalTime = $aheadCount * $timePerPatient;
 
         return $totalTime;
