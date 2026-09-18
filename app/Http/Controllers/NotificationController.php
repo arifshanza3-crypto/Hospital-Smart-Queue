@@ -49,8 +49,8 @@ class NotificationController extends Controller
                 ]);
             }
 
-            // ✅ Use Notification view (root folder)
-            return view('Notification', [
+            // ✅ FIXED: Use Pages.Notification (view is in resources/views/Pages/)
+            return view('Pages.Notification', [
                 'notifications' => $notifications,
                 'unreadCount' => $unreadCount,
                 'userRole' => $user->role ?? 'user'
@@ -59,7 +59,8 @@ class NotificationController extends Controller
         } catch (\Exception $e) {
             Log::error('Notification page error: ' . $e->getMessage());
             
-            return view('Notification', [
+            // ✅ FIXED: Use Pages.Notification here too
+            return view('Pages.Notification', [
                 'notifications' => collect([]),
                 'unreadCount' => 0,
                 'userRole' => 'user'
