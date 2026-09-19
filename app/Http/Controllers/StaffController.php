@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Token;
 use App\Models\QueueReport;
 use App\Models\User;
+use App\Models\Doctor;
 use App\Models\Notification;
 use App\Traits\NotificationTrait;
 use Illuminate\Support\Facades\Auth;
@@ -35,9 +36,15 @@ class StaffController extends Controller
         $completedToday = QueueReport::whereDate('created_at', today())->where('status', 'completed')->count();
         $avgWaitTime = QueueReport::where('status', 'completed')->avg('waiting_time') ?? 0;
         
+        // ✅ Get all active doctors for dropdown
+        $doctors = Doctor::where('status', 'active')
+                         ->orderBy('name')
+                         ->get();
+        
         return view('Pages.Staff', compact(
             'patients', 'totalQueue', 'nowServing', 
-            'nowServingToken', 'completedToday', 'avgWaitTime'
+            'nowServingToken', 'completedToday', 'avgWaitTime',
+            'doctors'
         ));
     }
 
@@ -126,16 +133,17 @@ class StaffController extends Controller
         return $times[$department] ?? 15;
     }
 
-    // ✅ Add Physical Patient - Updated with Mobile Number
+    // ✅ Add Physical Patient - Updated with Doctor Selection
     public function addPatient(Request $request)
     {
         Log::info('Add patient called', $request->all());
 
         try {
-            // ✅ Validation with mobile_number
+            // ✅ Validation with mobile_number AND doctor_id
             $request->validate([
                 'name' => 'required|string|max:255',
                 'mobile_number' => 'required|string|max:11|regex:/^03\d{9}$/',
+                'doctor_id' => 'required|exists:doctors,id',  // ✅ Doctor required
             ]);
 
             $lastToken = Token::orderBy('id', 'desc')->first();
@@ -157,7 +165,8 @@ class StaffController extends Controller
                 'token_number' => $tokenNumber,
                 'patient_id' => null,
                 'patient_name' => $request->name,
-                'phone' => $request->mobile_number,  // ✅ Mobile number saved here
+                'doctor_id' => $request->doctor_id,  // ✅ Save doctor
+                'phone' => $request->mobile_number,
                 'email' => null,
                 'department' => $department,
                 'status' => 'waiting',
@@ -169,16 +178,19 @@ class StaffController extends Controller
 
             $this->recalculatePositions($department);
 
-            Log::info('Token created: ' . $token->id . ' - ' . $tokenNumber);
+            Log::info('Token created: ' . $token->id . ' - ' . $tokenNumber . ' | Doctor ID: ' . $request->doctor_id);
 
             // ✅ BELL NOTIFICATION - Send to all staff and admins
+            $doctorName = Doctor::find($request->doctor_id)->name ?? 'Unknown';
+            
             $this->notifyAllStaffAndAdmins(
                 'New Patient Added',
-                'Patient "' . $request->name . '" added to ' . $department . ' queue (Token: ' . $tokenNumber . ')',
+                'Patient "' . $request->name . '" added to ' . $department . ' queue (Token: ' . $tokenNumber . ' | Doctor: Dr. ' . $doctorName . ')',
                 'physical_patient_added',
                 [
                     'token_number' => $tokenNumber,
                     'patient_name' => $request->name,
+                    'doctor_name' => $doctorName,
                     'department' => $department,
                     'url' => route('staff.dashboard')
                 ]
@@ -209,7 +221,6 @@ class StaffController extends Controller
             $token->called_at = now();
             $token->save();
 
-            // ✅ BELL NOTIFICATION
             $this->notifyAllStaffAndAdmins(
                 'Token Called',
                 'Token ' . $token->token_number . ' (' . $token->patient_name . ') has been called',
@@ -255,7 +266,6 @@ class StaffController extends Controller
             $token->started_at = now();
             $token->save();
 
-            // ✅ BELL NOTIFICATION
             $this->notifyAllStaffAndAdmins(
                 'Patient Arrived',
                 'Patient ' . $token->patient_name . ' (Token: ' . $token->token_number . ') has arrived',
@@ -305,7 +315,6 @@ class StaffController extends Controller
             $this->recalculatePositions($department);
             $this->callNext();
 
-            // ✅ BELL NOTIFICATION
             $this->notifyAllStaffAndAdmins(
                 'Service Completed',
                 'Service for ' . $token->patient_name . ' (Token: ' . $token->token_number . ') completed',
@@ -356,7 +365,6 @@ class StaffController extends Controller
             $this->recalculatePositions($department);
             $this->callNext();
 
-            // ✅ BELL NOTIFICATION
             $this->notifyAllStaffAndAdmins(
                 'Token Cancelled',
                 'Token ' . $tokenNumber . ' (' . $tokenName . ') has been cancelled',
@@ -407,7 +415,6 @@ class StaffController extends Controller
             $this->recalculatePositions($department);
             $this->callNext();
 
-            // ✅ BELL NOTIFICATION
             $this->notifyAllStaffAndAdmins(
                 'Patient Missed',
                 'Patient ' . $tokenName . ' (Token: ' . $tokenNumber . ') missed appointment',
@@ -466,7 +473,6 @@ class StaffController extends Controller
                 $next->called_at = now();
                 $next->save();
 
-                // ✅ BELL NOTIFICATION
                 $this->notifyAllStaffAndAdmins(
                     'Next Token Called',
                     'Token ' . $next->token_number . ' (' . $next->patient_name . ') is next',
@@ -531,7 +537,6 @@ class StaffController extends Controller
             $minutes = $request->minutes;
             Token::where('status', 'waiting')->update(['estimated_time' => $minutes]);
 
-            // ✅ BELL NOTIFICATION
             $this->notifyAllStaffAndAdmins(
                 'Global Time Updated',
                 'Global estimated time set to ' . $minutes . ' minutes',

@@ -46,6 +46,7 @@
                         <tr>
                             <th>Token #</th>
                             <th>Patient Info</th>
+                            <th>Doctor</th>
                             <th>Type</th>
                             <th>Est. Time</th>
                             <th>Status</th>
@@ -60,6 +61,14 @@
                                 <td>
                                     <div>{{ $token->patient_name ?? 'N/A' }}</div>
                                     <small class="patient-phone">{{ $token->phone ?? '' }}</small>
+                                </td>
+                                <td>
+                                    @if($token->doctor)
+                                        <div style="font-weight: 600; color: #0a2a3a;">Dr. {{ $token->doctor->name }}</div>
+                                        <small style="color: #64748b;">{{ $token->doctor->specialization }}</small>
+                                    @else
+                                        <span style="color: #94a3b8;">N/A</span>
+                                    @endif
                                 </td>
                                 <td>{{ ucfirst($token->type ?? 'online') }}</td>
                                 <td>{{ $token->estimated_time ?? 0 }} min</td>
@@ -105,7 +114,7 @@
                             @endforeach
                         @else
                             <tr id="empty-row">
-                                <td colspan="6" class="empty-cell">
+                                <td colspan="7" class="empty-cell">
                                     <i class="fas fa-inbox"></i>
                                     No patients in queue
                                 </td>
@@ -117,19 +126,40 @@
         </div>
     </main>
 
-    <!-- Patient Modal -->
+    <!-- Patient Modal - UPDATED with Doctor Selection -->
     <div id="patientModal" class="modal">
         <div class="modal-content">
             <h3>Add New Patient</h3>
+            
+            <!-- Full Name -->
             <div class="form-group">
                 <label>Full Name</label>
                 <input type="text" id="p_name" placeholder="Enter name..." required>
             </div>
+
+            <!-- ✅ NEW: Select Doctor Dropdown -->
+            <div class="form-group">
+                <label>Select Doctor</label>
+                <select id="p_doctor" required>
+                    <option value="">-- Select Doctor --</option>
+                    @forelse($doctors ?? [] as $doctor)
+                        <option value="{{ $doctor->id }}">
+                            Dr. {{ $doctor->name }} - {{ $doctor->specialization }}
+                        </option>
+                    @empty
+                        <option value="" disabled>No doctors available</option>
+                    @endforelse
+                </select>
+                <small id="doctorError" class="error-msg">Please select a doctor</small>
+            </div>
+
+            <!-- Mobile Number -->
             <div class="form-group">
                 <label>Mobile Number</label>
                 <input type="tel" id="p_mobile" placeholder="03XX-XXXXXXX" required maxlength="11">
                 <small id="mobileError" class="error-msg">Please enter a valid 11-digit number starting with 03</small>
             </div>
+
             <div class="modal-footer">
                 <button class="btn btn-text" onclick="closeModal('patientModal')">Cancel</button>
                 <button class="btn btn-primary" onclick="submitPatient()">Add to Queue</button>
@@ -154,4 +184,114 @@
 
     <!-- External Script File -->
     <script src="{{ asset('js/Staff.js') }}"></script>
+
+    {{-- ✅ Inline Script for Submit Patient with Doctor --}}
+    <script>
+    // Override submitPatient to include doctor_id
+    if (typeof window.submitPatient === 'undefined' || true) {
+        window.submitPatient = function() {
+            const name = document.getElementById('p_name')?.value?.trim();
+            const doctorId = document.getElementById('p_doctor')?.value?.trim();
+            const mobile = document.getElementById('p_mobile')?.value?.trim();
+            const doctorError = document.getElementById('doctorError');
+            const mobileError = document.getElementById('mobileError');
+
+            // Hide previous errors
+            doctorError.style.display = 'none';
+            mobileError.style.display = 'none';
+
+            // Validate Name
+            if (!name) {
+                alert('Please enter patient name');
+                return;
+            }
+
+            // Validate Doctor
+            if (!doctorId) {
+                doctorError.style.display = 'block';
+                document.getElementById('p_doctor').style.border = '1px solid #dc3545';
+                return;
+            }
+
+            // Validate Mobile
+            if (!mobile) {
+                alert('Please enter mobile number');
+                return;
+            }
+
+            const isValidMobile = /^(03)\d{9}$/.test(mobile);
+            if (!isValidMobile) {
+                mobileError.style.display = 'block';
+                document.getElementById('p_mobile').style.border = '1px solid #dc3545';
+                return;
+            }
+
+            // Submit via AJAX
+            fetch('/staff/add-patient', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    name: name,
+                    doctor_id: doctorId,
+                    mobile_number: mobile
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    closeModal('patientModal');
+                    // Reset form
+                    document.getElementById('p_name').value = '';
+                    document.getElementById('p_doctor').value = '';
+                    document.getElementById('p_mobile').value = '';
+                    // Reload page
+                    location.reload();
+                } else {
+                    alert('❌ ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('❌ Error adding patient');
+            });
+        };
+
+        // Mobile validation
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileInput = document.getElementById('p_mobile');
+            const mobileError = document.getElementById('mobileError');
+
+            if (mobileInput) {
+                mobileInput.addEventListener('input', function() {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                    if (this.value.length > 11) {
+                        this.value = this.value.slice(0, 11);
+                    }
+                    const isValid = /^(03)\d{9}$/.test(this.value);
+                    if (this.value.length > 0 && !isValid) {
+                        mobileError.style.display = 'block';
+                        this.style.border = '1px solid #dc3545';
+                    } else {
+                        mobileError.style.display = 'none';
+                        this.style.border = '1px solid #e2e8f0';
+                    }
+                });
+            }
+
+            // Doctor validation
+            const doctorSelect = document.getElementById('p_doctor');
+            if (doctorSelect) {
+                doctorSelect.addEventListener('change', function() {
+                    if (this.value) {
+                        document.getElementById('doctorError').style.display = 'none';
+                        this.style.border = '1px solid #e2e8f0';
+                    }
+                });
+            }
+        });
+    }
+    </script>
 @endsection
