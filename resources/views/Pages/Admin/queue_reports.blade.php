@@ -8,10 +8,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-    /* ============================================
-       QUEUE REPORTS - LIGHT THEME
-       ============================================ */
-    
     :root {
         --bg-primary: #f8fafc;
         --bg-card: #ffffff;
@@ -44,12 +40,6 @@
         margin-bottom: 28px;
         flex-wrap: wrap;
         gap: 16px;
-    }
-
-    .page-header-left {
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
     }
 
     .page-header-left h1 {
@@ -95,12 +85,12 @@
         box-shadow: 0 8px 30px rgba(16, 185, 129, 0.35);
     }
 
-    /* ===== STATISTICS CARDS ===== */
+    /* ===== STATS GRID ===== */
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 16px;
-        margin-bottom: 28px;
+        margin-bottom: 24px;
     }
 
     .stat-card {
@@ -119,7 +109,6 @@
         position: absolute;
         top: 0; left: 0; right: 0;
         height: 3px;
-        opacity: 1;
     }
 
     .stat-card:hover {
@@ -159,12 +148,12 @@
     .stat-card.cyan::before { background: linear-gradient(135deg, #0ea5e9, #06b6d4); }
     .stat-card.cyan .stat-icon { color: #0ea5e9; }
 
-    /* ===== STATUS SUMMARY ===== */
+    /* ===== STATUS GRID ===== */
     .status-summary-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 16px;
-        margin-bottom: 28px;
+        margin-bottom: 24px;
     }
 
     .status-item {
@@ -173,8 +162,8 @@
         border-radius: 12px;
         padding: 16px 20px;
         text-align: center;
-        transition: all 0.3s ease;
         box-shadow: var(--shadow);
+        transition: all 0.3s ease;
     }
 
     .status-item:hover {
@@ -210,7 +199,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 20px;
-        margin-bottom: 28px;
+        margin-bottom: 24px;
     }
 
     .chart-card {
@@ -219,12 +208,6 @@
         border-radius: 16px;
         padding: 20px 24px;
         box-shadow: var(--shadow);
-        transition: all 0.3s ease;
-        min-width: 0;
-    }
-
-    .chart-card:hover {
-        box-shadow: var(--shadow-hover);
     }
 
     .chart-card .chart-title {
@@ -237,9 +220,7 @@
         gap: 10px;
     }
 
-    .chart-card .chart-title i {
-        color: var(--accent-1);
-    }
+    .chart-card .chart-title i { color: var(--accent-1); }
 
     .chart-card .chart-container {
         position: relative;
@@ -264,7 +245,7 @@
 
     .filters-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 16px;
     }
 
@@ -351,7 +332,94 @@
         text-decoration: none;
     }
 
-    /* ===== TABLE SCROLL HINT ===== */
+    /* ===== DOCTOR REPORT TABLE ===== */
+    .doctor-report-section {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 20px 24px;
+        margin-bottom: 20px;
+        box-shadow: var(--shadow);
+    }
+
+    .doctor-report-section h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0 0 16px 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .doctor-report-section h3 i { color: var(--accent-1); }
+
+    .doctor-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 14px;
+    }
+
+    .doctor-stat-card {
+        background: #f8fafc;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .doctor-stat-card:hover {
+        background: white;
+        box-shadow: var(--shadow-hover);
+        transform: translateY(-2px);
+    }
+
+    .doctor-stat-card .doctor-name {
+        font-weight: 700;
+        color: var(--text-primary);
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+
+    .doctor-stat-card .doctor-spec {
+        color: var(--accent-1);
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .doctor-stat-card .doctor-counts {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .doctor-stat-card .count-item {
+        text-align: center;
+        padding: 6px;
+        background: white;
+        border-radius: 8px;
+    }
+
+    .doctor-stat-card .count-item .count-num {
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--text-primary);
+        display: block;
+    }
+
+    .doctor-stat-card .count-item .count-lbl {
+        font-size: 10px;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    .doctor-stat-card .count-item.completed .count-num { color: #10b981; }
+    .doctor-stat-card .count-item.waiting .count-num { color: #f59e0b; }
+    .doctor-stat-card .count-item.cancelled .count-num { color: #ef4444; }
+
+    /* ===== TABLE ===== */
     .table-scroll-hint {
         display: none;
         font-size: 12px;
@@ -370,7 +438,6 @@
         margin-right: 6px;
     }
 
-    /* ===== TABLE WRAPPER ===== */
     .table-wrapper {
         width: 100%;
         overflow-x: auto;
@@ -381,24 +448,13 @@
         box-shadow: var(--shadow);
     }
 
-    .table-wrapper::-webkit-scrollbar {
-        height: 6px;
-    }
+    .table-wrapper::-webkit-scrollbar { height: 6px; }
+    .table-wrapper::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+    .table-wrapper::-webkit-scrollbar-thumb { background: var(--accent-1); border-radius: 10px; }
 
-    .table-wrapper::-webkit-scrollbar-track {
-        background: #f1f5f9;
-        border-radius: 10px;
-    }
-
-    .table-wrapper::-webkit-scrollbar-thumb {
-        background: var(--accent-1);
-        border-radius: 10px;
-    }
-
-    /* ===== TABLE ===== */
     .table-container {
         width: 100%;
-        min-width: 950px;
+        min-width: 1000px;
     }
 
     .table-container table {
@@ -431,24 +487,15 @@
         white-space: nowrap;
     }
 
-    .table-container tbody tr {
-        transition: all 0.3s ease;
-    }
-
-    .table-container tbody tr:hover {
-        background: #f8fafc;
-    }
-
-    .table-container tbody tr:last-child td {
-        border-bottom: none;
-    }
+    .table-container tbody tr { transition: all 0.3s ease; }
+    .table-container tbody tr:hover { background: #f8fafc; }
+    .table-container tbody tr:last-child td { border-bottom: none; }
 
     .token-badge {
         font-weight: 700;
         color: var(--accent-1);
     }
 
-    /* ===== STATUS BADGES ===== */
     .status-badge {
         padding: 4px 14px;
         border-radius: 20px;
@@ -460,46 +507,19 @@
         white-space: nowrap;
     }
 
-    .status-badge.waiting {
-        background: #fef3c7;
-        color: #92400e;
-        border: 1px solid #fde68a;
-    }
+    .status-badge.waiting { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .status-badge.calling { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+    .status-badge.serving { background: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+    .status-badge.completed { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+    .status-badge.cancelled,
+    .status-badge.missed { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
 
-    .status-badge.in-progress {
-        background: #dbeafe;
-        color: #1e40af;
-        border: 1px solid #bfdbfe;
-    }
-
-    .status-badge.completed {
-        background: #d1fae5;
-        color: #065f46;
-        border: 1px solid #a7f3d0;
-    }
-
-    .status-badge.cancelled {
-        background: #fee2e2;
-        color: #991b1b;
-        border: 1px solid #fca5a5;
-    }
-
-    /* ===== PAGINATION ===== */
     .pagination-wrapper {
         margin-top: 20px;
-    }
-
-    .pagination-wrapper .pagination {
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .pagination-wrapper nav {
         display: flex;
         justify-content: center;
     }
 
-    /* ===== EMPTY STATE ===== */
     .empty-state {
         text-align: center;
         padding: 60px 20px;
@@ -520,86 +540,34 @@
 
     .empty-state p {
         color: var(--text-secondary);
-        margin-bottom: 0;
     }
 
-    /* ============================================ */
-    /* ✅ RESPONSIVE - LARGE TABLET (max 1200px)   */
-    /* ============================================ */
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 1200px) {
         .stats-grid,
         .status-summary-grid {
             grid-template-columns: repeat(4, 1fr);
         }
-
-        .stat-card .stat-number {
-            font-size: 26px;
-        }
+        .stat-card .stat-number { font-size: 26px; }
     }
 
-    /* ============================================ */
-    /* ✅ RESPONSIVE - TABLET (max 992px)           */
-    /* ============================================ */
     @media (max-width: 992px) {
-        .reports-wrapper {
-            padding: 20px 18px;
-        }
-
-        .charts-grid {
-            grid-template-columns: 1fr;
-            gap: 16px;
-        }
-
-        .page-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .page-header-left h1 {
-            font-size: 22px;
-        }
-
-        .btn-export {
-            width: 100%;
-            justify-content: center;
-        }
-
-        .chart-card .chart-container {
-            height: 250px;
-        }
-
-        .stat-card .stat-number {
-            font-size: 24px;
-        }
+        .reports-wrapper { padding: 20px 18px; }
+        .charts-grid { grid-template-columns: 1fr; gap: 16px; }
+        .page-header { flex-direction: column; align-items: flex-start; }
+        .page-header-left h1 { font-size: 22px; }
+        .btn-export { width: 100%; justify-content: center; }
+        .stat-card .stat-number { font-size: 24px; }
     }
 
-    /* ============================================ */
-    /* ✅ RESPONSIVE - MOBILE (max 768px)           */
-    /* ============================================ */
     @media (max-width: 768px) {
-        .reports-wrapper {
-            padding: 16px 12px;
-        }
+        .reports-wrapper { padding: 16px 12px; }
 
-        .page-header {
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+        .page-header { gap: 12px; margin-bottom: 20px; }
+        .page-header-left h1 { font-size: 20px; gap: 8px; }
+        .page-header-left h1 i { font-size: 20px; }
+        .page-header-left p { font-size: 13px; }
 
-        .page-header-left h1 {
-            font-size: 20px;
-            gap: 8px;
-        }
-
-        .page-header-left h1 i {
-            font-size: 20px;
-        }
-
-        .page-header-left p {
-            font-size: 13px;
-        }
-
-        /* Stats grid - 2 columns on mobile */
         .stats-grid,
         .status-summary-grid {
             grid-template-columns: repeat(2, 1fr);
@@ -607,326 +575,72 @@
             margin-bottom: 18px;
         }
 
-        .stat-card {
-            padding: 14px 16px;
-            border-radius: 12px;
-        }
+        .stat-card { padding: 14px 16px; border-radius: 12px; }
+        .stat-card .stat-icon { font-size: 20px; }
+        .stat-card .stat-number { font-size: 22px; margin: 4px 0 2px; }
+        .stat-card .stat-label { font-size: 11px; }
 
-        .stat-card .stat-icon {
-            font-size: 20px;
-        }
+        .status-item { padding: 12px 14px; border-radius: 10px; }
+        .status-item .status-icon { font-size: 18px; }
+        .status-item .status-number { font-size: 22px; }
+        .status-item .status-label { font-size: 11px; }
 
-        .stat-card .stat-number {
-            font-size: 22px;
-            margin: 4px 0 2px;
-        }
+        .chart-card { padding: 16px 16px; border-radius: 12px; }
+        .chart-card .chart-title { font-size: 14px; margin-bottom: 12px; }
+        .chart-card .chart-container { height: 220px; }
+        .chart-card canvas { max-height: 220px; }
 
-        .stat-card .stat-label {
-            font-size: 11px;
-        }
+        .filters-card { padding: 16px 14px; border-radius: 12px; }
+        .filters-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+        .filter-control { padding: 10px 12px; font-size: 13.5px; border-radius: 9px; }
+        .filter-actions { flex-direction: column; gap: 8px; }
+        .btn-filter, .btn-reset { width: 100%; justify-content: center; padding: 11px 20px; font-size: 13px; }
 
-        .status-item {
-            padding: 12px 14px;
-            border-radius: 10px;
-        }
+        .doctor-report-section { padding: 16px 14px; border-radius: 12px; }
+        .doctor-stats-grid { grid-template-columns: 1fr; }
 
-        .status-item .status-icon {
-            font-size: 18px;
-        }
+        .table-scroll-hint { display: block; }
+        .table-wrapper { border-radius: 12px; }
+        .table-container { min-width: 900px; }
+        .table-container thead th { padding: 10px 12px; font-size: 10px; }
+        .table-container tbody td { padding: 11px 12px; font-size: 12.5px; }
+        .status-badge { font-size: 11px; padding: 4px 10px; }
 
-        .status-item .status-number {
-            font-size: 22px;
-        }
-
-        .status-item .status-label {
-            font-size: 11px;
-        }
-
-        /* Charts */
-        .chart-card {
-            padding: 16px 16px;
-            border-radius: 12px;
-        }
-
-        .chart-card .chart-title {
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .chart-card .chart-container {
-            height: 220px;
-        }
-
-        .chart-card canvas {
-            max-height: 220px;
-        }
-
-        /* Filters */
-        .filters-card {
-            padding: 16px 14px;
-            border-radius: 12px;
-        }
-
-        .filters-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .filter-control {
-            padding: 10px 12px;
-            font-size: 13.5px;
-            border-radius: 9px;
-        }
-
-        .filter-actions {
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .btn-filter,
-        .btn-reset {
-            width: 100%;
-            justify-content: center;
-            padding: 11px 20px;
-            font-size: 13px;
-        }
-
-        /* Swipe hint */
-        .table-scroll-hint {
-            display: block;
-        }
-
-        /* Table */
-        .table-wrapper {
-            border-radius: 12px;
-        }
-
-        .table-container {
-            min-width: 850px;
-        }
-
-        .table-container thead th {
-            padding: 10px 12px;
-            font-size: 10px;
-        }
-
-        .table-container tbody td {
-            padding: 11px 12px;
-            font-size: 12.5px;
-        }
-
-        .status-badge {
-            font-size: 11px;
-            padding: 4px 10px;
-        }
-
-        .empty-state {
-            padding: 40px 16px;
-        }
-
-        .empty-state i {
-            font-size: 42px;
-        }
-
-        .empty-state h3 {
-            font-size: 17px;
-        }
-
-        .empty-state p {
-            font-size: 13px;
-        }
+        .empty-state { padding: 40px 16px; }
+        .empty-state i { font-size: 42px; }
+        .empty-state h3 { font-size: 17px; }
     }
 
-    /* ============================================ */
-    /* ✅ RESPONSIVE - SMALL MOBILE (max 576px)     */
-    /* ============================================ */
     @media (max-width: 576px) {
-        .reports-wrapper {
-            padding: 12px 10px;
-        }
+        .reports-wrapper { padding: 12px 10px; }
+        .page-header-left h1 { font-size: 18px; }
+        .page-header-left p { font-size: 12px; }
+        .btn-export { padding: 11px 16px; font-size: 12px; border-radius: 10px; }
 
-        .page-header-left h1 {
-            font-size: 18px;
-        }
+        .stat-card { padding: 12px 10px; }
+        .stat-card .stat-icon { font-size: 16px; }
+        .stat-card .stat-number { font-size: 18px; }
+        .stat-card .stat-label { font-size: 10px; }
 
-        .page-header-left p {
-            font-size: 12px;
-        }
+        .status-item { padding: 10px 10px; }
+        .status-item .status-icon { font-size: 16px; margin-bottom: 2px; }
+        .status-item .status-number { font-size: 18px; }
+        .status-item .status-label { font-size: 10px; }
 
-        .btn-export {
-            padding: 11px 16px;
-            font-size: 12px;
-            border-radius: 10px;
-        }
+        .chart-card { padding: 14px 12px; }
+        .chart-card .chart-title { font-size: 13px; }
+        .chart-card .chart-container { height: 200px; }
+        .chart-card canvas { max-height: 200px; }
 
-        /* Stats grid */
-        .stat-card {
-            padding: 12px 10px;
-        }
+        .filters-grid { grid-template-columns: 1fr; }
+        .filter-group label { font-size: 12px; }
+        .filter-control { padding: 10px 12px; font-size: 13px; }
 
-        .stat-card .stat-icon {
-            font-size: 16px;
-        }
-
-        .stat-card .stat-number {
-            font-size: 18px;
-        }
-
-        .stat-card .stat-label {
-            font-size: 10px;
-            letter-spacing: 0.2px;
-        }
-
-        .status-item {
-            padding: 10px 10px;
-        }
-
-        .status-item .status-icon {
-            font-size: 16px;
-            margin-bottom: 2px;
-        }
-
-        .status-item .status-number {
-            font-size: 18px;
-        }
-
-        .status-item .status-label {
-            font-size: 10px;
-        }
-
-        /* Charts */
-        .chart-card {
-            padding: 14px 12px;
-        }
-
-        .chart-card .chart-title {
-            font-size: 13px;
-        }
-
-        .chart-card .chart-container {
-            height: 200px;
-        }
-
-        .chart-card canvas {
-            max-height: 200px;
-        }
-
-        /* Filters */
-        .filters-card {
-            padding: 14px 12px;
-        }
-
-        .filters-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .filter-group label {
-            font-size: 12px;
-        }
-
-        .filter-control {
-            padding: 10px 12px;
-            font-size: 13px;
-        }
-
-        .btn-filter,
-        .btn-reset {
-            padding: 10px 16px;
-            font-size: 12px;
-        }
-
-        /* Table */
-        .table-container {
-            min-width: 780px;
-        }
-
-        .table-container thead th {
-            padding: 9px 10px;
-            font-size: 9.5px;
-        }
-
-        .table-container tbody td {
-            padding: 10px 10px;
-            font-size: 12px;
-        }
-
-        .status-badge {
-            font-size: 10px;
-            padding: 3px 8px;
-        }
-
-        .table-scroll-hint {
-            font-size: 11px;
-            padding: 6px;
-        }
-
-        /* Pagination */
-        .pagination-wrapper {
-            margin-top: 15px;
-        }
-    }
-
-    /* ============================================ */
-    /* ✅ RESPONSIVE - EXTRA SMALL (max 380px)     */
-    /* ============================================ */
-    @media (max-width: 380px) {
-        .reports-wrapper {
-            padding: 10px 8px;
-        }
-
-        .page-header-left h1 {
-            font-size: 16px;
-        }
-
-        .page-header-left h1 i {
-            font-size: 16px;
-        }
-
-        .stat-card {
-            padding: 10px 8px;
-        }
-
-        .stat-card .stat-icon {
-            font-size: 14px;
-        }
-
-        .stat-card .stat-number {
-            font-size: 16px;
-        }
-
-        .stat-card .stat-label {
-            font-size: 9px;
-        }
-
-        .status-item .status-number {
-            font-size: 16px;
-        }
-
-        .status-item .status-label {
-            font-size: 9px;
-        }
-
-        .chart-card .chart-container {
-            height: 180px;
-        }
-
-        .chart-card canvas {
-            max-height: 180px;
-        }
-
-        .table-container {
-            min-width: 720px;
-        }
-
-        .table-container thead th {
-            padding: 8px 9px;
-            font-size: 9px;
-        }
-
-        .table-container tbody td {
-            padding: 9px 9px;
-            font-size: 11.5px;
-        }
+        .table-container { min-width: 850px; }
+        .table-container thead th { padding: 9px 10px; font-size: 9.5px; }
+        .table-container tbody td { padding: 10px 10px; font-size: 12px; }
+        .status-badge { font-size: 10px; padding: 3px 8px; }
+        .table-scroll-hint { font-size: 11px; padding: 6px; }
     }
 </style>
 
@@ -1002,7 +716,7 @@
                 <canvas id="departmentChart"></canvas>
             </div>
         </div>
-        
+
         <div class="chart-card">
             <h4 class="chart-title">
                 <i class="fas fa-chart-line"></i> Last 7 Days Trend
@@ -1013,27 +727,60 @@
         </div>
     </div>
 
+    <!-- Doctor-wise Report -->
+    @if(isset($doctorStats) && $doctorStats->count() > 0)
+    <div class="doctor-report-section">
+        <h3><i class="fas fa-user-md"></i> Doctor-wise Report</h3>
+        <div class="doctor-stats-grid">
+            @foreach($doctorStats as $doc)
+            <div class="doctor-stat-card">
+                <div class="doctor-name">{{ $doc['doctor_name'] }}</div>
+                <div class="doctor-spec">{{ $doc['specialization'] }}</div>
+                <div class="doctor-counts">
+                    <div class="count-item">
+                        <span class="count-num">{{ $doc['total_patients'] }}</span>
+                        <span class="count-lbl">Total</span>
+                    </div>
+                    <div class="count-item completed">
+                        <span class="count-num">{{ $doc['completed'] }}</span>
+                        <span class="count-lbl">Done</span>
+                    </div>
+                    <div class="count-item waiting">
+                        <span class="count-num">{{ $doc['waiting'] }}</span>
+                        <span class="count-lbl">Waiting</span>
+                    </div>
+                    <div class="count-item cancelled">
+                        <span class="count-num">{{ $doc['cancelled'] }}</span>
+                        <span class="count-lbl">Cancel</span>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+    @endif
+
     <!-- Filters -->
     <div class="filters-card">
         <form method="GET" action="{{ route('admin.queue-reports.index') }}" id="filterForm">
             <div class="filters-grid">
                 <div class="filter-group">
                     <label for="from_date"><i class="fas fa-calendar"></i> From Date</label>
-                    <input type="date" name="from_date" class="filter-control" 
+                    <input type="date" name="from_date" class="filter-control"
                            value="{{ request('from_date') }}" id="from_date">
                 </div>
                 <div class="filter-group">
                     <label for="to_date"><i class="fas fa-calendar"></i> To Date</label>
-                    <input type="date" name="to_date" class="filter-control" 
+                    <input type="date" name="to_date" class="filter-control"
                            value="{{ request('to_date') }}" id="to_date">
                 </div>
                 <div class="filter-group">
-                    <label for="department"><i class="fas fa-building"></i> Department</label>
-                    <select name="department" class="filter-control" id="department">
-                        <option value="">All Departments</option>
-                        @foreach($departments ?? [] as $dept)
-                            <option value="{{ $dept }}" {{ request('department') == $dept ? 'selected' : '' }}>
-                                {{ $dept }}
+                    <label for="doctor_id"><i class="fas fa-user-md"></i> Doctor</label>
+                    <select name="doctor_id" class="filter-control" id="doctor_id">
+                        <option value="">All Doctors</option>
+                        @foreach($doctors ?? [] as $doctor)
+                            <option value="{{ $doctor->id }}" {{ request('doctor_id') == $doctor->id ? 'selected' : '' }}>
+                                Dr. {{ $doctor->name }}
                             </option>
                         @endforeach
                     </select>
@@ -1043,9 +790,11 @@
                     <select name="status" class="filter-control" id="status">
                         <option value="">All Status</option>
                         <option value="waiting" {{ request('status') == 'waiting' ? 'selected' : '' }}>⏳ Waiting</option>
-                        <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>🔄 In Progress</option>
+                        <option value="calling" {{ request('status') == 'calling' ? 'selected' : '' }}>📞 Calling</option>
+                        <option value="serving" {{ request('status') == 'serving' ? 'selected' : '' }}>🔄 Serving</option>
                         <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>✅ Completed</option>
                         <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>❌ Cancelled</option>
+                        <option value="missed" {{ request('status') == 'missed' ? 'selected' : '' }}>⏭️ Missed</option>
                     </select>
                 </div>
             </div>
@@ -1060,12 +809,12 @@
         </form>
     </div>
 
-    <!-- Swipe Hint (Sirf mobile par) -->
+    <!-- Swipe Hint -->
     <div class="table-scroll-hint">
         <i class="fas fa-arrows-left-right"></i> Swipe to see more
     </div>
 
-    <!-- Table Wrapper -->
+    <!-- Table -->
     <div class="table-wrapper">
         <div class="table-container">
             <table>
@@ -1073,32 +822,41 @@
                     <tr>
                         <th>Token #</th>
                         <th>Patient Name</th>
+                        <th>Phone</th>
                         <th>Doctor</th>
-                        <th>Department</th>
                         <th>Status</th>
-                        <th>Waiting Time</th>
-                        <th>Service Time</th>
-                        <th>Date</th>
+                        <th>Position</th>
+                        <th>Created</th>
+                        <th>Completed</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($reports ?? [] as $report)
                     <tr>
-                        <td><span class="token-badge">#{{ $report->token_number ?? $report->id }}</span></td>
+                        <td><span class="token-badge">{{ $report->token_number ?? '#' . $report->id }}</span></td>
                         <td>{{ $report->patient_name ?? 'N/A' }}</td>
-                        <td>{{ $report->doctor_name ?? 'N/A' }}</td>
-                        <td>{{ $report->department ?? 'General' }}</td>
+                        <td>{{ $report->phone ?? 'N/A' }}</td>
                         <td>
-                            <span class="status-badge {{ str_replace('_', '-', $report->status ?? 'waiting') }}">
-                                @if(($report->status ?? 'waiting') == 'waiting') ⏳ Waiting
-                                @elseif(($report->status ?? 'waiting') == 'in_progress') 🔄 In Progress
-                                @elseif(($report->status ?? 'waiting') == 'completed') ✅ Completed
-                                @else ❌ Cancelled @endif
+                            @if($report->doctor)
+                                Dr. {{ $report->doctor->name }}
+                            @else
+                                <span style="color: #94a3b8;">N/A</span>
+                            @endif
+                        </td>
+                        <td>
+                            <span class="status-badge {{ $report->status ?? 'waiting' }}">
+                                @if($report->status == 'waiting') ⏳ Waiting
+                                @elseif($report->status == 'calling') 📞 Calling
+                                @elseif($report->status == 'serving') 🔄 Serving
+                                @elseif($report->status == 'completed') ✅ Completed
+                                @elseif($report->status == 'cancelled') ❌ Cancelled
+                                @elseif($report->status == 'missed') ⏭️ Missed
+                                @else Unknown @endif
                             </span>
                         </td>
-                        <td>{{ $report->waiting_time ?? 0 }} min</td>
-                        <td>{{ $report->service_time ?? 0 }} min</td>
-                        <td>{{ isset($report->date) ? \Carbon\Carbon::parse($report->date)->format('d M Y') : 'N/A' }}</td>
+                        <td>#{{ $report->position ?? '-' }}</td>
+                        <td>{{ $report->created_at ? $report->created_at->format('d M Y, h:i A') : 'N/A' }}</td>
+                        <td>{{ $report->completed_at ? $report->completed_at->format('d M Y, h:i A') : '-' }}</td>
                     </tr>
                     @empty
                     <tr>
@@ -1115,11 +873,13 @@
             </table>
         </div>
     </div>
-    
+
     <!-- Pagination -->
+    @if(isset($reports) && $reports->hasPages())
     <div class="pagination-wrapper">
-        {{ $reports->links() ?? '' }}
+        {{ $reports->links() }}
     </div>
+    @endif
 </div>
 
 <script>
@@ -1134,17 +894,15 @@ function exportReport() {
 }
 
 // ============================================
-// CHARTS - Responsive Setup
+// CHARTS
 // ============================================
 const isMobile = window.innerWidth <= 768;
 
-// ============================================
-// DEPARTMENT DISTRIBUTION CHART
-// ============================================
+// Department Chart
 const deptCtx = document.getElementById('departmentChart');
 const deptData = @json($departmentStats ?? []);
 
-if (deptData.length > 0 && deptCtx) {
+if (deptData && deptData.length > 0 && deptCtx) {
     new Chart(deptCtx, {
         type: 'pie',
         data: {
@@ -1159,15 +917,13 @@ if (deptData.length > 0 && deptCtx) {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { 
-                    position: isMobile ? 'bottom' : 'bottom',
+                legend: {
+                    position: 'bottom',
                     labels: {
                         padding: isMobile ? 10 : 20,
                         usePointStyle: true,
                         pointStyle: 'circle',
-                        font: {
-                            size: isMobile ? 10 : 12
-                        },
+                        font: { size: isMobile ? 10 : 12 },
                         boxWidth: isMobile ? 8 : 12
                     }
                 }
@@ -1178,13 +934,11 @@ if (deptData.length > 0 && deptCtx) {
     deptCtx.parentElement.innerHTML = '<p style="text-align:center;color:#94a3b8;padding:40px 0;">No department data available</p>';
 }
 
-// ============================================
-// DAILY TREND CHART
-// ============================================
+// Trend Chart
 const trendCtx = document.getElementById('trendChart');
 const trendData = @json($dailyStats ?? []);
 
-if (trendData.length > 0 && trendCtx) {
+if (trendData && trendData.length > 0 && trendCtx) {
     new Chart(trendCtx, {
         type: 'line',
         data: {
@@ -1207,29 +961,20 @@ if (trendData.length > 0 && trendCtx) {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { 
+                legend: {
                     position: 'top',
                     labels: {
                         usePointStyle: true,
                         pointStyle: 'circle',
-                        font: {
-                            size: isMobile ? 11 : 12
-                        }
+                        font: { size: isMobile ? 11 : 12 }
                     }
                 }
             },
             scales: {
-                x: {
-                    ticks: {
-                        font: { size: isMobile ? 9 : 11 }
-                    }
-                },
+                x: { ticks: { font: { size: isMobile ? 9 : 11 } } },
                 y: {
                     beginAtZero: true,
-                    ticks: { 
-                        stepSize: 1,
-                        font: { size: isMobile ? 9 : 11 }
-                    }
+                    ticks: { stepSize: 1, font: { size: isMobile ? 9 : 11 } }
                 }
             }
         }

@@ -126,6 +126,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/user-management', [UserController::class, 'index'])->name('user-management');
     Route::get('/services-management', [ServiceController::class, 'index'])->name('services-management');
 
+    // ✅ DOCTORS ROUTES
     Route::prefix('doctors')->name('doctors.')->group(function () {
         Route::get('/', [DoctorController::class, 'index'])->name('index');
         Route::get('/create', [DoctorController::class, 'create'])->name('create');
@@ -136,6 +137,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
         Route::patch('/{id}/status/{status}', [DoctorController::class, 'updateStatus'])->name('update-status');
     });
     
+    // ✅ SERVICES ROUTES
     Route::prefix('services')->name('services.')->group(function () {
         Route::get('/', [ServiceController::class, 'index'])->name('index');
         Route::get('/create', [ServiceController::class, 'create'])->name('create');
@@ -149,6 +151,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
         Route::post('/bulk-delete', [ServiceController::class, 'bulkDelete'])->name('bulk-delete');
     });
     
+    // ✅ USERS ROUTES
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/create', [UserController::class, 'create'])->name('create');
@@ -160,17 +163,21 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
         Route::get('/search', [UserController::class, 'search'])->name('search');
     });
 
+    // ✅ QUEUE REPORTS ROUTES (⚠️ ORDER FIXED - export PEHLE, {id} BAAD MEIN)
     Route::prefix('queue-reports')->name('queue-reports.')->group(function () {
         Route::get('/', [QueueReportController::class, 'index'])->name('index');
-        Route::get('/{id}', [QueueReportController::class, 'show'])->name('show');
-        Route::get('/export/csv', [QueueReportController::class, 'export'])->name('export');
+        Route::get('/export/csv', [QueueReportController::class, 'export'])->name('export');     // ✅ PEHLE
+        Route::get('/summary', [QueueReportController::class, 'summary'])->name('summary');     // ✅ PEHLE
+        Route::get('/{id}', [QueueReportController::class, 'show'])->name('show');              // ✅ BAAD MEIN
     });
 
+    // ✅ SETTINGS ROUTES
     Route::prefix('settings')->name('settings.')->group(function () {
         Route::get('/', [SettingController::class, 'index'])->name('index');
         Route::put('/update', [SettingController::class, 'update'])->name('update');
     });
 
+    // ✅ ADMIN PROFILE ROUTES
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [ProfileController::class, 'index'])->name('index');
         Route::put('/update', [ProfileController::class, 'update'])->name('update');
@@ -194,7 +201,7 @@ Route::get('/dashboard', function() {
 })->middleware('auth')->name('dashboard');
 
 // =============================================
-// ✅ PROFILE ROUTES
+// ✅ PROFILE ROUTES (All Authenticated Users)
 // =============================================
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
@@ -204,8 +211,3 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar.update');
 });
 
-// =============================================
-// ✅ API ROUTES (AJAX)
-// =============================================
-Route::post('/api/validate-token', [AuthController::class, 'validateResetToken']);
-Route::post('/api/resend-link', [AuthController::class, 'resendResetLink']);
