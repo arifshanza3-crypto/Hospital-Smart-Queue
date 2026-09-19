@@ -136,6 +136,12 @@
                 <label>Full Name</label>
                 <input type="text" id="p_name" placeholder="Enter name..." required>
             </div>
+            <!-- Mobile Number -->
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <input type="tel" id="p_mobile" placeholder="03XX-XXXXXXX" required maxlength="11">
+                <small id="mobileError" class="error-msg">Please enter a valid 11-digit number starting with 03</small>
+            </div>
 
             <!-- ✅ NEW: Select Doctor Dropdown -->
             <div class="form-group">
@@ -152,14 +158,7 @@
                 </select>
                 <small id="doctorError" class="error-msg">Please select a doctor</small>
             </div>
-
-            <!-- Mobile Number -->
-            <div class="form-group">
-                <label>Mobile Number</label>
-                <input type="tel" id="p_mobile" placeholder="03XX-XXXXXXX" required maxlength="11">
-                <small id="mobileError" class="error-msg">Please enter a valid 11-digit number starting with 03</small>
-            </div>
-
+            
             <div class="modal-footer">
                 <button class="btn btn-text" onclick="closeModal('patientModal')">Cancel</button>
                 <button class="btn btn-primary" onclick="submitPatient()">Add to Queue</button>
